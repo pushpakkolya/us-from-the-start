@@ -17,7 +17,13 @@ export default function App() {
   }
 
   return (
-    <div style={{ padding: "40px", fontFamily: "sans-serif" }}>
+    <div
+      style={{
+        padding: "40px",
+        fontFamily: "sans-serif",
+        textAlign: "center",
+      }}
+    >
       <h1>Room Completed 🎉</h1>
       <p>More coming soon...</p>
     </div>
