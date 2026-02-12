@@ -5,13 +5,19 @@ export default function RoomOne({ onComplete }) {
 
   const correctAnswer = "first time you met";
 
-  const handleSubmit = () => {
-    if (answer.toLowerCase().trim() === correctAnswer) {
-      onComplete();
-    } else {
-      alert("Hmm… try again ❤️");
-    }
-  };
+const handleSubmit = () => {
+  const formatted = answer.toLowerCase().trim();
+
+  if (
+    formatted.includes("first") &&
+    formatted.includes("met")
+  ) {
+    onComplete();
+  } else {
+    alert("Hmm… try again ❤️");
+  }
+};
+
 
   return (
     <div style={{ padding: "40px", fontFamily: "sans-serif" }}>
