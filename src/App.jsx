@@ -11,9 +11,7 @@ function App() {
     const startMusic = async () => {
       try {
         await audio.play();
-      } catch (err) {
-        console.log("Autoplay blocked");
-      }
+      } catch (err) {}
     };
 
     document.addEventListener("click", startMusic, { once: true });
@@ -25,8 +23,8 @@ function App() {
 
   return (
     <>
-      {room === 1 && <RoomOne goNext={() => setRoom(2)} />}
-      {room === 2 && <RoomTwo goNext={() => setRoom(3)} />}
+      {room === 1 && <RoomOne onComplete={() => setRoom(2)} />}
+      {room === 2 && <RoomTwo onComplete={() => setRoom(3)} />}
     </>
   );
 }
