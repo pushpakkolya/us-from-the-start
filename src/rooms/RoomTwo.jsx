@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 
 export default function RoomTwo({ onComplete }) {
   const lines = [
-    "Close your eyes for a second...",
-    "Go back to the very beginning.",
-    "Before everything.",
-    "Before the jokes.",
-    "Before the memories.",
-    "There was just… us.",
-    "Two people who had no idea what was coming.",
+//    "Close your eyes for a second...",
+//    "Go back to the very beginning.",
+//    "Before everything.",
+//    "Before the jokes.",
+//    "Before the memories.",
+//    "There was just… us.",
+//    "Two people who had no idea what was coming.",
     "And yet… somehow it felt right."
   ];
 
