@@ -3,40 +3,52 @@ import { useState } from "react";
 export default function RoomOne({ onComplete }) {
   const [answer, setAnswer] = useState("");
 
-  const correctAnswer = "first time you met";
+  const handleSubmit = () => {
+    const formatted = answer.toLowerCase().trim();
 
-const handleSubmit = () => {
-  const formatted = answer.toLowerCase().trim();
-
-  console.log("User typed:", formatted);
-
-  if (
-    formatted.includes("first") &&
-    formatted.includes("met")
-  ) {
-    console.log("Correct answer detected");
-    onComplete();
-  } else {
-    alert("Hmm… try again ❤️");
-  }
-};
-
-
+    if (
+      formatted.includes("first") &&
+      formatted.includes("met")
+    ) {
+      if (typeof onComplete === "function") {
+        onComplete();
+      }
+    } else {
+      alert("Hmm… try again ❤️");
+    }
+  };
 
   return (
-    <div style={{ padding: "40px", fontFamily: "sans-serif" }}>
+    <div
+      style={{
+        padding: "40px",
+        fontFamily: "sans-serif",
+        textAlign: "center",
+      }}
+    >
       <h2>Room One — Memory</h2>
       <p>What was the first thing we talked about?</p>
 
       <input
         value={answer}
         onChange={(e) => setAnswer(e.target.value)}
-        style={{ padding: "8px", width: "250px" }}
+        style={{
+          padding: "8px",
+          width: "250px",
+          fontSize: "16px",
+        }}
       />
 
       <br /><br />
 
-      <button onClick={handleSubmit}>
+      <button
+        onClick={handleSubmit}
+        style={{
+          padding: "10px 20px",
+          fontSize: "16px",
+          cursor: "pointer",
+        }}
+      >
         Unlock 🔓
       </button>
     </div>
