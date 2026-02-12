@@ -7,8 +7,8 @@ export default function RoomOne({ onComplete }) {
     const formatted = answer.toLowerCase().trim();
 
     if (
-      formatted.includes("first") //&&
-      //formatted.includes("met")
+      formatted.includes("first") &&
+      formatted.includes("met")
     ) {
       if (typeof onComplete === "function") {
         onComplete();
