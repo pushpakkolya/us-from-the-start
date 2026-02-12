@@ -1,66 +1,25 @@
 import { useState } from "react";
+import Landing from "./components/Landing";
+import RoomOne from "./rooms/RoomOne";
 
 export default function App() {
   const [started, setStarted] = useState(false);
-  const [noCount, setNoCount] = useState(0);
+  const [currentRoom, setCurrentRoom] = useState(0);
 
-  const handleNo = () => {
-    setNoCount(noCount + 1);
-  };
+  if (!started) {
+    return <Landing onStart={() => setStarted(true)} />;
+  }
 
-  if (started) {
+  if (currentRoom === 0) {
     return (
-      <div style={{ padding: "40px", fontFamily: "sans-serif" }}>
-        <h1>Welcome to Us From The Start ❤️</h1>
-        <p>The journey begins...</p>
-      </div>
+      <RoomOne onComplete={() => setCurrentRoom(1)} />
     );
   }
 
   return (
-    <div
-      style={{
-        height: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        fontFamily: "sans-serif",
-        textAlign: "center",
-      }}
-    >
-      <h1>Are you ready?</h1>
-
-      <div style={{ marginTop: "20px" }}>
-        <button
-          onClick={() => setStarted(true)}
-          style={{
-            padding: "10px 20px",
-            marginRight: "15px",
-            fontSize: "16px",
-          }}
-        >
-          Yes ❤️
-        </button>
-
-        <button
-          onClick={handleNo}
-          style={{
-            padding: "10px 20px",
-            fontSize: "16px",
-          }}
-        >
-          No 🥺
-        </button>
-      </div>
-
-      {noCount > 0 && (
-        <p style={{ marginTop: "20px", color: "gray" }}>
-          {noCount < 10
-            ? "That hurt a little... 🥺 Why no?"
-            : "Okay now you're just being mean 😭 Please press Yes."}
-        </p>
-      )}
+    <div style={{ padding: "40px", fontFamily: "sans-serif" }}>
+      <h1>Room Completed 🎉</h1>
+      <p>More coming soon...</p>
     </div>
   );
 }
