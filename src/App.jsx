@@ -10,9 +10,14 @@ export default function App() {
     RoomOne,
   ];
 
-  if (!started) {
-    return <Landing onStart={() => setStarted(true)} />;
-  }
+if (!started) {
+  return (
+    <div className="fade-container">
+      <Landing onStart={() => setStarted(true)} />
+    </div>
+  );
+}
+
 
   const CurrentRoom = rooms[currentRoomIndex];
 
@@ -31,9 +36,13 @@ export default function App() {
     );
   }
 
-  return (
+return (
+  <div key={currentRoomIndex} className="fade-container">
     <CurrentRoom
       onComplete={() => setCurrentRoomIndex((prev) => prev + 1)}
     />
+  </div>
+);
+
   );
 }
