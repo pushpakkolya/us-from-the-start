@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import RoomOne from "./RoomOne";
-import RoomTwo from "./RoomTwo";
+import RoomOne from ".rooms/RoomOne";
+import RoomTwo from ".rooms/RoomTwo";
 
 function App() {
   const [room, setRoom] = useState(1);
