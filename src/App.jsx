@@ -11,9 +11,7 @@ export default function App() {
   }
 
   if (currentRoom === 0) {
-    return (
-      <RoomOne onComplete={() => setCurrentRoom(1)} />
-    );
+    return <RoomOne onComplete={() => setCurrentRoom(1)} />;
   }
 
   return (
