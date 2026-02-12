@@ -8,15 +8,19 @@ export default function RoomOne({ onComplete }) {
 const handleSubmit = () => {
   const formatted = answer.toLowerCase().trim();
 
+  console.log("User typed:", formatted);
+
   if (
     formatted.includes("first") &&
     formatted.includes("met")
   ) {
+    console.log("Correct answer detected");
     onComplete();
   } else {
     alert("Hmm… try again ❤️");
   }
 };
+
 
 
   return (
