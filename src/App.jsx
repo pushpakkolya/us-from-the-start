@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import Landing from "./components/Landing";
 import RoomOne from "./rooms/RoomOne";
+import RoomTwo from "./rooms/RoomTwo";
 import bgMusic from "./assets/bg.mp3";
 
 export default function App() {
@@ -19,10 +20,11 @@ export default function App() {
     }
   }, [started]);
 
-  const rooms = [
-    RoomOne,
-    // Add more rooms here later
-  ];
+const rooms = [
+  RoomOne,
+  RoomTwo,
+];
+
 
   if (!started) {
     return (
