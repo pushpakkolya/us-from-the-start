@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react";
 
 export default function RoomThree({ onComplete }) {
-  const size = 4; // 4x4 grid
-  const tileSize = 100; // size of each piece in px
+  const size = 4;
+  const tileSize = 100;
   const total = size * size;
 
-  // solved order: 1..15 + null
-  const solvedState = [
+  const imageUrl =
+    process.env.PUBLIC_URL
+      ? process.env.PUBLIC_URL + "/puzzle.jpg"
+      : "/puzzle.jpg";
+
+  const solved = [
     ...Array(total - 1).keys()
   ].map(i => i + 1).concat(null);
 
   const shuffle = () => {
-    const arr = [...solvedState];
+    const arr = [...solved];
     for (let i = arr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [arr[i], arr[j]] = [arr[j], arr[i]];
@@ -22,32 +26,31 @@ export default function RoomThree({ onComplete }) {
   const [tiles, setTiles] = useState(shuffle());
   const [completed, setCompleted] = useState(false);
 
-  const indexToRowCol = (i) => [
+  const getRowCol = (i) => [
     Math.floor(i / size),
     i % size
   ];
 
   const canMove = (i) => {
-    const emptyIndex = tiles.indexOf(null);
-    const [r1, c1] = indexToRowCol(i);
-    const [r2, c2] = indexToRowCol(emptyIndex);
-
+    const empty = tiles.indexOf(null);
+    const [r1, c1] = getRowCol(i);
+    const [r2, c2] = getRowCol(empty);
     return Math.abs(r1 - r2) + Math.abs(c1 - c2) === 1;
   };
 
   const moveTile = (i) => {
     if (!canMove(i) || completed) return;
 
-    const emptyIndex = tiles.indexOf(null);
+    const empty = tiles.indexOf(null);
     const newTiles = [...tiles];
-    [newTiles[i], newTiles[emptyIndex]] =
-      [newTiles[emptyIndex], newTiles[i]];
+    [newTiles[i], newTiles[empty]] =
+      [newTiles[empty], newTiles[i]];
 
     setTiles(newTiles);
   };
 
   useEffect(() => {
-    if (JSON.stringify(tiles) === JSON.stringify(solvedState)) {
+    if (JSON.stringify(tiles) === JSON.stringify(solved)) {
       setCompleted(true);
 
       setTimeout(() => {
@@ -59,6 +62,13 @@ export default function RoomThree({ onComplete }) {
   return (
     <div style={styles.container}>
       <h2>🧩 Slide the Pieces to Complete the Picture</h2>
+
+      {/* DEBUG IMAGE CHECK (remove later if you want) */}
+      <img
+        src={imageUrl}
+        alt="debug"
+        style={{ width: 200, marginBottom: 20 }}
+      />
 
       <div
         style={{
@@ -91,7 +101,7 @@ export default function RoomThree({ onComplete }) {
               style={{
                 width: tileSize,
                 height: tileSize,
-                backgroundImage: "url(/public/puzzle.jpg)",
+                backgroundImage: `url(${imageUrl})`,
                 backgroundSize: `${size * tileSize}px ${size * tileSize}px`,
                 backgroundPosition: `-${x * tileSize}px -${y * tileSize}px`,
                 cursor: canMove(index) ? "pointer" : "default",
@@ -104,7 +114,7 @@ export default function RoomThree({ onComplete }) {
       </div>
 
       {completed && (
-        <p style={{ marginTop: "20px" }}>
+        <p style={{ marginTop: 20 }}>
           💖 Perfect… unlocking next room...
         </p>
       )}
@@ -122,12 +132,12 @@ const styles = {
     justifyContent: "center",
     color: "#fff",
     fontFamily: "sans-serif",
+    textAlign: "center",
   },
   grid: {
     display: "grid",
     gridTemplateColumns: "repeat(4, 100px)",
     gridTemplateRows: "repeat(4, 100px)",
     gap: "4px",
-    marginTop: "20px",
   },
 };
