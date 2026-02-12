@@ -1,34 +1,53 @@
 import { useState } from "react";
 
-export default function RoomOne({ onComplete }) {
-  const [answer, setAnswer] = useState("");
+export default function Landing({ onStart }) {
+  const [noCount, setNoCount] = useState(0);
 
-  const correctAnswer = "first time you met";
-
-  const handleSubmit = () => {
-    if (answer.toLowerCase().trim() === correctAnswer) {
-      onComplete();
-    } else {
-      alert("Hmm… try again ❤️");
-    }
+  const handleNo = () => {
+    setNoCount((prev) => prev + 1);
   };
 
   return (
-    <div style={{ padding: "40px", fontFamily: "sans-serif" }}>
-      <h2>Room One — Memory</h2>
-      <p>What was the first thing we talked about?</p>
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        fontFamily: "sans-serif",
+        textAlign: "center",
+      }}
+    >
+      <h1>Are you ready?</h1>
 
-      <input
-        value={answer}
-        onChange={(e) => setAnswer(e.target.value)}
-        style={{ padding: "8px", width: "250px" }}
-      />
+      <div style={{ marginTop: "20px" }}>
+        <button
+          onClick={() => {
+            if (typeof onStart === "function") {
+              onStart();
+            }
+          }}
+          style={{ padding: "10px 20px", marginRight: "15px" }}
+        >
+          Yes ❤️
+        </button>
 
-      <br /><br />
+        <button
+          onClick={handleNo}
+          style={{ padding: "10px 20px" }}
+        >
+          No 🥺
+        </button>
+      </div>
 
-      <button onClick={handleSubmit}>
-        Unlock 🔓
-      </button>
+      {noCount > 0 && (
+        <p style={{ marginTop: "20px", color: "gray" }}>
+          {noCount < 10
+            ? "That hurt a little... 🥺"
+            : "Okay now you're just being mean 😭 Please press Yes."}
+        </p>
+      )}
     </div>
   );
 }
