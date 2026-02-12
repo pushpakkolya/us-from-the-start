@@ -91,7 +91,7 @@ export default function RoomThree({ onComplete }) {
               style={{
                 width: tileSize,
                 height: tileSize,
-                backgroundImage: "url(/puzzle.jpg)",
+                backgroundImage: "url(/public/puzzle.jpg)",
                 backgroundSize: `${size * tileSize}px ${size * tileSize}px`,
                 backgroundPosition: `-${x * tileSize}px -${y * tileSize}px`,
                 cursor: canMove(index) ? "pointer" : "default",
