@@ -1,60 +1,57 @@
 import { useState, useRef, useEffect } from "react";
-import Landing from "./components/Landing";
-import RoomOne from "./rooms/RoomOne";
-import RoomTwo from "./rooms/RoomTwo";
-import bgMusic from "./assets/bg.mp3";
+import RoomOne from "./RoomOne";
+import RoomTwo from "./RoomTwo";
+// import RoomThree from "./RoomThree"; // later
 
-export default function App() {
-  const [started, setStarted] = useState(false);
-  const [currentRoomIndex, setCurrentRoomIndex] = useState(0);
-
+function App() {
+  const [room, setRoom] = useState(1);
   const audioRef = useRef(null);
 
-  // Play music when user clicks "Yes"
   useEffect(() => {
-    if (started && audioRef.current) {
-      audioRef.current.volume = 0.4; // softer background
-      audioRef.current.play().catch(() => {
-        // autoplay might be blocked silently
-      });
-    }
-  }, [started]);
+    const audio = audioRef.current;
 
-const rooms = [
-  RoomOne,
-  RoomTwo,
-];
+    if (!audio) return;
 
+    audio.loop = true;
+    audio.volume = 0;
 
-  if (!started) {
-    return (
-      <div className="fade-container">
-        <Landing onStart={() => setStarted(true)} />
-        <audio ref={audioRef} src={bgMusic} loop />
-      </div>
-    );
-  }
+    const startMusic = () => {
+      audio.play().catch(() => {});
 
-  const CurrentRoom = rooms[currentRoomIndex];
+      // 🎵 Smooth Fade In
+      let vol = 0;
+      const fade = setInterval(() => {
+        if (vol < 0.5) {
+          vol += 0.02;
+          audio.volume = vol;
+        } else {
+          clearInterval(fade);
+        }
+      }, 100);
 
-  if (!CurrentRoom) {
-    return (
-      <div className="fade-container" style={{ textAlign: "center", padding: "40px" }}>
-        <h1>All Rooms Completed 🎉</h1>
-        <p>You unlocked everything ❤️</p>
-        <audio ref={audioRef} src={bgMusic} loop />
-      </div>
-    );
-  }
+      document.removeEventListener("click", startMusic);
+    };
+
+    document.addEventListener("click", startMusic);
+
+    return () => {
+      document.removeEventListener("click", startMusic);
+    };
+  }, []);
 
   return (
-    <div key={currentRoomIndex} className="fade-container">
-      <CurrentRoom
-        onComplete={() =>
-          setCurrentRoomIndex((prev) => prev + 1)
-        }
-      />
-      <audio ref={audioRef} src={bgMusic} loop />
+    <div className="app-container">
+      {/* 🎵 Global Background Music */}
+      <audio ref={audioRef}>
+        <source src="/music.mp3" type="audio/mp3" />
+      </audio>
+
+      {/* 🎬 Room Routing */}
+      {room === 1 && <RoomOne goNext={() => setRoom(2)} />}
+      {room === 2 && <RoomTwo goNext={() => setRoom(3)} />}
+      {/* {room === 3 && <RoomThree />} */}
     </div>
   );
 }
+
+export default App;
