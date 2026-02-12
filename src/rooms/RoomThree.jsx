@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 
 export default function RoomThree({ onComplete }) {
   const size = 4;
+  const tileSize = 90;
   const total = size * size;
 
-  const solvedState = [...Array(total - 1).keys()].map(i => i + 1).concat(null);
+  const solved = [...Array(total - 1).keys()].map(i => i + 1).concat(null);
 
   const shuffle = () => {
-    const arr = [...solvedState];
+    const arr = [...solved];
     for (let i = arr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [arr[i], arr[j]] = [arr[j], arr[i]];
@@ -37,7 +38,7 @@ export default function RoomThree({ onComplete }) {
   };
 
   useEffect(() => {
-    if (JSON.stringify(tiles) === JSON.stringify(solvedState)) {
+    if (JSON.stringify(tiles) === JSON.stringify(solved)) {
       setCompleted(true);
       setTimeout(() => {
         if (typeof onComplete === "function") onComplete();
@@ -47,12 +48,31 @@ export default function RoomThree({ onComplete }) {
 
   return (
     <div style={styles.container}>
-      <h2>🧩 Fix the Picture to Unlock</h2>
+      <h2 style={{ marginBottom: "10px" }}>
+        🧩 Fix the Picture to Unlock
+      </h2>
+      <p style={{ opacity: 0.8 }}>
+        Slide the pieces into place 💕
+      </p>
 
-      <div style={styles.grid}>
+      <div
+        style={{
+          ...styles.grid,
+          width: size * tileSize,
+          height: size * tileSize,
+        }}
+      >
         {tiles.map((tile, i) => {
           if (tile === null) {
-            return <div key={i} style={styles.empty}></div>;
+            return (
+              <div
+                key={i}
+                style={{
+                  width: tileSize,
+                  height: tileSize,
+                }}
+              />
+            );
           }
 
           const correctIndex = tile - 1;
@@ -64,18 +84,25 @@ export default function RoomThree({ onComplete }) {
               key={i}
               onClick={() => moveTile(i)}
               style={{
-                ...styles.tile,
-                backgroundImage: `url("/puzzle.jpg")`,
-                backgroundSize: `${size * 100}% ${size * 100}%`,
-                backgroundPosition: `${(x / (size - 1)) * 100}% ${(y / (size - 1)) * 100}%`,
+                width: tileSize,
+                height: tileSize,
+                borderRadius: "6px",
+                backgroundImage: "url(/puzzle.jpg)",
+                backgroundSize: `${size * tileSize}px ${size * tileSize}px`,
+                backgroundPosition: `-${x * tileSize}px -${y * tileSize}px`,
                 cursor: canMove(i) ? "pointer" : "default",
+                transition: "all 0.2s ease",
               }}
             />
           );
         })}
       </div>
 
-      {completed && <p style={styles.done}>💖 Perfect… unlocking...</p>}
+      {completed && (
+        <p style={{ marginTop: "20px", fontSize: "18px" }}>
+          💖 Perfect… unlocking...
+        </p>
+      )}
     </div>
   );
 }
@@ -89,6 +116,7 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
     color: "#fff",
+    fontFamily: "sans-serif",
   },
   grid: {
     display: "grid",
@@ -96,19 +124,5 @@ const styles = {
     gridTemplateRows: "repeat(4, 90px)",
     gap: "4px",
     marginTop: "20px",
-  },
-  tile: {
-    width: "90px",
-    height: "90px",
-    borderRadius: "6px",
-    transition: "0.2s",
-  },
-  empty: {
-    width: "90px",
-    height: "90px",
-  },
-  done: {
-    marginTop: "20px",
-    fontSize: "20px",
   },
 };
