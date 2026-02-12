@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Landing from "./rooms/Landing";
 import RoomOne from "./rooms/RoomOne";
 import RoomTwo from "./rooms/RoomTwo";
+import RoomThree from "./rooms/RoomThree";
 
 function App() {
   const [room, setRoom] = useState(0);
@@ -15,7 +16,7 @@ function App() {
       const timer = setTimeout(() => {
         setDisplayRoom(room); // switch room
         setFade(true); // fade in
-      }, 500); // duration must match CSS transition
+      }, 500); // must match transition time
 
       return () => clearTimeout(timer);
     }
@@ -38,6 +39,10 @@ function App() {
 
       {displayRoom === 2 && (
         <RoomTwo onComplete={() => setRoom(3)} />
+      )}
+
+      {displayRoom === 3 && (
+        <RoomThree onComplete={() => setRoom(4)} />
       )}
     </div>
   );
