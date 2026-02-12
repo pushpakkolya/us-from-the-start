@@ -4,6 +4,12 @@ export default function RoomOne({ onComplete }) {
   const [answer, setAnswer] = useState("");
 
   const handleSubmit = () => {
+    // 🎵 Force music to start from user interaction
+    const audio = document.getElementById("bg-music");
+    if (audio) {
+      audio.play().catch(() => {});
+    }
+
     const formatted = answer.toLowerCase().trim();
 
     if (
@@ -42,6 +48,7 @@ export default function RoomOne({ onComplete }) {
       <br /><br />
 
       <button
+        type="button"
         onClick={handleSubmit}
         style={{
           padding: "10px 20px",
