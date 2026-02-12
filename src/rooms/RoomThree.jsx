@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 
 export default function RoomThree({ onComplete }) {
-  const size = 4;
-  const tileSize = 90;
+  const size = 4; // 4x4 grid
+  const tileSize = 100; // size of each piece in px
   const total = size * size;
 
-  const solved = [...Array(total - 1).keys()].map(i => i + 1).concat(null);
+  // solved order: 1..15 + null
+  const solvedState = [
+    ...Array(total - 1).keys()
+  ].map(i => i + 1).concat(null);
 
   const shuffle = () => {
-    const arr = [...solved];
+    const arr = [...solvedState];
     for (let i = arr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [arr[i], arr[j]] = [arr[j], arr[i]];
@@ -19,41 +22,43 @@ export default function RoomThree({ onComplete }) {
   const [tiles, setTiles] = useState(shuffle());
   const [completed, setCompleted] = useState(false);
 
-  const indexToRC = (i) => [Math.floor(i / size), i % size];
+  const indexToRowCol = (i) => [
+    Math.floor(i / size),
+    i % size
+  ];
 
   const canMove = (i) => {
-    const empty = tiles.indexOf(null);
-    const [r1, c1] = indexToRC(i);
-    const [r2, c2] = indexToRC(empty);
+    const emptyIndex = tiles.indexOf(null);
+    const [r1, c1] = indexToRowCol(i);
+    const [r2, c2] = indexToRowCol(emptyIndex);
+
     return Math.abs(r1 - r2) + Math.abs(c1 - c2) === 1;
   };
 
   const moveTile = (i) => {
     if (!canMove(i) || completed) return;
 
-    const empty = tiles.indexOf(null);
+    const emptyIndex = tiles.indexOf(null);
     const newTiles = [...tiles];
-    [newTiles[i], newTiles[empty]] = [newTiles[empty], newTiles[i]];
+    [newTiles[i], newTiles[emptyIndex]] =
+      [newTiles[emptyIndex], newTiles[i]];
+
     setTiles(newTiles);
   };
 
   useEffect(() => {
-    if (JSON.stringify(tiles) === JSON.stringify(solved)) {
+    if (JSON.stringify(tiles) === JSON.stringify(solvedState)) {
       setCompleted(true);
+
       setTimeout(() => {
-        if (typeof onComplete === "function") onComplete();
+        if (onComplete) onComplete();
       }, 1500);
     }
   }, [tiles]);
 
   return (
     <div style={styles.container}>
-      <h2 style={{ marginBottom: "10px" }}>
-        🧩 Fix the Picture to Unlock
-      </h2>
-      <p style={{ opacity: 0.8 }}>
-        Slide the pieces into place 💕
-      </p>
+      <h2>🧩 Slide the Pieces to Complete the Picture</h2>
 
       <div
         style={{
@@ -62,11 +67,11 @@ export default function RoomThree({ onComplete }) {
           height: size * tileSize,
         }}
       >
-        {tiles.map((tile, i) => {
+        {tiles.map((tile, index) => {
           if (tile === null) {
             return (
               <div
-                key={i}
+                key={index}
                 style={{
                   width: tileSize,
                   height: tileSize,
@@ -81,16 +86,16 @@ export default function RoomThree({ onComplete }) {
 
           return (
             <div
-              key={i}
-              onClick={() => moveTile(i)}
+              key={index}
+              onClick={() => moveTile(index)}
               style={{
                 width: tileSize,
                 height: tileSize,
-                borderRadius: "6px",
                 backgroundImage: "url(/puzzle.jpg)",
                 backgroundSize: `${size * tileSize}px ${size * tileSize}px`,
                 backgroundPosition: `-${x * tileSize}px -${y * tileSize}px`,
-                cursor: canMove(i) ? "pointer" : "default",
+                cursor: canMove(index) ? "pointer" : "default",
+                borderRadius: "6px",
                 transition: "all 0.2s ease",
               }}
             />
@@ -99,8 +104,8 @@ export default function RoomThree({ onComplete }) {
       </div>
 
       {completed && (
-        <p style={{ marginTop: "20px", fontSize: "18px" }}>
-          💖 Perfect… unlocking...
+        <p style={{ marginTop: "20px" }}>
+          💖 Perfect… unlocking next room...
         </p>
       )}
     </div>
@@ -110,7 +115,7 @@ export default function RoomThree({ onComplete }) {
 const styles = {
   container: {
     minHeight: "100vh",
-    background: "linear-gradient(135deg, #0f0c29, #302b63)",
+    background: "linear-gradient(135deg, #2b0036, #1a0033)",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -120,8 +125,8 @@ const styles = {
   },
   grid: {
     display: "grid",
-    gridTemplateColumns: "repeat(4, 90px)",
-    gridTemplateRows: "repeat(4, 90px)",
+    gridTemplateColumns: "repeat(4, 100px)",
+    gridTemplateRows: "repeat(4, 100px)",
     gap: "4px",
     marginTop: "20px",
   },
