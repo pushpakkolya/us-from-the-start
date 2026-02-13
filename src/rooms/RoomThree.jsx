@@ -2,22 +2,20 @@ import { useEffect, useState } from "react";
 import puzzleImage from "../assets/puzzle.jpg";
 
 export default function RoomThree({ onComplete }) {
-  const size = 3; // 🔥 Changed to 3x3
-  const tileSize = 160; // Larger tiles for better look
+  const size = 3;
+  const tileSize = 160;
   const total = size * size;
 
   const solved = [...Array(total - 1).keys()]
     .map(i => i + 1)
     .concat(null);
 
-  // 🧠 Fair scramble (always solvable, easier)
   const shuffleSolvable = () => {
     let arr = [...solved];
     let emptyIndex = arr.indexOf(null);
 
-    for (let i = 0; i < 15; i++) { // fewer moves = easier
+    for (let i = 0; i < 15; i++) {
       const possibleMoves = [];
-
       const row = Math.floor(emptyIndex / size);
       const col = emptyIndex % size;
 
@@ -69,21 +67,19 @@ export default function RoomThree({ onComplete }) {
     setMoves(m => m + 1);
   };
 
-  // 🔓 Unlock magic every 50 moves
   useEffect(() => {
     if (moves > 0 && moves % 50 === 0) {
       setMagicAvailable(true);
     }
   }, [moves]);
 
-  // 🏁 Detect completion
   useEffect(() => {
     if (JSON.stringify(tiles) === JSON.stringify(solved)) {
       setCompleted(true);
 
       setTimeout(() => {
         if (onComplete) onComplete();
-      }, 3500);
+      }, 5000);
     }
   }, [tiles]);
 
@@ -180,11 +176,14 @@ export default function RoomThree({ onComplete }) {
 
       {completed && (
         <div style={styles.revealWrapper}>
+          <GlowAura />
           <img
             src={puzzleImage}
             alt="Completed"
             style={styles.finalImage}
           />
+          <h1 style={styles.overlayText}>You Did It 💖</h1>
+          <SparkleBurst />
           <Confetti />
         </div>
       )}
@@ -192,20 +191,59 @@ export default function RoomThree({ onComplete }) {
   );
 }
 
+/* ✨ Glow Aura */
+function GlowAura() {
+  return <div style={styles.glowAura} />;
+}
+
+/* 🌟 Sparkle Burst */
+function SparkleBurst() {
+  return (
+    <>
+      <style>
+        {`
+          @keyframes sparkle {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(3); opacity: 0; }
+          }
+        `}
+      </style>
+      <div style={styles.sparkle} />
+    </>
+  );
+}
+
+/* 🎉 Confetti */
 function Confetti() {
   return (
-    <div style={styles.confettiContainer}>
-      {[...Array(40)].map((_, i) => (
-        <div
-          key={i}
-          style={{
-            ...styles.confetti,
-            left: Math.random() * 100 + "%",
-            animationDelay: Math.random() + "s",
-          }}
-        />
-      ))}
-    </div>
+    <>
+      <style>
+        {`
+          @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+          }
+        `}
+      </style>
+      <div style={styles.confettiContainer}>
+        {[...Array(60)].map((_, i) => (
+          <div
+            key={i}
+            style={{
+              position: "absolute",
+              width: "8px",
+              height: "14px",
+              background: i % 2 === 0 ? "hotpink" : "#ffd1dc",
+              left: Math.random() * 100 + "%",
+              top: "-20px",
+              animation: "fall 3s linear infinite",
+              animationDelay: Math.random() * 2 + "s",
+              borderRadius: "4px",
+            }}
+          />
+        ))}
+      </div>
+    </>
   );
 }
 
@@ -242,13 +280,41 @@ const styles = {
   revealWrapper: {
     position: "relative",
     marginTop: "20px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
   },
   finalImage: {
-    width: 3 * 160,
-    height: 3 * 160,
-    objectFit: "cover",
-    borderRadius: "18px",
-    animation: "fadeIn 1s ease",
+    width: 420,
+    height: 420,
+    objectFit: "contain",
+    borderRadius: "20px",
+    animation: "zoom 6s ease forwards",
+  },
+  overlayText: {
+    position: "absolute",
+    bottom: "-50px",
+    fontSize: "28px",
+    fontWeight: "bold",
+    color: "white",
+    textShadow: "0 0 10px hotpink",
+  },
+  glowAura: {
+    position: "absolute",
+    width: 460,
+    height: 460,
+    background: "radial-gradient(circle, hotpink 0%, transparent 70%)",
+    filter: "blur(40px)",
+    zIndex: -1,
+  },
+  sparkle: {
+    position: "absolute",
+    width: "20px",
+    height: "20px",
+    background: "white",
+    borderRadius: "50%",
+    animation: "sparkle 1s ease-out forwards",
   },
   confettiContainer: {
     position: "absolute",
@@ -256,13 +322,5 @@ const styles = {
     height: "100%",
     pointerEvents: "none",
     top: 0,
-  },
-  confetti: {
-    position: "absolute",
-    width: "8px",
-    height: "14px",
-    background: "hotpink",
-    top: "-20px",
-    animation: "fall 3s linear infinite",
   },
 };
