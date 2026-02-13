@@ -90,55 +90,62 @@ export default function RoomThree({ onComplete }) {
       <p>Moves: {moves}</p>
 
       <div
-        style={{
-          ...styles.grid,
-          width: size * tileSize,
-          height: size * tileSize,
-          opacity: reveal ? 0 : 1,
-          transition: "opacity 1.2s ease",
-        }}
-      >
-{tiles.map((tile, index) => {
-  if (tile === null) {
+  style={{
+    display: "grid",
+    gridTemplateColumns: `repeat(${size}, ${tileSize}px)`,
+    gridTemplateRows: `repeat(${size}, ${tileSize}px)`,
+    gap: "6px",
+    marginTop: "20px",
+    width: size * tileSize,
+    height: size * tileSize,
+  }}
+>
+  {tiles.map((tile, index) => {
+    if (tile === null) {
+      return (
+        <div
+          key={index}
+          style={{
+            width: tileSize,
+            height: tileSize,
+          }}
+        />
+      );
+    }
+
+    const correctIndex = tile - 1;
+    const row = Math.floor(correctIndex / size);
+    const col = correctIndex % size;
+
+    const correct = tile === solved[index];
+
     return (
       <div
         key={index}
+        onClick={() => moveTile(index)}
         style={{
           width: tileSize,
           height: tileSize,
+
+          /* THIS is the important part */
+          backgroundImage: `url(${puzzleImage})`,
+          backgroundSize: `${size * tileSize}px ${size * tileSize}px`,
+          backgroundPosition: `-${col * tileSize}px -${row * tileSize}px`,
+          backgroundRepeat: "no-repeat",
+
+          borderRadius: "8px",
+          cursor: canMove(index) ? "pointer" : "default",
+          transition: "all 0.3s ease",
+
+          boxShadow: correct
+            ? "0 0 15px rgba(255,182,193,0.8)"
+            : "none",
         }}
       />
     );
-  }
+  })}
+</div>
 
-  const correctIndex = tile - 1;
-  const x = correctIndex % size;
-  const y = Math.floor(correctIndex / size);
-  const correct = tile === solved[index];
-
-  return (
-    <div
-      key={index}
-      onClick={() => moveTile(index)}
-      style={{
-        width: tileSize,
-        height: tileSize,
-        backgroundImage: `url(${puzzleImage})`,
-        backgroundSize: `${size * tileSize}px ${size * tileSize}px`,
-        backgroundPosition: `-${x * tileSize}px -${y * tileSize}px`,
-        backgroundRepeat: "no-repeat",
-        cursor: canMove(index) ? "pointer" : "default",
-        borderRadius: "8px",
-        transition: "all 0.3s ease",
-        boxShadow: correct
-          ? "0 0 15px rgba(255, 182, 193, 0.7)"
-          : "none",
-      }}
-    />
-  );
-})}
-
-      </div>
 
       {/* 🌫 Full image reveal */}
       {reveal && (
