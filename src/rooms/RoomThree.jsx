@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import puzzleImage from "../assets/puzzle.jpg";
 
 export default function RoomThree({ onComplete }) {
-  const size = 4;
-  const tileSize = 130; // slightly larger
+  const size = 3;
+  const tileSize = 135; // slightly larger
   const total = size * size;
 
   const solved = [...Array(total - 1).keys()]
