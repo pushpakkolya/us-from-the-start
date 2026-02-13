@@ -1,18 +1,14 @@
 import { useEffect, useState } from "react";
+import puzzleImage from "../assets/puzzle.jpg";
 
 export default function RoomThree({ onComplete }) {
   const size = 4;
   const tileSize = 100;
   const total = size * size;
 
-  const imageUrl =
-    process.env.PUBLIC_URL
-      ? process.env.PUBLIC_URL + "/puzzle.jpg"
-      : "/puzzle.jpg";
-
-  const solved = [
-    ...Array(total - 1).keys()
-  ].map(i => i + 1).concat(null);
+  const solved = [...Array(total - 1).keys()]
+    .map(i => i + 1)
+    .concat(null);
 
   const shuffle = () => {
     const arr = [...solved];
@@ -52,7 +48,6 @@ export default function RoomThree({ onComplete }) {
   useEffect(() => {
     if (JSON.stringify(tiles) === JSON.stringify(solved)) {
       setCompleted(true);
-
       setTimeout(() => {
         if (onComplete) onComplete();
       }, 1500);
@@ -61,14 +56,7 @@ export default function RoomThree({ onComplete }) {
 
   return (
     <div style={styles.container}>
-      <h2>🧩 Slide the Pieces to Complete the Picture</h2>
-
-      {/* DEBUG IMAGE CHECK (remove later if you want) */}
-      <img
-        src={imageUrl}
-        alt="debug"
-        style={{ width: 200, marginBottom: 20 }}
-      />
+      <h2>🧩 Complete the Picture</h2>
 
       <div
         style={{
@@ -101,7 +89,7 @@ export default function RoomThree({ onComplete }) {
               style={{
                 width: tileSize,
                 height: tileSize,
-                backgroundImage: `url(${imageUrl})`,
+                backgroundImage: `url(${puzzleImage})`,
                 backgroundSize: `${size * tileSize}px ${size * tileSize}px`,
                 backgroundPosition: `-${x * tileSize}px -${y * tileSize}px`,
                 cursor: canMove(index) ? "pointer" : "default",
@@ -115,7 +103,7 @@ export default function RoomThree({ onComplete }) {
 
       {completed && (
         <p style={{ marginTop: 20 }}>
-          💖 Perfect… unlocking next room...
+          💖 Perfect… unlocking...
         </p>
       )}
     </div>
@@ -132,12 +120,12 @@ const styles = {
     justifyContent: "center",
     color: "#fff",
     fontFamily: "sans-serif",
-    textAlign: "center",
   },
   grid: {
     display: "grid",
     gridTemplateColumns: "repeat(4, 100px)",
     gridTemplateRows: "repeat(4, 100px)",
     gap: "4px",
+    marginTop: "20px",
   },
 };
