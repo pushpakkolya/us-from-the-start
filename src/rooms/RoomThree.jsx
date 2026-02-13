@@ -2,20 +2,20 @@ import { useEffect, useState } from "react";
 import puzzleImage from "../assets/puzzle.jpg";
 
 export default function RoomThree({ onComplete }) {
-  const size = 3;
-  const tileSize = 135; // slightly larger
+  const size = 3; // 🔥 Changed to 3x3
+  const tileSize = 160; // Larger tiles for better look
   const total = size * size;
 
   const solved = [...Array(total - 1).keys()]
     .map(i => i + 1)
     .concat(null);
 
-  // 🧠 Fair scramble (always solvable)
+  // 🧠 Fair scramble (always solvable, easier)
   const shuffleSolvable = () => {
     let arr = [...solved];
     let emptyIndex = arr.indexOf(null);
 
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < 15; i++) { // fewer moves = easier
       const possibleMoves = [];
 
       const row = Math.floor(emptyIndex / size);
@@ -95,7 +95,6 @@ export default function RoomThree({ onComplete }) {
       <h2>🧩 Complete the Picture</h2>
       <p>Moves: {moves}</p>
 
-      {/* ✨ Magic Button */}
       {magicAvailable && !magicMode && !completed && (
         <button
           onClick={() => setMagicMode(true)}
@@ -105,7 +104,6 @@ export default function RoomThree({ onComplete }) {
         </button>
       )}
 
-      {/* 🧩 GRID */}
       {!completed && (
         <div
           style={{
@@ -163,7 +161,7 @@ export default function RoomThree({ onComplete }) {
                   backgroundSize: `${size * tileSize}px ${size * tileSize}px`,
                   backgroundPosition: `-${col * tileSize}px -${row * tileSize}px`,
                   backgroundRepeat: "no-repeat",
-                  borderRadius: "10px",
+                  borderRadius: "12px",
                   cursor: magicMode
                     ? "grab"
                     : canMove(index)
@@ -171,7 +169,7 @@ export default function RoomThree({ onComplete }) {
                     : "default",
                   transition: "all 0.3s ease",
                   boxShadow: correct
-                    ? "0 0 20px hotpink"
+                    ? "0 0 25px hotpink"
                     : "none",
                 }}
               />
@@ -180,7 +178,6 @@ export default function RoomThree({ onComplete }) {
         </div>
       )}
 
-      {/* 🎉 FINAL REVEAL (GRID COMPLETELY GONE) */}
       {completed && (
         <div style={styles.revealWrapper}>
           <img
@@ -198,7 +195,7 @@ export default function RoomThree({ onComplete }) {
 function Confetti() {
   return (
     <div style={styles.confettiContainer}>
-      {[...Array(50)].map((_, i) => (
+      {[...Array(40)].map((_, i) => (
         <div
           key={i}
           style={{
@@ -227,9 +224,9 @@ const styles = {
   },
   grid: {
     display: "grid",
-    gridTemplateColumns: "repeat(4, 130px)",
-    gridTemplateRows: "repeat(4, 130px)",
-    gap: "6px",
+    gridTemplateColumns: "repeat(3, 160px)",
+    gridTemplateRows: "repeat(3, 160px)",
+    gap: "8px",
     marginTop: "20px",
   },
   magicButton: {
@@ -237,21 +234,20 @@ const styles = {
     padding: "10px 16px",
     background: "hotpink",
     border: "none",
-    borderRadius: "10px",
+    borderRadius: "12px",
     cursor: "pointer",
     color: "white",
     fontWeight: "bold",
-    transition: "all 0.3s ease",
   },
   revealWrapper: {
     position: "relative",
     marginTop: "20px",
   },
   finalImage: {
-    width: 4 * 130,
-    height: 4 * 130,
+    width: 3 * 160,
+    height: 3 * 160,
     objectFit: "cover",
-    borderRadius: "15px",
+    borderRadius: "18px",
     animation: "fadeIn 1s ease",
   },
   confettiContainer: {
