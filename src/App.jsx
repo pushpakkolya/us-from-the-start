@@ -10,18 +10,33 @@ function App() {
   const [displayRoom, setDisplayRoom] = useState(0);
   const [fade, setFade] = useState(true);
 
+  // Fade transition logic
   useEffect(() => {
     if (room !== displayRoom) {
-      setFade(false); // fade out
+      setFade(false);
 
       const timer = setTimeout(() => {
-        setDisplayRoom(room); // switch room
-        setFade(true); // fade in
-      }, 500); // must match transition time
+        setDisplayRoom(room);
+        setFade(true);
+      }, 500);
 
       return () => clearTimeout(timer);
     }
   }, [room, displayRoom]);
+
+  // 🔐 Cheat code (press 0–4 to jump rooms)
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "0") setRoom(0);
+      if (e.key === "1") setRoom(1);
+      if (e.key === "2") setRoom(2);
+      if (e.key === "3") setRoom(3);
+      if (e.key === "4") setRoom(4);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   return (
     <div
@@ -47,7 +62,7 @@ function App() {
       )}
 
       {displayRoom === 4 && (
-        <RoomThree onComplete={() => setRoom(5)} />
+        <RoomFour onComplete={() => setRoom(5)} />
       )}
     </div>
   );
