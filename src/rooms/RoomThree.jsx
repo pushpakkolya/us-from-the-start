@@ -10,6 +10,7 @@ export default function RoomThree({ onComplete }) {
     .map(i => i + 1)
     .concat(null);
 
+  // 🧠 Fair shuffle (balanced difficulty)
   const shuffleSolvable = () => {
     let arr = [...solved];
     let emptyIndex = arr.indexOf(null);
@@ -67,19 +68,17 @@ export default function RoomThree({ onComplete }) {
     setMoves(m => m + 1);
   };
 
+  // 🔓 Unlock magic every 50 moves
   useEffect(() => {
     if (moves > 0 && moves % 50 === 0) {
       setMagicAvailable(true);
     }
   }, [moves]);
 
+  // 🏁 Detect completion
   useEffect(() => {
     if (JSON.stringify(tiles) === JSON.stringify(solved)) {
       setCompleted(true);
-
-      setTimeout(() => {
-        if (onComplete) onComplete();
-      }, 5000);
     }
   }, [tiles]);
 
@@ -185,6 +184,13 @@ export default function RoomThree({ onComplete }) {
           <h1 style={styles.overlayText}>You Did It 💖</h1>
           <SparkleBurst />
           <Confetti />
+
+          <button
+            onClick={onComplete}
+            style={styles.continueButton}
+          >
+            Continue ➜
+          </button>
         </div>
       )}
     </div>
@@ -204,7 +210,15 @@ function SparkleBurst() {
         {`
           @keyframes sparkle {
             0% { transform: scale(0); opacity: 1; }
-            100% { transform: scale(3); opacity: 0; }
+            100% { transform: scale(4); opacity: 0; }
+          }
+          @keyframes zoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.08); }
+          }
+          @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
           }
         `}
       </style>
@@ -216,34 +230,24 @@ function SparkleBurst() {
 /* 🎉 Confetti */
 function Confetti() {
   return (
-    <>
-      <style>
-        {`
-          @keyframes fall {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-          }
-        `}
-      </style>
-      <div style={styles.confettiContainer}>
-        {[...Array(60)].map((_, i) => (
-          <div
-            key={i}
-            style={{
-              position: "absolute",
-              width: "8px",
-              height: "14px",
-              background: i % 2 === 0 ? "hotpink" : "#ffd1dc",
-              left: Math.random() * 100 + "%",
-              top: "-20px",
-              animation: "fall 3s linear infinite",
-              animationDelay: Math.random() * 2 + "s",
-              borderRadius: "4px",
-            }}
-          />
-        ))}
-      </div>
-    </>
+    <div style={styles.confettiContainer}>
+      {[...Array(60)].map((_, i) => (
+        <div
+          key={i}
+          style={{
+            position: "absolute",
+            width: "8px",
+            height: "14px",
+            background: i % 2 === 0 ? "hotpink" : "#ffd1dc",
+            left: Math.random() * 100 + "%",
+            top: "-20px",
+            animation: "fall 3s linear infinite",
+            animationDelay: Math.random() * 2 + "s",
+            borderRadius: "4px",
+          }}
+        />
+      ))}
+    </div>
   );
 }
 
@@ -281,9 +285,8 @@ const styles = {
     position: "relative",
     marginTop: "20px",
     display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
     flexDirection: "column",
+    alignItems: "center",
   },
   finalImage: {
     width: 420,
@@ -293,19 +296,29 @@ const styles = {
     animation: "zoom 6s ease forwards",
   },
   overlayText: {
-    position: "absolute",
-    bottom: "-50px",
+    marginTop: "20px",
     fontSize: "28px",
     fontWeight: "bold",
-    color: "white",
-    textShadow: "0 0 10px hotpink",
+    textShadow: "0 0 15px hotpink",
+  },
+  continueButton: {
+    marginTop: "30px",
+    padding: "12px 28px",
+    background: "white",
+    color: "#b30059",
+    border: "none",
+    borderRadius: "25px",
+    fontWeight: "bold",
+    fontSize: "16px",
+    cursor: "pointer",
+    boxShadow: "0 0 20px rgba(255,105,180,0.6)",
   },
   glowAura: {
     position: "absolute",
     width: 460,
     height: 460,
     background: "radial-gradient(circle, hotpink 0%, transparent 70%)",
-    filter: "blur(40px)",
+    filter: "blur(50px)",
     zIndex: -1,
   },
   sparkle: {
