@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import puzzleImage from "../assets/puzzle.jpg";
 
 export default function RoomThree({ onComplete }) {
-  const size = 4;
+  const size = 3;
   const tileSize = 120; // bigger tiles
   const total = size * size;
 
