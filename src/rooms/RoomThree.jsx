@@ -2,44 +2,48 @@ import { useEffect, useState } from "react";
 import puzzleImage from "../assets/puzzle.jpg";
 
 export default function RoomThree({ onComplete }) {
-  const size = 3;
-  const tileSize = 120; // bigger tiles
+  const size = 4;
+  const tileSize = 130; // slightly larger
   const total = size * size;
 
   const solved = [...Array(total - 1).keys()]
     .map(i => i + 1)
     .concat(null);
 
-  // 🧠 Always solvable shuffle
+  // 🧠 Fair scramble (always solvable)
   const shuffleSolvable = () => {
-    let arr;
-    do {
-      arr = [...solved];
-      for (let i = arr.length - 2; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-    } while (!isSolvable(arr));
+    let arr = [...solved];
+    let emptyIndex = arr.indexOf(null);
+
+    for (let i = 0; i < 25; i++) {
+      const possibleMoves = [];
+
+      const row = Math.floor(emptyIndex / size);
+      const col = emptyIndex % size;
+
+      if (row > 0) possibleMoves.push(emptyIndex - size);
+      if (row < size - 1) possibleMoves.push(emptyIndex + size);
+      if (col > 0) possibleMoves.push(emptyIndex - 1);
+      if (col < size - 1) possibleMoves.push(emptyIndex + 1);
+
+      const moveIndex =
+        possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+
+      [arr[emptyIndex], arr[moveIndex]] =
+        [arr[moveIndex], arr[emptyIndex]];
+
+      emptyIndex = moveIndex;
+    }
+
     return arr;
   };
 
-  const isSolvable = (arr) => {
-    const nums = arr.filter(n => n !== null);
-    let inversions = 0;
-
-    for (let i = 0; i < nums.length; i++) {
-      for (let j = i + 1; j < nums.length; j++) {
-        if (nums[i] > nums[j]) inversions++;
-      }
-    }
-
-    return inversions % 2 === 0;
-  };
-
   const [tiles, setTiles] = useState(shuffleSolvable());
-  const [completed, setCompleted] = useState(false);
   const [moves, setMoves] = useState(0);
-  const [reveal, setReveal] = useState(false);
+  const [completed, setCompleted] = useState(false);
+  const [magicAvailable, setMagicAvailable] = useState(false);
+  const [magicMode, setMagicMode] = useState(false);
+  const [dragIndex, setDragIndex] = useState(null);
 
   const getRowCol = (i) => [
     Math.floor(i / size),
@@ -54,7 +58,7 @@ export default function RoomThree({ onComplete }) {
   };
 
   const moveTile = (i) => {
-    if (!canMove(i) || completed) return;
+    if (!canMove(i) || completed || magicMode) return;
 
     const empty = tiles.indexOf(null);
     const newTiles = [...tiles];
@@ -65,23 +69,25 @@ export default function RoomThree({ onComplete }) {
     setMoves(m => m + 1);
   };
 
+  // 🔓 Unlock magic every 50 moves
+  useEffect(() => {
+    if (moves > 0 && moves % 50 === 0) {
+      setMagicAvailable(true);
+    }
+  }, [moves]);
+
+  // 🏁 Detect completion
   useEffect(() => {
     if (JSON.stringify(tiles) === JSON.stringify(solved)) {
       setCompleted(true);
 
-      // soft snap reveal
-      setTimeout(() => {
-        setReveal(true);
-      }, 400);
-
-      // move to next room
       setTimeout(() => {
         if (onComplete) onComplete();
-      }, 3000);
+      }, 3500);
     }
   }, [tiles]);
 
-  const isCorrectPosition = (tile, index) =>
+  const isCorrect = (tile, index) =>
     tile === solved[index];
 
   return (
@@ -89,83 +95,102 @@ export default function RoomThree({ onComplete }) {
       <h2>🧩 Complete the Picture</h2>
       <p>Moves: {moves}</p>
 
-      <div
-  style={{
-    display: "grid",
-    gridTemplateColumns: `repeat(${size}, ${tileSize}px)`,
-    gridTemplateRows: `repeat(${size}, ${tileSize}px)`,
-    gap: "6px",
-    marginTop: "20px",
-    width: size * tileSize,
-    height: size * tileSize,
-  }}
->
-  {tiles.map((tile, index) => {
-    if (tile === null) {
-      return (
+      {/* ✨ Magic Button */}
+      {magicAvailable && !magicMode && !completed && (
+        <button
+          onClick={() => setMagicMode(true)}
+          style={styles.magicButton}
+        >
+          ✨ Magic Swap Available
+        </button>
+      )}
+
+      {/* 🧩 GRID */}
+      {!completed && (
         <div
-          key={index}
           style={{
-            width: tileSize,
-            height: tileSize,
+            ...styles.grid,
+            width: size * tileSize,
+            height: size * tileSize,
           }}
-        />
-      );
-    }
+        >
+          {tiles.map((tile, index) => {
+            if (tile === null) {
+              return (
+                <div
+                  key={index}
+                  style={{
+                    width: tileSize,
+                    height: tileSize,
+                  }}
+                />
+              );
+            }
 
-    const correctIndex = tile - 1;
-    const row = Math.floor(correctIndex / size);
-    const col = correctIndex % size;
+            const correctIndex = tile - 1;
+            const row = Math.floor(correctIndex / size);
+            const col = correctIndex % size;
 
-    const correct = tile === solved[index];
+            const correct = isCorrect(tile, index);
 
-    return (
-      <div
-        key={index}
-        onClick={() => moveTile(index)}
-        style={{
-          width: tileSize,
-          height: tileSize,
+            return (
+              <div
+                key={index}
+                draggable={magicMode}
+                onDragStart={() =>
+                  magicMode && setDragIndex(index)
+                }
+                onDragOver={(e) =>
+                  magicMode && e.preventDefault()
+                }
+                onDrop={() => {
+                  if (!magicMode || dragIndex === null) return;
 
-          /* THIS is the important part */
-          backgroundImage: `url(${puzzleImage})`,
-          backgroundSize: `${size * tileSize}px ${size * tileSize}px`,
-          backgroundPosition: `-${col * tileSize}px -${row * tileSize}px`,
-          backgroundRepeat: "no-repeat",
+                  const newTiles = [...tiles];
+                  [newTiles[dragIndex], newTiles[index]] =
+                    [newTiles[index], newTiles[dragIndex]];
 
-          borderRadius: "8px",
-          cursor: canMove(index) ? "pointer" : "default",
-          transition: "all 0.3s ease",
-
-          boxShadow: correct
-            ? "0 0 15px rgba(255,182,193,0.8)"
-            : "none",
-        }}
-      />
-    );
-  })}
-</div>
-
-
-      {/* 🌫 Full image reveal */}
-      {reveal && (
-        <div style={styles.revealOverlay}>
-          <img
-            src={puzzleImage}
-            alt="Complete"
-            style={{
-              width: size * tileSize,
-              height: size * tileSize,
-              objectFit: "cover",
-              borderRadius: "12px",
-              animation: "snap 0.6s ease",
-            }}
-          />
+                  setTiles(newTiles);
+                  setMagicMode(false);
+                  setMagicAvailable(false);
+                  setDragIndex(null);
+                }}
+                onClick={() => moveTile(index)}
+                style={{
+                  width: tileSize,
+                  height: tileSize,
+                  backgroundImage: `url(${puzzleImage})`,
+                  backgroundSize: `${size * tileSize}px ${size * tileSize}px`,
+                  backgroundPosition: `-${col * tileSize}px -${row * tileSize}px`,
+                  backgroundRepeat: "no-repeat",
+                  borderRadius: "10px",
+                  cursor: magicMode
+                    ? "grab"
+                    : canMove(index)
+                    ? "pointer"
+                    : "default",
+                  transition: "all 0.3s ease",
+                  boxShadow: correct
+                    ? "0 0 20px hotpink"
+                    : "none",
+                }}
+              />
+            );
+          })}
         </div>
       )}
 
-      {/* 🎉 Confetti */}
-      {completed && <Confetti />}
+      {/* 🎉 FINAL REVEAL (GRID COMPLETELY GONE) */}
+      {completed && (
+        <div style={styles.revealWrapper}>
+          <img
+            src={puzzleImage}
+            alt="Completed"
+            style={styles.finalImage}
+          />
+          <Confetti />
+        </div>
+      )}
     </div>
   );
 }
@@ -173,7 +198,7 @@ export default function RoomThree({ onComplete }) {
 function Confetti() {
   return (
     <div style={styles.confettiContainer}>
-      {[...Array(40)].map((_, i) => (
+      {[...Array(50)].map((_, i) => (
         <div
           key={i}
           style={{
@@ -195,21 +220,38 @@ const styles = {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    color: "#fff",
+    color: "white",
     fontFamily: "sans-serif",
     textAlign: "center",
-    position: "relative",
     overflow: "hidden",
   },
   grid: {
     display: "grid",
-    gridTemplateColumns: "repeat(4, 120px)",
-    gridTemplateRows: "repeat(4, 120px)",
+    gridTemplateColumns: "repeat(4, 130px)",
+    gridTemplateRows: "repeat(4, 130px)",
     gap: "6px",
     marginTop: "20px",
   },
-  revealOverlay: {
-    position: "absolute",
+  magicButton: {
+    marginTop: "10px",
+    padding: "10px 16px",
+    background: "hotpink",
+    border: "none",
+    borderRadius: "10px",
+    cursor: "pointer",
+    color: "white",
+    fontWeight: "bold",
+    transition: "all 0.3s ease",
+  },
+  revealWrapper: {
+    position: "relative",
+    marginTop: "20px",
+  },
+  finalImage: {
+    width: 4 * 130,
+    height: 4 * 130,
+    objectFit: "cover",
+    borderRadius: "15px",
     animation: "fadeIn 1s ease",
   },
   confettiContainer: {
@@ -217,12 +259,13 @@ const styles = {
     width: "100%",
     height: "100%",
     pointerEvents: "none",
+    top: 0,
   },
   confetti: {
     position: "absolute",
     width: "8px",
-    height: "12px",
-    background: "pink",
+    height: "14px",
+    background: "hotpink",
     top: "-20px",
     animation: "fall 3s linear infinite",
   },
