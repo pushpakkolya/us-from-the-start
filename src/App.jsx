@@ -3,6 +3,7 @@ import Landing from "./rooms/Landing";
 import RoomOne from "./rooms/RoomOne";
 import RoomTwo from "./rooms/RoomTwo";
 import RoomThree from "./rooms/RoomThree";
+import RoomFour from "./rooms/RoomFour";
 
 function App() {
   const [room, setRoom] = useState(0);
@@ -43,6 +44,10 @@ function App() {
 
       {displayRoom === 3 && (
         <RoomThree onComplete={() => setRoom(4)} />
+      )}
+
+      {displayRoom === 4 && (
+        <RoomThree onComplete={() => setRoom(5)} />
       )}
     </div>
   );
