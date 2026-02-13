@@ -98,45 +98,46 @@ export default function RoomThree({ onComplete }) {
           transition: "opacity 1.2s ease",
         }}
       >
-        {tiles.map((tile, index) => {
-          if (tile === null) {
-            return (
-              <div
-                key={index}
-                style={{
-                  width: tileSize,
-                  height: tileSize,
-                }}
-              />
-            );
-          }
+{tiles.map((tile, index) => {
+  if (tile === null) {
+    return (
+      <div
+        key={index}
+        style={{
+          width: tileSize,
+          height: tileSize,
+        }}
+      />
+    );
+  }
 
-          const correctIndex = tile - 1;
-          const x = correctIndex % size;
-          const y = Math.floor(correctIndex / size);
+  const correctIndex = tile - 1;
+  const x = correctIndex % size;
+  const y = Math.floor(correctIndex / size);
+  const correct = tile === solved[index];
 
-          const correct = isCorrectPosition(tile, index);
+  return (
+    <div
+      key={index}
+      onClick={() => moveTile(index)}
+      style={{
+        width: tileSize,
+        height: tileSize,
+        backgroundImage: `url(${puzzleImage})`,
+        backgroundSize: `${size * tileSize}px ${size * tileSize}px`,
+        backgroundPosition: `-${x * tileSize}px -${y * tileSize}px`,
+        backgroundRepeat: "no-repeat",
+        cursor: canMove(index) ? "pointer" : "default",
+        borderRadius: "8px",
+        transition: "all 0.3s ease",
+        boxShadow: correct
+          ? "0 0 15px rgba(255, 182, 193, 0.7)"
+          : "none",
+      }}
+    />
+  );
+})}
 
-          return (
-            <div
-              key={index}
-              onClick={() => moveTile(index)}
-              style={{
-                width: tileSize,
-                height: tileSize,
-                backgroundImage: `url(${puzzleImage})`,
-                backgroundSize: "cover", // auto square crop
-                backgroundPosition: `${(x / (size - 1)) * 100}% ${(y / (size - 1)) * 100}%`,
-                cursor: canMove(index) ? "pointer" : "default",
-                borderRadius: "8px",
-                transition: "all 0.3s ease",
-                boxShadow: correct
-                  ? "0 0 15px rgba(255, 182, 193, 0.7)"
-                  : "none",
-              }}
-            />
-          );
-        })}
       </div>
 
       {/* 🌫 Full image reveal */}
