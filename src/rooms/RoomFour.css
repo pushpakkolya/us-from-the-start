@@ -1,98 +1,164 @@
 .room-four {
   display: flex;
   height: 100vh;
-  background: linear-gradient(#87ceeb, #bde0fe);
-  font-family: monospace;
+  background: linear-gradient(#5c94fc 60%, #c68642 60%);
+  font-family: "Courier New", monospace;
 }
 
 .game-area {
   flex: 1;
   position: relative;
   overflow: hidden;
+  transition: transform 2s ease;
 }
 
-.platform {
+.game-area.pan {
+  transform: translateX(-150px);
+}
+
+/* Clouds */
+.cloud {
+  width: 60px;
+  height: 30px;
+  background: white;
+  border-radius: 20px;
+  position: absolute;
+  top: 60px;
+  animation: float 20s linear infinite;
+}
+.cloud1 { left: -100px; }
+.cloud2 { top: 120px; animation-delay: 10s; }
+
+@keyframes float {
+  from { transform: translateX(0); }
+  to { transform: translateX(120vw); }
+}
+
+/* Ground */
+.ground {
   position: absolute;
   bottom: 0;
   width: 100%;
   height: 80px;
-  background: repeating-linear-gradient(
-    45deg,
-    #8b4513,
-    #8b4513 10px,
-    #a0522d 10px,
-    #a0522d 20px
-  );
+  background: #8b4513;
 }
 
+/* Mario */
 .mario {
-  position: absolute;
-  bottom: 80px;
   width: 40px;
   height: 40px;
   background: red;
-  box-shadow:
-    10px 0 blue,
-    0 10px peachpuff,
-    10px 10px peachpuff;
-  transition: left 0.8s ease;
-}
-
-.princess {
   position: absolute;
   bottom: 80px;
-  right: 20px;
+  left: 50px;
+  box-shadow:
+    10px 0 blue,
+    0 10px red,
+    10px 10px blue;
+}
+
+.mario.jump {
+  animation: jump 0.4s ease;
+}
+
+@keyframes jump {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-60px); }
+  100% { transform: translateY(0); }
+}
+
+/* Princess */
+.princess {
   width: 40px;
   height: 40px;
   background: pink;
-  box-shadow:
-    10px 0 yellow,
-    0 10px peachpuff,
-    10px 10px peachpuff;
-}
-
-.final-message {
   position: absolute;
-  top: 30%;
-  left: 20%;
-  font-size: 28px;
-  color: #ff1493;
-  animation: fadeIn 2s ease forwards;
+  bottom: 80px;
+  right: 120px;
+  box-shadow:
+    10px 0 gold,
+    0 10px pink;
 }
 
-.riddle-panel {
-  width: 40%;
+/* Castle */
+.castle {
+  position: absolute;
+  bottom: 80px;
+  right: 0;
+  width: 120px;
+  height: 120px;
+  background: #b22222;
+  box-shadow:
+    20px -20px #8b0000;
+}
+
+/* Coins */
+.coin {
+  width: 20px;
+  height: 20px;
+  background: gold;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 150px;
+  left: 100px;
+  animation: pop 1s ease forwards;
+}
+
+@keyframes pop {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-80px); opacity: 0; }
+}
+
+/* Heart burst */
+.heart-burst {
+  position: absolute;
+  bottom: 140px;
+  right: 140px;
+  font-size: 30px;
+  animation: heart 1s ease infinite alternate;
+}
+
+.heart-burst::before {
+  content: "💖";
+}
+
+@keyframes heart {
+  from { transform: scale(1); }
+  to { transform: scale(1.4); }
+}
+
+/* Final text */
+.final-text {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: 22px;
+  color: white;
+  text-shadow: 2px 2px black;
+}
+
+/* Riddle area */
+.riddle-area {
+  flex: 1;
+  background: #fff8dc;
   padding: 40px;
-  background: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.riddle-panel input {
+.riddle-area input {
   padding: 10px;
-  margin-top: 15px;
+  font-size: 16px;
+  margin-top: 10px;
 }
 
-.riddle-panel button {
+.riddle-area button {
   margin-top: 10px;
   padding: 10px;
+  background: #ff6347;
+  border: none;
+  color: white;
   cursor: pointer;
-}
-
-.dev-console {
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-  background: black;
-  padding: 10px;
-}
-
-.dev-console input {
-  padding: 5px;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
 }
