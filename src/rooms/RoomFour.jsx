@@ -26,9 +26,10 @@ export default function RoomFour() {
   const [answer, setAnswer] = useState("");
   const [correctCount, setCorrectCount] = useState(0);
   const [kissScene, setKissScene] = useState(false);
+  const [celebration, setCelebration] = useState(false);
   const [birthdayReveal, setBirthdayReveal] = useState(false);
 
-  const TOTAL_DISTANCE = 700;
+  const TOTAL_DISTANCE = 1050;
   const STEP_DISTANCE = TOTAL_DISTANCE / 5;
 
   const handleSubmit = () => {
@@ -42,13 +43,9 @@ export default function RoomFour() {
       }
 
       if (newCount === 5) {
-        setTimeout(() => {
-          setKissScene(true);
-        }, 900);
-
-        setTimeout(() => {
-          setBirthdayReveal(true);
-        }, 3000);
+        setTimeout(() => setKissScene(true), 800);
+        setTimeout(() => setCelebration(true), 1200);
+        setTimeout(() => setBirthdayReveal(true), 4500);
       }
     }
   };
@@ -59,29 +56,36 @@ export default function RoomFour() {
 
         <img src={cloudImg} className="cloud cloud1" alt="" />
         <img src={cloudImg} className="cloud cloud2" alt="" />
-
         <img src={castleImg} className="castle" alt="" />
 
         <img
           src={princessImg}
           alt=""
-          className={`princess 
-            ${correctCount === 5 ? "princess-final" : ""} 
-            ${kissScene ? "kiss" : ""}`}
+          className={`princess ${correctCount === 5 ? "princess-final" : ""} ${kissScene ? "kiss" : ""}`}
         />
 
         <img
           src={marioImg}
           alt=""
-          className={`mario 
-            ${correctCount === 5 ? "mario-final" : ""} 
-            ${kissScene ? "kiss" : ""}`}
+          className={`mario ${correctCount === 5 ? "mario-final" : ""} ${kissScene ? "kiss" : ""}`}
           style={
             correctCount < 5
               ? { transform: `translateX(${correctCount * STEP_DISTANCE}px)` }
               : {}
           }
         />
+
+        {kissScene && (
+          <div className="center-heart">💖</div>
+        )}
+
+        {celebration && (
+          <div className="fireworks">
+            <div className="firework fw1"></div>
+            <div className="firework fw2"></div>
+            <div className="firework fw3"></div>
+          </div>
+        )}
 
       </div>
 
@@ -94,12 +98,6 @@ export default function RoomFour() {
             placeholder="Your answer..."
           />
           <button onClick={handleSubmit}>Submit</button>
-        </div>
-      )}
-
-      {kissScene && (
-        <div className="kiss-overlay">
-          <div className="heart-burst">💖</div>
         </div>
       )}
 
