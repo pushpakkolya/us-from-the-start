@@ -1,10 +1,14 @@
+/* ============================= */
+/* MAIN ROOM BACKGROUND SKY      */
+/* ============================= */
+
 .room-four {
   position: relative;
   width: 100%;
   height: 100vh;
   overflow: hidden;
 
-  /* Soft romantic retro sky */
+  /* Dreamy romantic retro sky */
   background: linear-gradient(
     to top,
     #ff9a9e 0%,
@@ -22,11 +26,15 @@
   height: 70vh;
 }
 
-/* Clouds */
+/* ============================= */
+/* CLOUDS                        */
+/* ============================= */
+
 .cloud {
   position: absolute;
   width: 120px;
   image-rendering: pixelated;
+  opacity: 0.9;
 }
 
 .cloud1 {
@@ -39,7 +47,10 @@
   right: 15%;
 }
 
-/* Castle */
+/* ============================= */
+/* CASTLE                        */
+/* ============================= */
+
 .castle {
   position: absolute;
   bottom: 70px;
@@ -48,7 +59,10 @@
   image-rendering: pixelated;
 }
 
-/* Princess */
+/* ============================= */
+/* PRINCESS                      */
+/* ============================= */
+
 .princess {
   position: absolute;
   bottom: 70px;
@@ -58,7 +72,10 @@
   z-index: 2;
 }
 
-/* Mario */
+/* ============================= */
+/* MARIO                         */
+/* ============================= */
+
 .mario {
   position: absolute;
   bottom: 70px;
@@ -69,10 +86,13 @@
   z-index: 3;
 }
 
-/* Final locked positions */
+/* ============================= */
+/* FINAL LOCKED POSITIONS        */
+/* ============================= */
+
 .mario-final {
   left: auto;
-  right: 210px; /* adjust if needed */
+  right: 210px;   /* adjust slightly if needed */
   transform: none;
 }
 
@@ -80,7 +100,10 @@
   right: 140px;
 }
 
-/* Kiss bounce */
+/* ============================= */
+/* KISS BOUNCE                   */
+/* ============================= */
+
 .kiss {
   animation: kissBounce 0.5s ease 3;
 }
@@ -91,29 +114,78 @@
   100% { transform: translateY(0); }
 }
 
-/* Heart */
-.kiss-overlay {
+/* ============================= */
+/* CENTER HEART MAGIC            */
+/* ============================= */
+
+.center-heart {
+  position: absolute;
+  bottom: 150px;
+  right: 190px; /* adjust slightly if needed */
+  font-size: 55px;
+  animation: heartFloat 1.2s ease forwards;
+  z-index: 4;
+}
+
+@keyframes heartFloat {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.2);
+  }
+}
+
+/* ============================= */
+/* FIREWORKS                     */
+/* ============================= */
+
+.fireworks {
   position: absolute;
   inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   pointer-events: none;
-  z-index: 5;
 }
 
-.heart-burst {
-  font-size: 70px;
-  animation: heartPop 0.8s ease forwards;
+.firework {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: gold;
+  border-radius: 50%;
+  animation: explode 1.2s ease infinite;
+  box-shadow:
+    0 0 10px yellow,
+    0 0 20px orange,
+    0 0 30px pink;
 }
 
-@keyframes heartPop {
-  0% { transform: scale(0); opacity: 0; }
-  70% { transform: scale(1.6); opacity: 1; }
-  100% { transform: scale(1); }
+.fw1 { top: 30%; left: 40%; }
+.fw2 { top: 20%; left: 65%; animation-delay: 0.4s; }
+.fw3 { top: 35%; left: 75%; animation-delay: 0.8s; }
+
+@keyframes explode {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(6);
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
-/* Riddle Box */
+/* ============================= */
+/* RIDDLE BOX                    */
+/* ============================= */
+
 .riddle-box {
   position: absolute;
   bottom: 0;
@@ -125,6 +197,13 @@
   justify-content: center;
   align-items: center;
   color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.riddle-box h3 {
+  font-size: 12px;
+  margin-bottom: 15px;
 }
 
 .riddle-box input {
@@ -132,6 +211,7 @@
   margin: 10px 0;
   font-family: "Press Start 2P", cursive;
   font-size: 10px;
+  width: 260px;
 }
 
 .riddle-box button {
@@ -141,31 +221,68 @@
   border: none;
   cursor: pointer;
   font-family: "Press Start 2P", cursive;
+  transition: transform 0.2s ease;
 }
 
-/* Birthday Screen */
+.riddle-box button:hover {
+  transform: scale(1.1);
+}
+
+/* ============================= */
+/* FINAL BIRTHDAY SCREEN         */
+/* ============================= */
+
 .birthday-screen {
   position: fixed;
   inset: 0;
-  background: linear-gradient(to top, #0d1b2a, #1b263b);
+
+  /* Pink magical gradient you loved */
+  background: linear-gradient(
+    to top,
+    #ff758c 0%,
+    #ff7eb3 40%,
+    #ffb199 70%,
+    #ffd6e0 100%
+  );
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   color: white;
   text-align: center;
-  animation: fadeIn 1.5s ease forwards;
+  animation: fadeIn 2s ease forwards;
   z-index: 9999;
 }
 
 .birthday-screen h1 {
-  font-size: 28px;
-  margin-bottom: 20px;
+  font-size: 30px;
+  margin-bottom: 25px;
+  animation: glowMagic 2s infinite alternate;
+}
+
+.birthday-screen p {
+  font-size: 12px;
+  margin: 8px 0;
 }
 
 .subtext {
   margin-top: 20px;
-  font-size: 12px;
+  font-size: 11px;
+  opacity: 0.95;
+}
+
+/* ============================= */
+/* MAGIC GLOW + FADE             */
+/* ============================= */
+
+@keyframes glowMagic {
+  from {
+    text-shadow: 0 0 8px white;
+  }
+  to {
+    text-shadow: 0 0 30px #fff0f5;
+  }
 }
 
 @keyframes fadeIn {
