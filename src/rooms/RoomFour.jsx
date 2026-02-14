@@ -89,9 +89,15 @@ export default function RoomFour() {
         />
 
         <img src={castle} className="castle" alt="" />
-        <img src={princess} className="princess" alt="" />
+<img 
+  src={princess} 
+  className={`princess ${finished ? "bounce" : ""}`} 
+  alt="" 
+/>
 
-        {finished && <div className="heart">💖</div>}
+
+{finished && <div className="heart float">💖</div>}
+
       </div>
 
       {!finished && (
