@@ -50,7 +50,7 @@
 
 .cloud {
   position: absolute;
-  width: 70px;              /* Smaller size */
+  width: 80px;              /* Smaller size */
   opacity: 0.9;
   image-rendering: pixelated;
   animation: moveClouds 40s linear infinite;
