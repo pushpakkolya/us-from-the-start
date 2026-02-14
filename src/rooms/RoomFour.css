@@ -14,10 +14,12 @@
 
 .mario {
   position: absolute;
-  bottom: 80px;      /* 👈 SAME LEVEL AS PRINCESS */
-  width: 56px;      /* Slightly bigger Mario */
+  bottom: 80px;
+  left: 0;
+  width: 56px;
   image-rendering: pixelated;
 }
+
 
 .princess {
   position: absolute;
