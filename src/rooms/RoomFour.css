@@ -14,24 +14,28 @@
 
 .mario {
   position: absolute;
-  bottom: 80px;
-  width: 48px;
+  bottom: 80px;      /* 👈 SAME LEVEL AS PRINCESS */
+  width: 56px;      /* Slightly bigger Mario */
   transition: left 0.4s ease;
+  image-rendering: pixelated;
+}
+
+.princess {
+  position: absolute;
+  bottom: 80px;      /* 👈 SAME LEVEL */
+  right: 200px;
+  width: 52px;       /* Slightly balanced size */
+  image-rendering: pixelated;
 }
 
 .castle {
   position: absolute;
   bottom: 80px;
-  right: 120px;
-  width: 120px;
+  right: 100px;
+  width: 180px;      /* 👑 Bigger castle */
+  image-rendering: pixelated;
 }
 
-.princess {
-  position: absolute;
-  bottom: 80px;
-  right: 200px;
-  width: 48px;
-}
 
 .riddle-box {
   height: 180px;
