@@ -5,9 +5,19 @@
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  background: linear-gradient(to top, #5c94fc 0%, #a6d6ff 100%);
+
+  /* Dreamy retro Mario sky */
+  background: linear-gradient(
+    to top,
+    #ff9a9e 0%,      /* soft pink */
+    #fad0c4 25%,     /* peach */
+    #a1c4fd 60%,     /* soft blue */
+    #c2e9fb 100%     /* light sky */
+  );
+
   font-family: "Press Start 2P", cursive;
 }
+
 
 
 /* ===== GAME WORLD ===== */
