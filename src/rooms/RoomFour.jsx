@@ -18,18 +18,18 @@ const riddles = [
 export default function RoomFour() {
   const [index, setIndex] = useState(0);
   const [input, setInput] = useState("");
-  const [x, setX] = useState(50);
-  const [yOffset, setYOffset] = useState(0);
+  const [x, setX] = useState(0);
+  const [y, setY] = useState(0);
   const [jumping, setJumping] = useState(false);
   const [finished, setFinished] = useState(false);
 
   const STEP = 120;
 
-  const performJump = (height = 80) => {
-    const duration = 600;
+  const performJump = (height = 100) => {
+    const duration = 700;
+    const start = performance.now();
     const startX = x;
     const endX = x + STEP;
-    const start = performance.now();
 
     setJumping(true);
 
@@ -38,19 +38,18 @@ export default function RoomFour() {
       const t = elapsed / duration;
 
       if (t < 1) {
-        // Horizontal interpolation
-        const newX = startX + (endX - startX) * t;
+        const progressX = startX + (endX - startX) * t;
 
-        // Parabolic formula
-        const y = -4 * height * (t - 0.5) * (t - 0.5) + height;
+        // REAL PARABOLA
+        const progressY = -4 * height * (t - 0.5) * (t - 0.5) + height;
 
-        setX(newX);
-        setYOffset(y);
+        setX(progressX);
+        setY(progressY);
 
         requestAnimationFrame(animate);
       } else {
         setX(endX);
-        setYOffset(0);
+        setY(0);
         setJumping(false);
       }
     }
@@ -66,8 +65,7 @@ export default function RoomFour() {
         setIndex(i => i + 1);
         setInput("");
       } else {
-        // Final jump bigger
-        performJump(120);
+        performJump(140); // bigger final jump
         setFinished(true);
       }
     }
@@ -85,8 +83,7 @@ export default function RoomFour() {
           src={jumping ? marioJump : marioStand}
           className="mario"
           style={{
-            left: x,
-            bottom: 80 + yOffset
+            transform: `translate(${50 + x}px, ${-y}px)`
           }}
           alt="mario"
         />
