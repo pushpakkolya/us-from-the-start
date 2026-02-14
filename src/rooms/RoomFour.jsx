@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./RoomFour.css";
 
 import marioStand from "../assets/mario/mario-stand.png";
+import marioJump from "../assets/mario/mario-jump.png";
 import princess from "../assets/mario/princess.png";
 import castle from "../assets/mario/castle.png";
 import cloud from "../assets/mario/cloud.png";
@@ -17,19 +18,56 @@ const riddles = [
 export default function RoomFour() {
   const [index, setIndex] = useState(0);
   const [input, setInput] = useState("");
-  const [progress, setProgress] = useState(0);
+  const [x, setX] = useState(50);
+  const [yOffset, setYOffset] = useState(0);
+  const [jumping, setJumping] = useState(false);
   const [finished, setFinished] = useState(false);
 
-  const STEP = 100;
+  const STEP = 120;
+
+  const performJump = (height = 80) => {
+    const duration = 600;
+    const startX = x;
+    const endX = x + STEP;
+    const start = performance.now();
+
+    setJumping(true);
+
+    function animate(time) {
+      const elapsed = time - start;
+      const t = elapsed / duration;
+
+      if (t < 1) {
+        // Horizontal interpolation
+        const newX = startX + (endX - startX) * t;
+
+        // Parabolic formula
+        const y = -4 * height * (t - 0.5) * (t - 0.5) + height;
+
+        setX(newX);
+        setYOffset(y);
+
+        requestAnimationFrame(animate);
+      } else {
+        setX(endX);
+        setYOffset(0);
+        setJumping(false);
+      }
+    }
+
+    requestAnimationFrame(animate);
+  };
 
   const handleAnswer = () => {
     if (input.toLowerCase().trim() === riddles[index].a) {
-      setProgress(p => p + STEP);
 
       if (index < riddles.length - 1) {
+        performJump();
         setIndex(i => i + 1);
         setInput("");
       } else {
+        // Final jump bigger
+        performJump(120);
         setFinished(true);
       }
     }
@@ -39,13 +77,17 @@ export default function RoomFour() {
     <div className="room-four">
 
       <div className="world">
+
         <img src={cloud} className="cloud cloud1" alt="" />
         <img src={cloud} className="cloud cloud2" alt="" />
 
         <img
-          src={marioStand}
+          src={jumping ? marioJump : marioStand}
           className="mario"
-          style={{ left: 50 + progress }}
+          style={{
+            left: x,
+            bottom: 80 + yOffset
+          }}
           alt="mario"
         />
 
@@ -59,11 +101,13 @@ export default function RoomFour() {
         <div className="riddle-box">
           <h2>Help Mario reach the Princess 👑</h2>
           <p>{riddles[index].q}</p>
+
           <input
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === "Enter" && handleAnswer()}
           />
+
           <button onClick={handleAnswer}>Answer</button>
         </div>
       )}
