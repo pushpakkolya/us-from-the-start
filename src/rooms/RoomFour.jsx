@@ -29,7 +29,7 @@ export default function RoomFour() {
   const [kissScene, setKissScene] = useState(false);
   const [birthdayReveal, setBirthdayReveal] = useState(false);
 
-  const TOTAL_DISTANCE = 700; // total px mario travels
+  const TOTAL_DISTANCE = 1000; // total px mario travels
   const STEP_DISTANCE = TOTAL_DISTANCE / 5;
 
   const handleSubmit = () => {
