@@ -16,7 +16,6 @@
   position: absolute;
   bottom: 80px;      /* 👈 SAME LEVEL AS PRINCESS */
   width: 56px;      /* Slightly bigger Mario */
-  transition: left 0.4s ease;
   image-rendering: pixelated;
 }
 
