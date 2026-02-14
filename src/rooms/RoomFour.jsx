@@ -14,7 +14,6 @@ const riddlesPool = [
   { q: "What has to be broken before you use it?", a: "egg" },
   { q: "What runs but never walks?", a: "water" },
   { q: "What has one eye but cannot see?", a: "needle" },
-  { q: "What goes up but never comes down?", a: "age" },
 ];
 
 function getRandomRiddles() {
@@ -29,7 +28,7 @@ export default function RoomFour() {
   const [kissScene, setKissScene] = useState(false);
   const [birthdayReveal, setBirthdayReveal] = useState(false);
 
-  const TOTAL_DISTANCE = 1000; // total px mario travels
+  const TOTAL_DISTANCE = 700;
   const STEP_DISTANCE = TOTAL_DISTANCE / 5;
 
   const handleSubmit = () => {
@@ -43,12 +42,10 @@ export default function RoomFour() {
       }
 
       if (newCount === 5) {
-        // trigger kiss after movement animation finishes
         setTimeout(() => {
           setKissScene(true);
         }, 900);
 
-        // birthday reveal
         setTimeout(() => {
           setBirthdayReveal(true);
         }, 3000);
@@ -65,22 +62,27 @@ export default function RoomFour() {
 
         <img src={castleImg} className="castle" alt="" />
 
-        {/* Princess always visible */}
         <img
           src={princessImg}
-          className={`princess ${kissScene ? "kiss" : ""}`}
           alt=""
+          className={`princess 
+            ${correctCount === 5 ? "princess-final" : ""} 
+            ${kissScene ? "kiss" : ""}`}
         />
 
-        {/* Mario */}
         <img
           src={marioImg}
-          className={`mario ${kissScene ? "kiss" : ""}`}
           alt=""
-          style={{
-            transform: `translateX(${correctCount * STEP_DISTANCE}px)`
-          }}
+          className={`mario 
+            ${correctCount === 5 ? "mario-final" : ""} 
+            ${kissScene ? "kiss" : ""}`}
+          style={
+            correctCount < 5
+              ? { transform: `translateX(${correctCount * STEP_DISTANCE}px)` }
+              : {}
+          }
         />
+
       </div>
 
       {correctCount < 5 && (
