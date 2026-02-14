@@ -1,145 +1,113 @@
 .room-four {
+  display: flex;
   height: 100vh;
-  overflow: hidden;
-  background: linear-gradient(#5c94fc, #87ceeb);
-  font-family: "Press Start 2P", cursive;
+  font-family: monospace;
 }
 
-/* GAME WORLD */
-.game-world {
+.world {
+  flex: 1;
   position: relative;
-  height: 60vh;
+  overflow: hidden;
+  background: #5c94fc;
+  transition: transform 2s ease;
+}
+
+.world.pan {
+  transform: translateX(-150px);
 }
 
 /* Clouds */
 .cloud {
   position: absolute;
-  top: 40px;
-  width: 120px;
-  image-rendering: pixelated;
-  animation: cloudMove 25s linear infinite;
+  width: 80px;
+  animation: moveClouds 30s linear infinite;
 }
+.cloud1 { top: 60px; }
+.cloud2 { top: 120px; animation-delay: 10s; }
 
-.cloud1 { left: -150px; }
-.cloud2 { top: 80px; left: -250px; animation-delay: 10s; }
-
-@keyframes cloudMove {
-  from { transform: translateX(0); }
-  to { transform: translateX(120vw); }
-}
-
-/* Castle */
-.castle {
-  position: absolute;
-  bottom: 70px;
-  right: 60px;
-  width: 300px;
-  image-rendering: pixelated;
-  animation: castleEnter 1.2s ease-out forwards;
-  transform: translateY(60px);
-  opacity: 0;
-}
-
-@keyframes castleEnter {
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+@keyframes moveClouds {
+  from { left: -100px; }
+  to { left: 110%; }
 }
 
 /* Mario */
 .mario {
   position: absolute;
-  bottom: 70px;
+  bottom: 80px;
   left: 50px;
-  width: 90px;
+  width: 48px;
   image-rendering: pixelated;
-  transition: transform 0.8s ease;
+  transition: transform 0.4s ease;
 }
 
-.mario-final {
-  animation: jump 0.6s ease infinite alternate;
+.mario.jump {
+  animation: jump 0.4s ease;
 }
 
 @keyframes jump {
-  from { transform: translateY(0); }
-  to { transform: translateY(-20px); }
+  0% { bottom: 80px; }
+  50% { bottom: 150px; }
+  100% { bottom: 80px; }
 }
 
-/* Princess */
+/* Coin */
+.coin {
+  position: absolute;
+  bottom: 140px;
+  width: 32px;
+  animation: pop 1s forwards;
+  image-rendering: pixelated;
+}
+
+@keyframes pop {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-60px); opacity: 0; }
+}
+
+/* Castle & Princess */
+.castle {
+  position: absolute;
+  bottom: 80px;
+  right: 120px;
+  width: 120px;
+  image-rendering: pixelated;
+}
+
 .princess {
   position: absolute;
-  bottom: 70px;
-  right: 140px;
-  width: 80px;
+  bottom: 80px;
+  right: 200px;
+  width: 48px;
   image-rendering: pixelated;
+}
+
+/* Heart */
+.heart {
+  position: absolute;
+  bottom: 150px;
+  right: 220px;
+  font-size: 40px;
+  animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.4); }
 }
 
 /* Riddle Box */
 .riddle-box {
-  background: #fff;
-  padding: 20px;
-  text-align: center;
+  flex: 1;
+  background: #fff8dc;
+  padding: 40px;
 }
 
 .riddle-box input {
-  padding: 10px;
+  padding: 8px;
   margin-top: 10px;
 }
 
 .riddle-box button {
-  margin-left: 10px;
-  padding: 10px 15px;
-}
-
-/* Kiss Overlay */
-.kiss-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  animation: fadeIn 1s ease forwards;
-}
-
-.heart-burst {
-  font-size: 60px;
-  animation: pop 0.8s ease forwards;
-}
-
-@keyframes pop {
-  from { transform: scale(0); opacity: 0; }
-  to { transform: scale(1.4); opacity: 1; }
-}
-
-/* Birthday Screen */
-.birthday-screen {
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle at center, #ff4d6d, #1b263b);
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  animation: fadeIn 1.5s ease forwards;
-  z-index: 9999;
-  text-align: center;
-  padding: 20px;
-}
-
-.birthday-screen h1 {
-  font-size: 26px;
-  margin-bottom: 20px;
-}
-
-.birthday-screen .subtext {
-  margin-top: 20px;
-  font-size: 14px;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  margin-top: 10px;
+  padding: 8px;
 }
