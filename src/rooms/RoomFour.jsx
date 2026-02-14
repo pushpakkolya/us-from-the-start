@@ -1,21 +1,26 @@
 import { useState } from "react";
 import "./RoomFour.css";
 
-import marioImg from "../assets/mario/mario-stand.png";
-import princessImg from "../assets/mario/princess.png";
-import castleImg from "../assets/mario/castle.png";
-import cloudImg from "../assets/mario/cloud.png";
-
 const riddlesPool = [
   { q: "What has hands but can’t clap?", a: "clock" },
+  { q: "What has a face and two hands, but no arms or legs?", a: "clock" },
   { q: "What gets wetter the more it dries?", a: "towel" },
   { q: "What has keys but can't open locks?", a: "piano" },
   { q: "What has a heart that doesn’t beat?", a: "artichoke" },
   { q: "What has to be broken before you use it?", a: "egg" },
   { q: "What has one eye but cannot see?", a: "needle" },
+  { q: "What has legs but doesn’t walk?", a: "table" },
+  { q: "What can travel around the world while staying in a corner?", a: "stamp" },
+  { q: "What has a ring but no finger?", a: "phone" },
+  { q: "What comes once in a minute, twice in a moment?", a: "m" },
+  { q: "What has many teeth but can’t bite?", a: "comb" },
   { q: "What runs but never walks?", a: "water" },
-  { q: "What has a thumb and four fingers but isn’t alive?", a: "glove" },
+  { q: "What has a neck but no head?", a: "bottle" },
+  { q: "What has an eye but can’t see?", a: "needle" },
+  { q: "What has four legs in the morning, two at noon, three at night?", a: "human" },
   { q: "What goes up but never comes down?", a: "age" },
+  { q: "What is always in front of you but can’t be seen?", a: "future" },
+  { q: "What has a thumb and four fingers but isn’t alive?", a: "glove" },
   { q: "What begins with T, ends with T, and has T in it?", a: "teapot" },
 ];
 
@@ -42,12 +47,10 @@ export default function RoomFour() {
       }
 
       if (newCount === 5) {
-        // trigger kiss after Mario finishes moving
         setTimeout(() => {
           setKissScene(true);
         }, 1200);
 
-        // birthday reveal
         setTimeout(() => {
           setBirthdayReveal(true);
         }, 3500);
@@ -62,33 +65,28 @@ export default function RoomFour() {
       <div className="game-world">
 
         {/* Clouds */}
-        <img src={cloudImg} className="cloud cloud1" alt="" />
-        <img src={cloudImg} className="cloud cloud2" alt="" />
+        <img src="/mario/cloud.png" className="cloud cloud1" />
+        <img src="/mario/cloud.png" className="cloud cloud2" />
 
         {/* Castle */}
-        <img src={castleImg} className="castle" alt="" />
+        <img src="/mario/castle.png" className="castle" />
 
-        {/* Princess appears only at final step */}
+        {/* Princess */}
         {correctCount === 5 && (
-          <img src={princessImg} className="princess" alt="" />
+          <img src="/mario/princess.png" className="princess" />
         )}
 
         {/* Mario */}
         <img
-          src={marioImg}
+          src="/mario/mario-stand.png"
           className={`mario ${correctCount === 5 ? "mario-final" : ""}`}
-          alt=""
           style={{
-            transform:
-              correctCount < 5
-                ? `translateX(${correctCount * 150}px)`
-                : `translateX(750px)` // force him to reach princess
+            transform: `translateX(${correctCount * 140}px)`
           }}
         />
-
       </div>
 
-      {/* RIDDLE SECTION */}
+      {/* Riddle Section */}
       {correctCount < 5 && (
         <div className="riddle-box">
           <h3>{riddles[index].q}</h3>
