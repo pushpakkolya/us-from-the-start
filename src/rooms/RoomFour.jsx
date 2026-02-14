@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./RoomFour.css";
 
 import marioStand from "../assets/mario/mario-stand.png";
@@ -16,64 +16,62 @@ const riddles = [
   { q: "What has keys but can’t open locks?", a: "piano" }
 ];
 
-export default function RoomFour() {
+export default function RoomFour({ onComplete }) {
   const [index, setIndex] = useState(0);
   const [input, setInput] = useState("");
   const [progress, setProgress] = useState(0);
   const [jumping, setJumping] = useState(false);
-  const [coins, setCoins] = useState([]);
+  const [showHeart, setShowHeart] = useState(false);
   const [finished, setFinished] = useState(false);
+
+  const STEP = 100; // cleaner spacing
 
   const handleAnswer = () => {
     if (input.toLowerCase().trim() === riddles[index].a) {
       setJumping(true);
-      setProgress(p => p + 80);
-      setCoins(c => [...c, Date.now()]);
 
-      setTimeout(() => setJumping(false), 400);
+      setTimeout(() => {
+        setProgress(p => p + STEP);
+        setJumping(false);
+      }, 200);
 
       if (index < riddles.length - 1) {
         setIndex(i => i + 1);
         setInput("");
       } else {
-        setTimeout(() => setFinished(true), 800);
+        setTimeout(() => {
+          setFinished(true);
+          setShowHeart(true);
+
+          // Move to birthday screen after 3 sec
+          setTimeout(() => {
+            onComplete && onComplete();
+          }, 3000);
+        }, 600);
       }
     }
   };
 
   return (
     <div className="room-four">
-
-      {/* GAME WORLD */}
-      <div className={`world ${finished ? "pan" : ""}`}>
+      <div className="world">
 
         <img src={cloud} className="cloud cloud1" alt="" />
         <img src={cloud} className="cloud cloud2" alt="" />
 
         <img
           src={jumping ? marioJump : marioStand}
-          className={`mario ${jumping ? "jump" : ""}`}
-          style={{ transform: `translateX(${progress}px)` }}
+          className={`mario ${jumping ? "jump" : ""} ${finished ? "kiss" : ""}`}
+          style={{ left: 50 + progress }}
           alt="mario"
         />
 
-        {coins.map(id => (
-          <img
-            key={id}
-            src={coinImg}
-            className="coin"
-            style={{ left: progress + 40 }}
-            alt=""
-          />
-        ))}
-
         <img src={castle} className="castle" alt="" />
-        <img src={princess} className="princess" alt="" />
+        <img src={princess} className={`princess ${finished ? "kiss" : ""}`} alt="" />
 
-        {finished && <div className="heart">💖</div>}
+        {showHeart && <div className="heart">💖</div>}
       </div>
 
-      {/* RIDDLE UI */}
       {!finished && (
         <div className="riddle-box">
           <h2>Help Mario reach the Princess 👑</h2>
