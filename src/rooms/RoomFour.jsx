@@ -1,15 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import "./RoomFour.css";
 
-import marioStand from "../assets/mario/mario-stand.png";
-import marioJump from "../assets/mario/mario-jump.png";
+import marioImg from "../assets/mario/mario-stand.png";
 import princessImg from "../assets/mario/princess.png";
 import castleImg from "../assets/mario/castle.png";
 import cloudImg from "../assets/mario/cloud.png";
-import coinImg from "../assets/mario/coin.png";
-
-import jumpSoundFile from "../assets/sounds/jump.mp3";
-import coinSoundFile from "../assets/sounds/coin.mp3";
 
 const riddlesPool = [
   { q: "What has hands but can’t clap?", a: "clock" },
@@ -17,8 +12,11 @@ const riddlesPool = [
   { q: "What has keys but can't open locks?", a: "piano" },
   { q: "What has a heart that doesn’t beat?", a: "artichoke" },
   { q: "What has to be broken before you use it?", a: "egg" },
-  { q: "What runs but never walks?", a: "water" },
   { q: "What has one eye but cannot see?", a: "needle" },
+  { q: "What runs but never walks?", a: "water" },
+  { q: "What has a thumb and four fingers but isn’t alive?", a: "glove" },
+  { q: "What goes up but never comes down?", a: "age" },
+  { q: "What begins with T, ends with T, and has T in it?", a: "teapot" },
 ];
 
 function getRandomRiddles() {
@@ -30,104 +28,67 @@ export default function RoomFour() {
   const [index, setIndex] = useState(0);
   const [answer, setAnswer] = useState("");
   const [correctCount, setCorrectCount] = useState(0);
-
-  const [isJumping, setIsJumping] = useState(false);
-  const [showCoin, setShowCoin] = useState(false);
-
   const [kissScene, setKissScene] = useState(false);
-  const [celebration, setCelebration] = useState(false);
   const [birthdayReveal, setBirthdayReveal] = useState(false);
-
-  const jumpSound = useRef(new Audio(jumpSoundFile));
-  const coinSound = useRef(new Audio(coinSoundFile));
-
-  const TOTAL_DISTANCE = 1100;
-  const STEP_DISTANCE = TOTAL_DISTANCE / 5;
 
   const handleSubmit = () => {
     if (answer.trim().toLowerCase() === riddles[index].a) {
-
-      jumpSound.current.currentTime = 0;
-      coinSound.current.currentTime = 0;
-      jumpSound.current.play();
-      coinSound.current.play();
-
-      setIsJumping(true);
-      setShowCoin(true);
-
-      setTimeout(() => setIsJumping(false), 500);
-      setTimeout(() => setShowCoin(false), 800);
-
-      setCorrectCount(prev => prev + 1);
+      const newCount = correctCount + 1;
+      setCorrectCount(newCount);
       setAnswer("");
 
-      if (correctCount < 4) {
-        setIndex(prev => prev + 1);
+      if (newCount < 5) {
+        setIndex(index + 1);
+      }
+
+      if (newCount === 5) {
+        // trigger kiss after Mario finishes moving
+        setTimeout(() => {
+          setKissScene(true);
+        }, 1200);
+
+        // birthday reveal
+        setTimeout(() => {
+          setBirthdayReveal(true);
+        }, 3500);
       }
     }
   };
 
-  useEffect(() => {
-    if (correctCount === 5) {
-      setTimeout(() => setKissScene(true), 700);
-      setTimeout(() => setCelebration(true), 1200);
-      setTimeout(() => setBirthdayReveal(true), 4500);
-    }
-  }, [correctCount]);
-
   return (
     <div className="room-four">
+
+      {/* GAME WORLD */}
       <div className="game-world">
 
+        {/* Clouds */}
         <img src={cloudImg} className="cloud cloud1" alt="" />
         <img src={cloudImg} className="cloud cloud2" alt="" />
+
+        {/* Castle */}
         <img src={castleImg} className="castle" alt="" />
 
+        {/* Princess appears only at final step */}
+        {correctCount === 5 && (
+          <img src={princessImg} className="princess" alt="" />
+        )}
+
+        {/* Mario */}
         <img
-          src={princessImg}
+          src={marioImg}
+          className={`mario ${correctCount === 5 ? "mario-final" : ""}`}
           alt=""
-          className={`princess ${correctCount === 5 ? "princess-final" : ""} ${kissScene ? "kiss" : ""}`}
+          style={{
+            transform:
+              correctCount < 5
+                ? `translateX(${correctCount * 150}px)`
+                : `translateX(750px)` // force him to reach princess
+          }}
         />
-
-        {/* ✅ Mario Wrapper handles horizontal movement */}
-        <div
-          className={`mario-wrapper ${correctCount === 5 ? "mario-final" : ""}`}
-          style={
-            correctCount < 5
-              ? { transform: `translateX(${correctCount * STEP_DISTANCE}px)` }
-              : {}
-          }
-        >
-          <img
-            src={isJumping ? marioJump : marioStand}
-            alt=""
-            className={`mario-sprite ${isJumping ? "jump-motion" : ""} ${kissScene ? "kiss" : ""}`}
-          />
-        </div>
-
-        {showCoin && (
-          <img
-            src={coinImg}
-            alt=""
-            className="coin"
-            style={{
-              left: 50 + correctCount * STEP_DISTANCE + 35
-            }}
-          />
-        )}
-
-        {kissScene && <div className="center-heart">💖</div>}
-
-        {celebration && (
-          <div className="fireworks">
-            <div className="firework fw1"></div>
-            <div className="firework fw2"></div>
-            <div className="firework fw3"></div>
-          </div>
-        )}
 
       </div>
 
+      {/* RIDDLE SECTION */}
       {correctCount < 5 && (
         <div className="riddle-box">
           <h3>{riddles[index].q}</h3>
@@ -140,13 +101,24 @@ export default function RoomFour() {
         </div>
       )}
 
+      {/* Kiss Scene */}
+      {kissScene && (
+        <div className="kiss-overlay">
+          <div className="heart-burst">💖💖💖</div>
+        </div>
+      )}
+
+      {/* GRAND BIRTHDAY REVEAL */}
       {birthdayReveal && (
         <div className="birthday-screen">
           <h1>🎉 HAPPY BIRTHDAY MY PRINCESS 🎉</h1>
           <p>March 9th — The Day My World Leveled Up ❤️</p>
-          <p className="subtext">You are my forever Player Two.</p>
+          <p className="subtext">
+            You are my forever Player Two.
+          </p>
         </div>
       )}
+
     </div>
   );
 }
