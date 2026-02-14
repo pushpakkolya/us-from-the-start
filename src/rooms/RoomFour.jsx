@@ -12,11 +12,9 @@ const riddlesPool = [
   { q: "What has keys but can't open locks?", a: "piano" },
   { q: "What has a heart that doesn’t beat?", a: "artichoke" },
   { q: "What has to be broken before you use it?", a: "egg" },
-  { q: "What has one eye but cannot see?", a: "needle" },
   { q: "What runs but never walks?", a: "water" },
-  { q: "What has a thumb and four fingers but isn’t alive?", a: "glove" },
+  { q: "What has one eye but cannot see?", a: "needle" },
   { q: "What goes up but never comes down?", a: "age" },
-  { q: "What begins with T, ends with T, and has T in it?", a: "teapot" },
 ];
 
 function getRandomRiddles() {
@@ -31,6 +29,9 @@ export default function RoomFour() {
   const [kissScene, setKissScene] = useState(false);
   const [birthdayReveal, setBirthdayReveal] = useState(false);
 
+  const TOTAL_DISTANCE = 700; // total px mario travels
+  const STEP_DISTANCE = TOTAL_DISTANCE / 5;
+
   const handleSubmit = () => {
     if (answer.trim().toLowerCase() === riddles[index].a) {
       const newCount = correctCount + 1;
@@ -42,53 +43,46 @@ export default function RoomFour() {
       }
 
       if (newCount === 5) {
-        // trigger kiss after Mario finishes moving
+        // trigger kiss after movement animation finishes
         setTimeout(() => {
           setKissScene(true);
-        }, 1200);
+        }, 900);
 
         // birthday reveal
         setTimeout(() => {
           setBirthdayReveal(true);
-        }, 3500);
+        }, 3000);
       }
     }
   };
 
   return (
     <div className="room-four">
-
-      {/* GAME WORLD */}
       <div className="game-world">
 
-        {/* Clouds */}
         <img src={cloudImg} className="cloud cloud1" alt="" />
         <img src={cloudImg} className="cloud cloud2" alt="" />
 
-        {/* Castle */}
         <img src={castleImg} className="castle" alt="" />
 
-        {/* Princess appears only at final step */}
-        {correctCount === 5 && (
-          <img src={princessImg} className="princess" alt="" />
-        )}
+        {/* Princess always visible */}
+        <img
+          src={princessImg}
+          className={`princess ${kissScene ? "kiss" : ""}`}
+          alt=""
+        />
 
         {/* Mario */}
         <img
           src={marioImg}
-          className={`mario ${correctCount === 5 ? "mario-final" : ""}`}
+          className={`mario ${kissScene ? "kiss" : ""}`}
           alt=""
           style={{
-            transform:
-              correctCount < 5
-                ? `translateX(${correctCount * 150}px)`
-                : `translateX(750px)` // force him to reach princess
+            transform: `translateX(${correctCount * STEP_DISTANCE}px)`
           }}
         />
-
       </div>
 
-      {/* RIDDLE SECTION */}
       {correctCount < 5 && (
         <div className="riddle-box">
           <h3>{riddles[index].q}</h3>
@@ -101,24 +95,19 @@ export default function RoomFour() {
         </div>
       )}
 
-      {/* Kiss Scene */}
       {kissScene && (
         <div className="kiss-overlay">
-          <div className="heart-burst">💖💖💖</div>
+          <div className="heart-burst">💖</div>
         </div>
       )}
 
-      {/* GRAND BIRTHDAY REVEAL */}
       {birthdayReveal && (
         <div className="birthday-screen">
           <h1>🎉 HAPPY BIRTHDAY MY PRINCESS 🎉</h1>
           <p>March 9th — The Day My World Leveled Up ❤️</p>
-          <p className="subtext">
-            You are my forever Player Two.
-          </p>
+          <p className="subtext">You are my forever Player Two.</p>
         </div>
       )}
-
     </div>
   );
 }
