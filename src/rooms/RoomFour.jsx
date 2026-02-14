@@ -47,13 +47,11 @@ export default function RoomFour() {
   const handleSubmit = () => {
     if (answer.trim().toLowerCase() === riddles[index].a) {
 
-      // 🔊 Play sounds
       jumpSound.current.currentTime = 0;
       coinSound.current.currentTime = 0;
       jumpSound.current.play();
       coinSound.current.play();
 
-      // Trigger jump sprite
       setIsJumping(true);
       setShowCoin(true);
 
@@ -69,7 +67,6 @@ export default function RoomFour() {
     }
   };
 
-  /* ✅ Guaranteed Final Sequence */
   useEffect(() => {
     if (correctCount === 5) {
       setTimeout(() => setKissScene(true), 700);
@@ -92,19 +89,21 @@ export default function RoomFour() {
           className={`princess ${correctCount === 5 ? "princess-final" : ""} ${kissScene ? "kiss" : ""}`}
         />
 
-        <img
-          src={isJumping ? marioJump : marioStand}
-          alt=""
-          className={`mario 
-            ${correctCount === 5 ? "mario-final" : ""} 
-            ${isJumping ? "jump-motion" : ""} 
-            ${kissScene ? "kiss" : ""}`}
+        {/* ✅ Mario Wrapper handles horizontal movement */}
+        <div
+          className={`mario-wrapper ${correctCount === 5 ? "mario-final" : ""}`}
           style={
             correctCount < 5
               ? { transform: `translateX(${correctCount * STEP_DISTANCE}px)` }
               : {}
           }
-        />
+        >
+          <img
+            src={isJumping ? marioJump : marioStand}
+            alt=""
+            className={`mario-sprite ${isJumping ? "jump-motion" : ""} ${kissScene ? "kiss" : ""}`}
+          />
+        </div>
 
         {showCoin && (
           <img
@@ -112,7 +111,7 @@ export default function RoomFour() {
             alt=""
             className="coin"
             style={{
-              left: 50 + correctCount * STEP_DISTANCE + 20
+              left: 50 + correctCount * STEP_DISTANCE + 35
             }}
           />
         )}
