@@ -41,7 +41,7 @@ export default function RoomFour() {
   const jumpSound = useRef(new Audio(jumpSoundFile));
   const coinSound = useRef(new Audio(coinSoundFile));
 
-  const TOTAL_DISTANCE = 700;
+  const TOTAL_DISTANCE = 1100;
   const STEP_DISTANCE = TOTAL_DISTANCE / 5;
 
   const handleSubmit = () => {
