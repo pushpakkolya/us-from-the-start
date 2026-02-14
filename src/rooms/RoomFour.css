@@ -5,53 +5,25 @@
   font-family: monospace;
 }
 
-/* ============================= */
-/* GAME WORLD (TOP) */
-/* ============================= */
-
 .world {
   flex: 1;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(to top, #5c94fc 70%, #a0d8ff 100%);
+  background: #5c94fc;
 }
-
-/* Clouds */
-.cloud {
-  position: absolute;
-  width: 80px;
-  animation: moveClouds 30s linear infinite;
-}
-
-.cloud1 { top: 60px; }
-.cloud2 { top: 120px; animation-delay: 10s; }
-
-@keyframes moveClouds {
-  from { left: -100px; }
-  to { left: 110%; }
-}
-
-/* ============================= */
-/* MARIO */
-/* ============================= */
 
 .mario {
   position: absolute;
+  bottom: 80px;
   width: 48px;
-  image-rendering: pixelated;
   transition: left 0.4s ease;
 }
-
-/* ============================= */
-/* CASTLE & PRINCESS */
-/* ============================= */
 
 .castle {
   position: absolute;
   bottom: 80px;
   right: 120px;
   width: 120px;
-  image-rendering: pixelated;
 }
 
 .princess {
@@ -59,56 +31,11 @@
   bottom: 80px;
   right: 200px;
   width: 48px;
-  image-rendering: pixelated;
 }
-
-.princess.bounce {
-  animation: princessBounce 0.6s ease;
-}
-
-@keyframes princessBounce {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
-  100% { transform: translateY(0); }
-}
-
-/* ============================= */
-/* HEART */
-/* ============================= */
-
-.heart {
-  position: absolute;
-  bottom: 160px;
-  right: 220px;
-  font-size: 40px;
-  animation: popHeart 0.6s ease forwards;
-}
-
-@keyframes popHeart {
-  0% { transform: scale(0); opacity: 0; }
-  60% { transform: scale(1.4); opacity: 1; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-/* ============================= */
-/* RIDDLE BOX (BOTTOM) */
-/* ============================= */
 
 .riddle-box {
   height: 180px;
   background: #fff8dc;
   padding: 20px;
   text-align: center;
-  box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
-}
-
-.riddle-box input {
-  padding: 8px;
-  margin-top: 10px;
-}
-
-.riddle-box button {
-  margin-top: 10px;
-  padding: 8px 14px;
-  cursor: pointer;
 }
