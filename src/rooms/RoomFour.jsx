@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./RoomFour.css";
 
-import marioImg from "../assets/mario/mario-stand.png";
+import marioStand from "../assets/mario/mario-stand.png";
+import marioJump from "../assets/mario/mario-jump.png";
 import princessImg from "../assets/mario/princess.png";
 import castleImg from "../assets/mario/castle.png";
 import cloudImg from "../assets/mario/cloud.png";
+import coinImg from "../assets/mario/coin.png";
+
+import jumpSoundFile from "../assets/sounds/jump.mp3";
+import coinSoundFile from "../assets/sounds/coin.mp3";
 
 const riddlesPool = [
   { q: "What has hands but can’t clap?", a: "clock" },
@@ -25,30 +30,53 @@ export default function RoomFour() {
   const [index, setIndex] = useState(0);
   const [answer, setAnswer] = useState("");
   const [correctCount, setCorrectCount] = useState(0);
+
+  const [isJumping, setIsJumping] = useState(false);
+  const [showCoin, setShowCoin] = useState(false);
+
   const [kissScene, setKissScene] = useState(false);
   const [celebration, setCelebration] = useState(false);
   const [birthdayReveal, setBirthdayReveal] = useState(false);
 
-  const TOTAL_DISTANCE = 1050;
+  const jumpSound = useRef(new Audio(jumpSoundFile));
+  const coinSound = useRef(new Audio(coinSoundFile));
+
+  const TOTAL_DISTANCE = 700;
   const STEP_DISTANCE = TOTAL_DISTANCE / 5;
 
   const handleSubmit = () => {
     if (answer.trim().toLowerCase() === riddles[index].a) {
-      const newCount = correctCount + 1;
-      setCorrectCount(newCount);
+
+      // 🔊 Play sounds
+      jumpSound.current.currentTime = 0;
+      coinSound.current.currentTime = 0;
+      jumpSound.current.play();
+      coinSound.current.play();
+
+      // Trigger jump sprite
+      setIsJumping(true);
+      setShowCoin(true);
+
+      setTimeout(() => setIsJumping(false), 500);
+      setTimeout(() => setShowCoin(false), 800);
+
+      setCorrectCount(prev => prev + 1);
       setAnswer("");
 
-      if (newCount < 5) {
-        setIndex(index + 1);
-      }
-
-      if (newCount === 5) {
-        setTimeout(() => setKissScene(true), 800);
-        setTimeout(() => setCelebration(true), 1200);
-        setTimeout(() => setBirthdayReveal(true), 4500);
+      if (correctCount < 4) {
+        setIndex(prev => prev + 1);
       }
     }
   };
+
+  /* ✅ Guaranteed Final Sequence */
+  useEffect(() => {
+    if (correctCount === 5) {
+      setTimeout(() => setKissScene(true), 700);
+      setTimeout(() => setCelebration(true), 1200);
+      setTimeout(() => setBirthdayReveal(true), 4500);
+    }
+  }, [correctCount]);
 
   return (
     <div className="room-four">
@@ -65,9 +93,12 @@ export default function RoomFour() {
         />
 
         <img
-          src={marioImg}
+          src={isJumping ? marioJump : marioStand}
           alt=""
-          className={`mario ${correctCount === 5 ? "mario-final" : ""} ${kissScene ? "kiss" : ""}`}
+          className={`mario 
+            ${correctCount === 5 ? "mario-final" : ""} 
+            ${isJumping ? "jump-motion" : ""} 
+            ${kissScene ? "kiss" : ""}`}
           style={
             correctCount < 5
               ? { transform: `translateX(${correctCount * STEP_DISTANCE}px)` }
@@ -75,9 +106,18 @@ export default function RoomFour() {
           }
         />
 
-        {kissScene && (
-          <div className="center-heart">💖</div>
+        {showCoin && (
+          <img
+            src={coinImg}
+            alt=""
+            className="coin"
+            style={{
+              left: 50 + correctCount * STEP_DISTANCE + 20
+            }}
+          />
         )}
+
+        {kissScene && <div className="center-heart">💖</div>}
 
         {celebration && (
           <div className="fireworks">
