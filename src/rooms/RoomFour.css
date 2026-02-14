@@ -43,3 +43,36 @@
   padding: 20px;
   text-align: center;
 }
+
+/* ============================= */
+/* CLOUDS */
+/* ============================= */
+
+.cloud {
+  position: absolute;
+  width: 70px;              /* Smaller size */
+  opacity: 0.9;
+  image-rendering: pixelated;
+  animation: moveClouds 40s linear infinite;
+}
+
+.cloud1 {
+  top: 60px;
+  animation-duration: 45s;  /* Different speeds = depth effect */
+}
+
+.cloud2 {
+  top: 120px;
+  width: 55px;              /* Slightly smaller for distance effect */
+  animation-duration: 60s;
+}
+
+@keyframes moveClouds {
+  from {
+    transform: translateX(-150px);
+  }
+  to {
+    transform: translateX(110vw);
+  }
+}
+
