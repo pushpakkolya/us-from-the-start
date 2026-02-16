@@ -15,8 +15,8 @@ export default function RoomOne({ onComplete }) {
     const formatted = answer.toLowerCase().trim();
 
     if (
-      formatted.includes("Blueberry") &&
-      formatted.includes("Cheesecake")
+      formatted.includes("blueberry") &&
+      formatted.includes("cheesecake")
     ) {
       setError("");
       setShowTransition(true);
