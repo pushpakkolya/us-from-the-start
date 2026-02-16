@@ -4,6 +4,7 @@ import "./RoomOne.css";
 export default function RoomOne({ onComplete }) {
   const [answer, setAnswer] = useState("");
   const [error, setError] = useState("");
+  const [showTransition, setShowTransition] = useState(false);
 
   const handleSubmit = () => {
     const audio = document.getElementById("bg-music");
@@ -14,50 +15,70 @@ export default function RoomOne({ onComplete }) {
     const formatted = answer.toLowerCase().trim();
 
     if (
-      formatted.includes("June") &&
-      formatted.includes("8")
+      formatted.includes("first") &&
+      formatted.includes("met")
     ) {
-      if (typeof onComplete === "function") {
-        onComplete();
-      }
+      setError("");
+      setShowTransition(true);
+
+      // Delay before moving to next room
+      setTimeout(() => {
+        if (typeof onComplete === "function") {
+          onComplete();
+        }
+      }, 2200);
+
     } else {
       setError("Hmm… try again ❤️");
-      setTimeout(() => setError(""), 2000);
     }
   };
 
   return (
     <div className="roomone-container">
-
-      {/* Glow Background Elements */}
+      {/* Glow Background */}
       <div className="glow glow1"></div>
       <div className="glow glow2"></div>
       <div className="glow glow3"></div>
 
-      <div className="room-card">
-        <h2 className="room-title">Room One — Memory 💭</h2>
+      {/* Sparkles */}
+      <div className="sparkle">✨</div>
+      <div className="sparkle">✨</div>
+      <div className="sparkle">✨</div>
+
+      {/* Subtle Doodles */}
+      <div className="doodle doodle1">👦🏻</div>
+      <div className="doodle doodle2">👧🏻</div>
+
+      <div className={`room-card ${showTransition ? "success-glow" : ""}`}>
+        <h2 className="room-title">Room One — Our First Memory</h2>
 
         <p className="room-question">
-          When was our First Date 💘🙈?
+          Think back to that moment… what was the first thing we talked about?
         </p>
 
         <input
+          className="room-input"
           value={answer}
           onChange={(e) => setAnswer(e.target.value)}
-          className="room-input"
-          placeholder="Type your answer here..."
+          placeholder="Type your memory here..."
+          disabled={showTransition}
         />
 
         <button
           type="button"
-          onClick={handleSubmit}
           className="unlock-btn"
+          onClick={handleSubmit}
+          disabled={showTransition}
         >
           Unlock 🔓
         </button>
 
-        {error && (
-          <p className="error-text">{error}</p>
+        {error && <div className="error-text">{error}</div>}
+
+        {showTransition && (
+          <div className="transition-message">
+            The game is just getting started 😌✨
+          </div>
         )}
       </div>
     </div>
