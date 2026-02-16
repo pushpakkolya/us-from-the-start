@@ -15,8 +15,8 @@ export default function RoomOne({ onComplete }) {
     const formatted = answer.toLowerCase().trim();
 
     if (
-      formatted.includes("first") &&
-      formatted.includes("met")
+      formatted.includes("Blueberry") &&
+      formatted.includes("Cheesecake")
     ) {
       setError("");
       setShowTransition(true);
@@ -46,14 +46,14 @@ export default function RoomOne({ onComplete }) {
       <div className="sparkle">✨</div>
 
       {/* Subtle Doodles */}
-      <div className="doodle doodle1">👦🏻</div>
-      <div className="doodle doodle2">👧🏻</div>
+      <div className="doodle doodle1">💌</div>
+      <div className="doodle doodle2">💗</div>
 
       <div className={`room-card ${showTransition ? "success-glow" : ""}`}>
         <h2 className="room-title">Room One — Our First Memory</h2>
 
         <p className="room-question">
-          Think back to that moment… what was the first thing we talked about?
+          Think back in time… what was the first dessert we ate together🤤 ?
         </p>
 
         <input
