@@ -21,67 +21,25 @@
   z-index: 3;
 }
 
+.mario.kiss {
+  transform-origin: bottom center;
+  animation: kissTilt 0.4s ease forwards;
+}
+
+@keyframes kissTilt {
+  from { rotate: 0deg; }
+  to { rotate: -8deg; }
+}
 
 .princess {
   position: absolute;
-  bottom: 80px;      /* 👈 SAME LEVEL */
+  bottom: 80px;
   right: 200px;
-  width: 52px;       /* Slightly balanced size */
+  width: 52px;
   image-rendering: pixelated;
   z-index: 2;
 }
 
-.castle {
-  position: absolute;
-  bottom: 80px;
-  right: 100px;
-  width: 180px;      /* 👑 Bigger castle */
-  image-rendering: pixelated;
-  z-index: 1;
-}
-
-
-.riddle-box {
-  height: 180px;
-  background: #fff8dc;
-  padding: 20px;
-  text-align: center;
-}
-
-/* ============================= */
-/* CLOUDS */
-/* ============================= */
-
-.cloud {
-  position: absolute;
-  width: 80px;              /* Smaller size */
-  opacity: 0.9;
-  image-rendering: pixelated;
-  animation: moveClouds 40s linear infinite;
-}
-
-.cloud1 {
-  top: 60px;
-  animation-duration: 45s;  /* Different speeds = depth effect */
-}
-
-.cloud2 {
-  top: 120px;
-  width: 55px;              /* Slightly smaller for distance effect */
-  animation-duration: 60s;
-}
-
-@keyframes moveClouds {
-  from {
-    transform: translateX(-150px);
-  }
-  to {
-    transform: translateX(110vw);
-  }
-}
-
-
-/* Princess excited bounce */
 .princess.bounce {
   animation: princessBounce 0.5s ease;
 }
@@ -92,12 +50,49 @@
   100% { transform: translateY(0); }
 }
 
-/* Floating heart */
+.castle {
+  position: absolute;
+  bottom: 80px;
+  right: 100px;
+  width: 180px;
+  image-rendering: pixelated;
+  z-index: 1;
+}
+
+/* Clouds */
+
+.cloud {
+  position: absolute;
+  width: 80px;
+  opacity: 0.9;
+  image-rendering: pixelated;
+  animation: moveClouds 40s linear infinite;
+}
+
+.cloud1 {
+  top: 60px;
+  animation-duration: 45s;
+}
+
+.cloud2 {
+  top: 120px;
+  width: 55px;
+  animation-duration: 60s;
+}
+
+@keyframes moveClouds {
+  from { transform: translateX(-150px); }
+  to { transform: translateX(110vw); }
+}
+
+/* Heart */
+
 .heart {
   position: absolute;
   bottom: 150px;
   right: 220px;
   font-size: 40px;
+  z-index: 5;
 }
 
 .heart.float {
@@ -110,14 +105,13 @@
   100% { transform: translateY(-120px) scale(1); opacity: 0; }
 }
 
-/* Mario lean-in during kiss */
-.mario.kiss {
-  animation: leanIn 0.6s ease forwards;
-}
+/* Sparkles */
 
-@keyframes leanIn {
-  0% { transform: translateX(0) rotate(0deg); }
-  100% { transform: translateX(8px) rotate(-8deg); }
+.sparkle-container {
+  position: absolute;
+  bottom: 120px;
+  right: 210px;
+  z-index: 5;
 }
 
 .sparkle {
@@ -130,13 +124,53 @@
   animation: sparkleBurst 1s ease-out forwards;
 }
 
-.sparkle:nth-child(1) { top: 120px; right: 210px; animation-delay: 0s; }
-.sparkle:nth-child(2) { top: 140px; right: 190px; animation-delay: 0.1s; }
-.sparkle:nth-child(3) { top: 110px; right: 230px; animation-delay: 0.2s; }
-.sparkle:nth-child(4) { top: 150px; right: 215px; animation-delay: 0.3s; }
+.sparkle.s1 { top: 0px; left: 0px; animation-delay: 0s; }
+.sparkle.s2 { top: -15px; left: 15px; animation-delay: 0.1s; }
+.sparkle.s3 { top: 10px; left: -15px; animation-delay: 0.2s; }
+.sparkle.s4 { top: -10px; left: 25px; animation-delay: 0.3s; }
 
 @keyframes sparkleBurst {
   0% { transform: scale(0); opacity: 1; }
   100% { transform: scale(4); opacity: 0; }
 }
 
+/* Riddle Box */
+
+.riddle-box {
+  height: 180px;
+  background: #fff8dc;
+  padding: 20px;
+  text-align: center;
+}
+
+.riddle-box.locked {
+  opacity: 0.6;
+}
+
+.riddle-box.locked input,
+.riddle-box.locked button {
+  pointer-events: none;
+}
+
+/* Birthday Screen */
+
+.birthday-screen {
+  height: 100vh;
+  background: #000;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.birthday-screen h1 {
+  font-size: 40px;
+}
+
+.subtext {
+  margin-top: 20px;
+  font-size: 18px;
+  opacity: 0.8;
+}
