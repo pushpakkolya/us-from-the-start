@@ -18,6 +18,7 @@
   left: 0;
   width: 56px;
   image-rendering: pixelated;
+  z-index: 3;
 }
 
 
@@ -27,6 +28,7 @@
   right: 200px;
   width: 52px;       /* Slightly balanced size */
   image-rendering: pixelated;
+  z-index: 2;
 }
 
 .castle {
@@ -35,6 +37,7 @@
   right: 100px;
   width: 180px;      /* 👑 Bigger castle */
   image-rendering: pixelated;
+  z-index: 1;
 }
 
 
@@ -107,4 +110,33 @@
   100% { transform: translateY(-120px) scale(1); opacity: 0; }
 }
 
+/* Mario lean-in during kiss */
+.mario.kiss {
+  animation: leanIn 0.6s ease forwards;
+}
+
+@keyframes leanIn {
+  0% { transform: translateX(0) rotate(0deg); }
+  100% { transform: translateX(8px) rotate(-8deg); }
+}
+
+.sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: gold;
+  border-radius: 50%;
+  opacity: 0;
+  animation: sparkleBurst 1s ease-out forwards;
+}
+
+.sparkle:nth-child(1) { top: 120px; right: 210px; animation-delay: 0s; }
+.sparkle:nth-child(2) { top: 140px; right: 190px; animation-delay: 0.1s; }
+.sparkle:nth-child(3) { top: 110px; right: 230px; animation-delay: 0.2s; }
+.sparkle:nth-child(4) { top: 150px; right: 215px; animation-delay: 0.3s; }
+
+@keyframes sparkleBurst {
+  0% { transform: scale(0); opacity: 1; }
+  100% { transform: scale(4); opacity: 0; }
+}
 
