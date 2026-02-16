@@ -37,7 +37,7 @@ export default function RoomFour() {
     const marioCenter = marioRect.left + marioRect.width / 2;
     const princessCenter = princessRect.left + princessRect.width / 2;
 
-    const totalDistance = princessCenter - marioCenter - 20;
+    const totalDistance = princessCenter - marioCenter - 40;
 
     // Divide total distance by remaining riddles
     const remaining = riddles.length - index;
@@ -114,15 +114,16 @@ export default function RoomFour() {
       <img src={cloud} className="cloud cloud1" alt="" />
       <img src={cloud} className="cloud cloud2" alt="" />
 
-      <img
-        ref={marioRef}
-        src={jumping ? marioJump : marioStand}
-        className="mario"
-        style={{
-          transform: `translate(${50 + x}px, ${-y}px)`
-        }}
-        alt="mario"
-      />
+<img
+  ref={marioRef}
+  src={jumping ? marioJump : marioStand}
+  className={`mario ${finished ? "kiss" : ""}`}
+  style={{
+    transform: `translate(${50 + x}px, ${-y}px)`
+  }}
+  alt="mario"
+/>
+
 
       <img src={castle} className="castle" alt="" />
 
@@ -133,7 +134,16 @@ export default function RoomFour() {
         alt=""
       />
 
-      {finished && <div className="heart float">💖</div>}
+      {finished && (
+  <>
+    <div className="heart float">💖</div>
+    <div className="sparkle"></div>
+    <div className="sparkle"></div>
+    <div className="sparkle"></div>
+    <div className="sparkle"></div>
+  </>
+)}
+
 
     </div>
 
