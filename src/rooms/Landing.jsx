@@ -3,6 +3,8 @@ import "./Landing.css";
 
 export default function Landing({ onStart }) {
   const [message, setMessage] = useState("");
+  const [lastIndex, setLastIndex] = useState(null);
+  const [noCount, setNoCount] = useState(0);
 
   const dramaticLines = [
     "🥺 Oh… okay.",
@@ -18,8 +20,14 @@ export default function Landing({ onStart }) {
   ];
 
   const handleNo = () => {
-    const randomIndex = Math.floor(Math.random() * dramaticLines.length);
+    let randomIndex;
+    do {
+      randomIndex = Math.floor(Math.random() * dramaticLines.length);
+    } while (randomIndex === lastIndex);
+
+    setLastIndex(randomIndex);
     setMessage(dramaticLines[randomIndex]);
+    setNoCount(prev => prev + 1);
   };
 
   const handleYes = () => {
@@ -33,22 +41,37 @@ export default function Landing({ onStart }) {
     }
   };
 
+  const yesScale = Math.min(1 + noCount * 0.08, 1.8);
+
   return (
     <div className="landing-container">
 
-      {/* Floating Petals */}
+      {/* Floating petals */}
       <div className="petals">
-        {[...Array(15)].map((_, i) => (
+        {[...Array(20)].map((_, i) => (
           <span key={i} className="petal">🌸</span>
         ))}
       </div>
+
+      {/* Soft glow orbs */}
+      <div className="glow glow1"></div>
+      <div className="glow glow2"></div>
+      <div className="glow glow3"></div>
 
       <h1 className="landing-title">
         Are you ready? 💕
       </h1>
 
+      <p className="subtitle">
+        I made something special just for you…
+      </p>
+
       <div className="button-group">
-        <button className="yes-btn" onClick={handleYes}>
+        <button
+          className="yes-btn"
+          onClick={handleYes}
+          style={{ transform: `scale(${yesScale})` }}
+        >
           Yes ❤️
         </button>
 
