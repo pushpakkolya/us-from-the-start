@@ -1,10 +1,11 @@
 import { useState } from "react";
+import "./RoomOne.css";
 
 export default function RoomOne({ onComplete }) {
   const [answer, setAnswer] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = () => {
-    // 🎵 Force music to start from user interaction
     const audio = document.getElementById("bg-music");
     if (audio) {
       audio.play().catch(() => {});
@@ -13,51 +14,52 @@ export default function RoomOne({ onComplete }) {
     const formatted = answer.toLowerCase().trim();
 
     if (
-      formatted.includes("first") &&
-      formatted.includes("met")
+      formatted.includes("June") &&
+      formatted.includes("8")
     ) {
       if (typeof onComplete === "function") {
         onComplete();
       }
     } else {
-      alert("Hmm… try again ❤️");
+      setError("Hmm… try again ❤️");
+      setTimeout(() => setError(""), 2000);
     }
   };
 
   return (
-    <div
-      style={{
-        padding: "40px",
-        fontFamily: "sans-serif",
-        textAlign: "center",
-      }}
-    >
-      <h2>Room One — Memory</h2>
-      <p>What was the first thing we talked about?</p>
+    <div className="roomone-container">
 
-      <input
-        value={answer}
-        onChange={(e) => setAnswer(e.target.value)}
-        style={{
-          padding: "8px",
-          width: "250px",
-          fontSize: "16px",
-        }}
-      />
+      {/* Glow Background Elements */}
+      <div className="glow glow1"></div>
+      <div className="glow glow2"></div>
+      <div className="glow glow3"></div>
 
-      <br /><br />
+      <div className="room-card">
+        <h2 className="room-title">Room One — Memory 💭</h2>
 
-      <button
-        type="button"
-        onClick={handleSubmit}
-        style={{
-          padding: "10px 20px",
-          fontSize: "16px",
-          cursor: "pointer",
-        }}
-      >
-        Unlock 🔓
-      </button>
+        <p className="room-question">
+          When was our First Date 💘🙈?
+        </p>
+
+        <input
+          value={answer}
+          onChange={(e) => setAnswer(e.target.value)}
+          className="room-input"
+          placeholder="Type your answer here..."
+        />
+
+        <button
+          type="button"
+          onClick={handleSubmit}
+          className="unlock-btn"
+        >
+          Unlock 🔓
+        </button>
+
+        {error && (
+          <p className="error-text">{error}</p>
+        )}
+      </div>
     </div>
   );
 }
