@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import "./RoomFour.css";
 
 import marioStand from "../assets/mario/mario-stand.png";
@@ -22,14 +22,31 @@ export default function RoomFour() {
   const [y, setY] = useState(0);
   const [jumping, setJumping] = useState(false);
   const [finished, setFinished] = useState(false);
+  const [showBirthday, setShowBirthday] = useState(false);
 
-  const STEP = 120;
+  const marioRef = useRef(null);
+  const princessRef = useRef(null);
 
-  const performJump = (height = 100) => {
+  const performJump = (height = 100, isFinal = false) => {
     const duration = 700;
     const start = performance.now();
+
+    const marioRect = marioRef.current.getBoundingClientRect();
+    const princessRect = princessRef.current.getBoundingClientRect();
+
+    const marioCenter = marioRect.left + marioRect.width / 2;
+    const princessCenter = princessRect.left + princessRect.width / 2;
+
+    const totalDistance = princessCenter - marioCenter - 20;
+
+    // Divide total distance by remaining riddles
+    const remaining = riddles.length - index;
+    const dynamicStep = isFinal
+      ? totalDistance
+      : totalDistance / remaining;
+
     const startX = x;
-    const endX = x + STEP;
+    const endX = x + dynamicStep;
 
     setJumping(true);
 
@@ -39,8 +56,6 @@ export default function RoomFour() {
 
       if (t < 1) {
         const progressX = startX + (endX - startX) * t;
-
-        // REAL PARABOLA
         const progressY = -4 * height * (t - 0.5) * (t - 0.5) + height;
 
         setX(progressX);
@@ -51,6 +66,14 @@ export default function RoomFour() {
         setX(endX);
         setY(0);
         setJumping(false);
+
+        if (isFinal) {
+          setFinished(true);
+
+          setTimeout(() => {
+            setShowBirthday(true);
+          }, 1800);
+        }
       }
     }
 
@@ -65,21 +88,34 @@ export default function RoomFour() {
         setIndex(i => i + 1);
         setInput("");
       } else {
-        performJump(140); // bigger final jump
-        setFinished(true);
+        performJump(140, true);
       }
     }
   };
 
+  if (showBirthday) {
+    return (
+      <div className="birthday-screen">
+        <h1>🎉 Happy Birthday My Love 🎉</h1>
+        <p>You solved every riddle…</p>
+        <p>You reached the princess…</p>
+        <p>And you reached my heart too ❤️</p>
+        <div className="subtext">
+          Thank you for being my forever player 1.
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="room-four">
-
-      <div className="world">
+      <div className="game-world">
 
         <img src={cloud} className="cloud cloud1" alt="" />
         <img src={cloud} className="cloud cloud2" alt="" />
 
         <img
+          ref={marioRef}
           src={jumping ? marioJump : marioStand}
           className="mario"
           style={{
@@ -89,14 +125,15 @@ export default function RoomFour() {
         />
 
         <img src={castle} className="castle" alt="" />
-<img 
-  src={princess} 
-  className={`princess ${finished ? "bounce" : ""}`} 
-  alt="" 
-/>
 
+        <img
+          ref={princessRef}
+          src={princess}
+          className={`princess ${finished ? "kiss" : ""}`}
+          alt=""
+        />
 
-{finished && <div className="heart float">💖</div>}
+        {finished && <div className="center-heart">💖</div>}
 
       </div>
 
