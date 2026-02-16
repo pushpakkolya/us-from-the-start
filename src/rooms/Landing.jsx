@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./Landing.css";
 
 export default function Landing({ onStart }) {
   const [message, setMessage] = useState("");
@@ -33,64 +34,31 @@ export default function Landing({ onStart }) {
   };
 
   return (
-    <div
-      style={{
-        height: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        fontFamily: "'Georgia', serif",
-        textAlign: "center",
-        background: "linear-gradient(to bottom, #fff5f7, #fde2e4)",
-        padding: "20px",
-      }}
-    >
-      <h1 style={{ fontSize: "48px", marginBottom: "30px" }}>
-        Are you ready?
+    <div className="landing-container">
+
+      {/* Floating Petals */}
+      <div className="petals">
+        {[...Array(15)].map((_, i) => (
+          <span key={i} className="petal">🌸</span>
+        ))}
+      </div>
+
+      <h1 className="landing-title">
+        Are you ready? 💕
       </h1>
 
-      <div style={{ display: "flex", gap: "20px" }}>
-        <button
-          onClick={handleYes}
-          style={{
-            padding: "12px 28px",
-            fontSize: "18px",
-            borderRadius: "30px",
-            border: "none",
-            cursor: "pointer",
-            backgroundColor: "#c9184a",
-            color: "white",
-          }}
-        >
+      <div className="button-group">
+        <button className="yes-btn" onClick={handleYes}>
           Yes ❤️
         </button>
 
-        <button
-          onClick={handleNo}
-          style={{
-            padding: "12px 28px",
-            fontSize: "18px",
-            borderRadius: "30px",
-            border: "2px solid #c9184a",
-            backgroundColor: "white",
-            cursor: "pointer",
-            color: "#c9184a",
-          }}
-        >
+        <button className="no-btn" onClick={handleNo}>
           No 🙈
         </button>
       </div>
 
       {message && (
-        <p
-          style={{
-            marginTop: "40px",
-            fontSize: "20px",
-            opacity: 0.85,
-            transition: "all 0.3s ease",
-          }}
-        >
+        <p className="dramatic-message">
           {message}
         </p>
       )}
