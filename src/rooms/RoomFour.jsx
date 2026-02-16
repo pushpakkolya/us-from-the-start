@@ -69,10 +69,6 @@ export default function RoomFour() {
 
         if (isFinal) {
           setFinished(true);
-
-          setTimeout(() => {
-            setShowBirthday(true);
-          }, 2500);
         }
       }
     }
@@ -116,9 +112,9 @@ export default function RoomFour() {
         <img
           ref={marioRef}
           src={jumping ? marioJump : marioStand}
-          className={`mario ${finished ? "kiss" : ""}`}
+          className="mario"
           style={{
-            transform: `translate(${50 + x}px, ${-y}px)`
+            transform: `translate(${50 + x}px, ${-y}px) rotate(${finished ? -8 : 0}deg)`
           }}
           alt="mario"
         />
@@ -142,6 +138,13 @@ export default function RoomFour() {
               <div className="sparkle s3"></div>
               <div className="sparkle s4"></div>
             </div>
+
+            <button
+              className="continue-btn"
+              onClick={() => setShowBirthday(true)}
+            >
+              Continue ❤️
+            </button>
           </>
         )}
 
