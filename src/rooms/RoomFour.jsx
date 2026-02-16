@@ -108,49 +108,49 @@ export default function RoomFour() {
   }
 
   return (
-    <div className="room-four">
-      <div className="game-world">
+  <div className="room-four">
+    <div className="world">
 
-        <img src={cloud} className="cloud cloud1" alt="" />
-        <img src={cloud} className="cloud cloud2" alt="" />
+      <img src={cloud} className="cloud cloud1" alt="" />
+      <img src={cloud} className="cloud cloud2" alt="" />
 
-        <img
-          ref={marioRef}
-          src={jumping ? marioJump : marioStand}
-          className="mario"
-          style={{
-            transform: `translate(${50 + x}px, ${-y}px)`
-          }}
-          alt="mario"
-        />
+      <img
+        ref={marioRef}
+        src={jumping ? marioJump : marioStand}
+        className="mario"
+        style={{
+          transform: `translate(${50 + x}px, ${-y}px)`
+        }}
+        alt="mario"
+      />
 
-        <img src={castle} className="castle" alt="" />
+      <img src={castle} className="castle" alt="" />
 
-        <img
-          ref={princessRef}
-          src={princess}
-          className={`princess ${finished ? "kiss" : ""}`}
-          alt=""
-        />
+      <img
+        ref={princessRef}
+        src={princess}
+        className={`princess ${finished ? "bounce" : ""}`}
+        alt=""
+      />
 
-        {finished && <div className="center-heart">💖</div>}
+      {finished && <div className="heart float">💖</div>}
 
-      </div>
-
-      {!finished && (
-        <div className="riddle-box">
-          <h2>Help Mario reach the Princess 👑</h2>
-          <p>{riddles[index].q}</p>
-
-          <input
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            onKeyDown={e => e.key === "Enter" && handleAnswer()}
-          />
-
-          <button onClick={handleAnswer}>Answer</button>
-        </div>
-      )}
     </div>
-  );
+
+    {!finished && (
+      <div className="riddle-box">
+        <h2>Help Mario reach the Princess 👑</h2>
+        <p>{riddles[index].q}</p>
+
+        <input
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          onKeyDown={e => e.key === "Enter" && handleAnswer()}
+        />
+
+        <button onClick={handleAnswer}>Answer</button>
+      </div>
+    )}
+  </div>
+);
 }
