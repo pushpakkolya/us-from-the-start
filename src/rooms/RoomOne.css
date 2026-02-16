@@ -1,3 +1,7 @@
+/* ============================= */
+/*        MAIN CONTAINER         */
+/* ============================= */
+
 .roomone-container {
   height: 100vh;
   display: flex;
@@ -11,14 +15,16 @@
   animation: gradientShift 15s ease infinite;
 }
 
-/* Gradient animation */
+/* Gradient Animation */
 @keyframes gradientShift {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-/* Glow elements */
+/* ============================= */
+/*          GLOW BLOBS           */
+/* ============================= */
 
 .glow {
   position: absolute;
@@ -58,7 +64,72 @@
   100% { transform: translateY(0); }
 }
 
-/* Main Card */
+/* ============================= */
+/*            SPARKLES           */
+/* ============================= */
+
+.sparkle {
+  position: absolute;
+  font-size: 14px;
+  opacity: 0;
+  animation: sparkleFloat 6s linear infinite;
+}
+
+.sparkle:nth-of-type(4) {
+  top: 20%;
+  left: 25%;
+  animation-delay: 0s;
+}
+
+.sparkle:nth-of-type(5) {
+  top: 70%;
+  left: 40%;
+  animation-delay: 2s;
+}
+
+.sparkle:nth-of-type(6) {
+  top: 35%;
+  left: 75%;
+  animation-delay: 4s;
+}
+
+@keyframes sparkleFloat {
+  0% { transform: translateY(0); opacity: 0; }
+  20% { opacity: 0.7; }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(-40px); opacity: 0; }
+}
+
+/* ============================= */
+/*            DOODLES            */
+/* ============================= */
+
+.doodle {
+  position: absolute;
+  font-size: 40px;
+  opacity: 0.08;
+  animation: floatDoodle 10s ease-in-out infinite;
+}
+
+.doodle1 {
+  top: 15%;
+  right: 10%;
+}
+
+.doodle2 {
+  bottom: 10%;
+  left: 15%;
+}
+
+@keyframes floatDoodle {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0); }
+}
+
+/* ============================= */
+/*           MAIN CARD           */
+/* ============================= */
 
 .room-card {
   background: rgba(255, 255, 255, 0.85);
@@ -68,6 +139,8 @@
   box-shadow: 0 15px 40px rgba(0,0,0,0.1);
   backdrop-filter: blur(10px);
   animation: fadeIn 0.8s ease;
+  z-index: 2;
+  transition: box-shadow 0.4s ease;
 }
 
 @keyframes fadeIn {
@@ -75,12 +148,31 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Title */
+/* ============================= */
+/*            TITLE              */
+/* ============================= */
 
 .room-title {
   font-size: 32px;
   color: #c9184a;
   margin-bottom: 20px;
+  position: relative;
+}
+
+.room-title::after {
+  content: "";
+  display: block;
+  width: 0%;
+  height: 3px;
+  margin: 8px auto 0;
+  background: linear-gradient(to right, #ff4d6d, #c9184a);
+  border-radius: 10px;
+  animation: underlineGrow 1.2s ease forwards;
+}
+
+@keyframes underlineGrow {
+  from { width: 0%; }
+  to { width: 60%; }
 }
 
 .room-question {
@@ -89,7 +181,9 @@
   color: #6d6875;
 }
 
-/* Input */
+/* ============================= */
+/*             INPUT             */
+/* ============================= */
 
 .room-input {
   padding: 12px 18px;
@@ -107,7 +201,9 @@
   transform: scale(1.03);
 }
 
-/* Unlock Button */
+/* ============================= */
+/*           BUTTON              */
+/* ============================= */
 
 .unlock-btn {
   margin-top: 25px;
@@ -127,11 +223,59 @@
   box-shadow: 0 12px 30px rgba(201, 24, 74, 0.6);
 }
 
-/* Error */
+.unlock-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* ============================= */
+/*           ERROR TEXT          */
+/* ============================= */
 
 .error-text {
   margin-top: 20px;
   font-size: 16px;
   color: #b5179e;
   animation: fadeIn 0.4s ease;
+}
+
+/* ============================= */
+/*        SUCCESS GLOW           */
+/* ============================= */
+
+.success-glow {
+  animation: successPulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes successPulse {
+  from {
+    box-shadow: 0 0 20px rgba(201, 24, 74, 0.3);
+  }
+  to {
+    box-shadow: 0 0 40px rgba(201, 24, 74, 0.6);
+  }
+}
+
+/* ============================= */
+/*     TRANSITION MESSAGE        */
+/* ============================= */
+
+.transition-message {
+  margin-top: 25px;
+  font-size: 18px;
+  color: #c9184a;
+  opacity: 0;
+  animation: fadeSmirk 0.8s ease forwards;
+  font-style: italic;
+}
+
+@keyframes fadeSmirk {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
