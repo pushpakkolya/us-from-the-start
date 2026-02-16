@@ -38,9 +38,8 @@ export default function RoomFour() {
     const princessCenter = princessRect.left + princessRect.width / 2;
 
     const totalDistance = princessCenter - marioCenter - 40;
-
-    // Divide total distance by remaining riddles
     const remaining = riddles.length - index;
+
     const dynamicStep = isFinal
       ? totalDistance
       : totalDistance / remaining;
@@ -56,7 +55,8 @@ export default function RoomFour() {
 
       if (t < 1) {
         const progressX = startX + (endX - startX) * t;
-        const progressY = -4 * height * (t - 0.5) * (t - 0.5) + height;
+        const progressY =
+          -4 * height * (t - 0.5) * (t - 0.5) + height;
 
         setX(progressX);
         setY(progressY);
@@ -72,7 +72,7 @@ export default function RoomFour() {
 
           setTimeout(() => {
             setShowBirthday(true);
-          }, 1800);
+          }, 2500);
         }
       }
     }
@@ -82,7 +82,6 @@ export default function RoomFour() {
 
   const handleAnswer = () => {
     if (input.toLowerCase().trim() === riddles[index].a) {
-
       if (index < riddles.length - 1) {
         performJump();
         setIndex(i => i + 1);
@@ -108,47 +107,47 @@ export default function RoomFour() {
   }
 
   return (
-  <div className="room-four">
-    <div className="world">
+    <div className="room-four">
+      <div className="world">
 
-      <img src={cloud} className="cloud cloud1" alt="" />
-      <img src={cloud} className="cloud cloud2" alt="" />
+        <img src={cloud} className="cloud cloud1" alt="" />
+        <img src={cloud} className="cloud cloud2" alt="" />
 
-<img
-  ref={marioRef}
-  src={jumping ? marioJump : marioStand}
-  className={`mario ${finished ? "kiss" : ""}`}
-  style={{
-    transform: `translate(${50 + x}px, ${-y}px)`
-  }}
-  alt="mario"
-/>
+        <img
+          ref={marioRef}
+          src={jumping ? marioJump : marioStand}
+          className={`mario ${finished ? "kiss" : ""}`}
+          style={{
+            transform: `translate(${50 + x}px, ${-y}px)`
+          }}
+          alt="mario"
+        />
 
+        <img src={castle} className="castle" alt="" />
 
-      <img src={castle} className="castle" alt="" />
+        <img
+          ref={princessRef}
+          src={princess}
+          className={`princess ${finished ? "bounce" : ""}`}
+          alt=""
+        />
 
-      <img
-        ref={princessRef}
-        src={princess}
-        className={`princess ${finished ? "bounce" : ""}`}
-        alt=""
-      />
+        {finished && (
+          <>
+            <div className="heart float">💖</div>
 
-      {finished && (
-  <>
-    <div className="heart float">💖</div>
-    <div className="sparkle"></div>
-    <div className="sparkle"></div>
-    <div className="sparkle"></div>
-    <div className="sparkle"></div>
-  </>
-)}
+            <div className="sparkle-container">
+              <div className="sparkle s1"></div>
+              <div className="sparkle s2"></div>
+              <div className="sparkle s3"></div>
+              <div className="sparkle s4"></div>
+            </div>
+          </>
+        )}
 
+      </div>
 
-    </div>
-
-    {!finished && (
-      <div className="riddle-box">
+      <div className={`riddle-box ${finished ? "locked" : ""}`}>
         <h2>Help Mario reach the Princess 👑</h2>
         <p>{riddles[index].q}</p>
 
@@ -160,7 +159,6 @@ export default function RoomFour() {
 
         <button onClick={handleAnswer}>Answer</button>
       </div>
-    )}
-  </div>
-);
+    </div>
+  );
 }
