@@ -9,31 +9,29 @@ import photo6 from "../assets/photo6.jpg";
 
 export default function RoomTwo({ onComplete }) {
 
-  /* -------------------------
-     Cinematic Intro State
-  ------------------------- */
-  const [showIntro, setShowIntro] = useState(true);
-  const [lineIndex, setLineIndex] = useState(0);
+/* -------------------------
+   Cinematic Intro State
+------------------------- */
+const [showIntro, setShowIntro] = useState(true);
+const [lineIndex, setLineIndex] = useState(0);
 
-  const introLines = [
-    "Hiiii Bubbachii 🥰.. There is something i have been cooking over the last few days for youu 🤪 ",
-    "I bareley held it together without telling you for this long",
-    "I just wanted to make something that feels even a tiny bit as special as you make me feel every single day.",
-    "But more than the surprise itself, I just want you to know how grateful I am for you.",
-    "ilaaaavuuuuuuu bubbaa 💞.. Sooo sooo Muchhh. Hope you enjoy this. ",
-    
-  ];
+const introLines = [
+  "Hiiii Bubbachii 🥰.. There is something i have been cooking over the last few days for youu 🤪 ",
+  "I bareley held it together without telling you for this long",
+  "I just wanted to make something that feels even a tiny bit as special as you make me feel every single day.",
+  "But more than the surprise itself, I just want you to know how grateful I am for you.",
+  "ilaaaavuuuuuuu bubbaa 💞.. Sooo sooo Muchhh. Hope you enjoy this."
+];
 
-  useEffect(() => {
-    if (lineIndex < introLines.length) {
-      const timer = setTimeout(() => {
-        setLineIndex(prev => prev + 1);
-      }, 1800);
-      return () => clearTimeout(timer);
-    } else {
-      setTimeout(() => setShowIntro(false), 1200);
-    }
-  }, [lineIndex]);
+useEffect(() => {
+  if (lineIndex < introLines.length - 1) {
+    const timer = setTimeout(() => {
+      setLineIndex(prev => prev + 1);
+    }, 2200); // slower now
+    return () => clearTimeout(timer);
+  }
+}, [lineIndex]);
+
 
   /* -------------------------
      Gallery State
@@ -98,13 +96,23 @@ export default function RoomTwo({ onComplete }) {
       </div>
 
       {/* Cinematic Intro */}
-      {showIntro && (
-        <div className="cinematic-intro">
-          {introLines.slice(0, lineIndex).map((line, i) => (
-            <p key={i} className="intro-line">{line}</p>
-          ))}
-        </div>
-      )}
+{showIntro && (
+  <div className="cinematic-intro">
+    {introLines.slice(0, lineIndex + 1).map((line, i) => (
+      <p key={i} className="intro-line">{line}</p>
+    ))}
+
+    {lineIndex === introLines.length - 1 && (
+      <button
+        className="intro-continue-btn"
+        onClick={() => setShowIntro(false)}
+      >
+        Continue 🤍
+      </button>
+    )}
+  </div>
+)}
+
 
       {/* Gallery */}
       <div className={`gallery-wrapper ${showIntro ? "hidden" : "visible"}`}>
