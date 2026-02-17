@@ -44,32 +44,32 @@ export default function RoomTwo({ onComplete }) {
 
   const images = [
     {
-      src: photo1,
+      src: photo4,
       short: "The first memory 🌸",
       long: "This was the moment I realized something was changing inside me..."
     },
     {
-      src: "/images/pic2.jpg",
+      src: photo3,
       short: "That smile 💕",
       long: "Every time you smiled like this, my world softened."
     },
     {
-      src: "/images/pic3.jpg",
+      src: photo6,
       short: "Our chaos ✨",
       long: "Not perfect. Not planned. But perfectly ours."
     },
     {
-      src: "/images/pic4.jpg",
+      src: photo5,
       short: "That day 🌙",
       long: "Time felt slower. Lighter. Safer."
     },
     {
-      src: "/images/pic5.jpg",
+      src: photo2,
       short: "Us being us 🥹",
       long: "No filters. No pretending. Just comfort."
     },
     {
-      src: "/images/pic6.jpg",
+      src: photo1,
       short: "Still my favorite 💖",
       long: "If I could relive one frame forever, it might be this one."
     }
