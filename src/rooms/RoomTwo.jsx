@@ -12,37 +12,37 @@ import photo6 from "../assets/photo6.jpg";;
 const images = [
   {
     id: 1,
-    src: "photo1.jpg",
+    src: photo1 ,
     short: "The Day I Realized.",
     long: "This was the day I knew something felt different. The way you laughed, the way you looked at me... it stayed with me longer than I expected."
   },
   {
     id: 2,
-    src: "photo1.jpg",
+    src: photo1 ,
     short: "Your Soft Smile.",
     long: "Your smile is unfair. It fixes my worst days. It makes everything around you feel warmer."
   },
   {
     id: 3,
-    src: "photo1.jpg",
+    src: photo1 ,
     short: "Our Chaos.",
     long: "We are chaotic, dramatic, ridiculous… but somehow perfect in our own way."
   },
   {
     id: 4,
-    src: "photo1.jpg",
+    src: photo1 ,
     short: "That Moment.",
     long: "Time slowed down here. I didn’t want the moment to end."
   },
   {
     id: 5,
-    src: "photo1.jpg",
+    src: photo1 ,
     short: "You Being You.",
     long: "The softest heart. The cutest soul. The most precious human."
   },
   {
     id: 6,
-    src: "photo1.jpg",
+    src: photo1 ,
     short: "Still My Favorite.",
     long: "No matter how many days pass, you are still my favorite notification."
   }
