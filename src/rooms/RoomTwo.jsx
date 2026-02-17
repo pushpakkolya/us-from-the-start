@@ -53,14 +53,14 @@ useEffect(() => {
     },
     {
       src: photo6,
-      short: "Our chaos ✨",
-      long: "Not perfect. Not planned. But perfectly ours."
+      short: "The chaos ✨",
+      long: "The sudden energy bursts that you have; cutest and the most satisfying chaos ever. One minute you are a couch potato and the next second you are a monkey on a tree and honestly I cannot imagine my life without your mayhem now 💞. "
     },
     {
       src: photo5,
-      short: "That day 🌙",
-      long: "Time felt slower. Lighter. Safer."
-    },
+      short: "Yeah, She is that pretty 😌",
+         long: "The prettiest. I love every inch of youu, inside out and I cant stop flexing youu. You are the prettiest when you smile. And you manage to be ridiculously cute at the same time 🥱. I dont want to admit it but I hope your genes wins and we get cute babies like youu 🫣"
+       },
     {
       src: photo2,
       short: "Us being us 🥹",
