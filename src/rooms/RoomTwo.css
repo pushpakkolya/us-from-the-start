@@ -1,38 +1,110 @@
-.room-two {
+/* ===============================
+   MAIN CONTAINER (MATCHES JSX)
+================================ */
+
+.room-two-container {
   min-height: 100vh;
   background: linear-gradient(to bottom, #f5ede4, #f0dfcf);
   padding: 60px 20px;
   text-align: center;
-  transition: all 0.3s ease;
   position: relative;
   overflow-x: hidden;
 }
 
-/* Blur when modal is active */
-.room-two.blurred .gallery-grid,
-.room-two.blurred .gallery-title {
-  filter: blur(8px);
-  transition: filter 0.3s ease;
+/* ===============================
+   DREAMY FLOATING PARTICLES
+================================ */
+
+.dream-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
 }
 
-/* Title */
-.gallery-title {
-  font-size: 2.5rem;
-  font-family: 'Playfair Display', serif;
-  color: #5e4633;
-  margin-bottom: 50px;
+.particle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 240, 220, 0.4);
+  border-radius: 50%;
+  animation: floatUp 12s infinite linear;
 }
 
-/* Grid */
+.particle:nth-child(odd) {
+  width: 6px;
+  height: 6px;
+  animation-duration: 16s;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(100vh) translateX(0);
+    opacity: 0;
+  }
+  20% { opacity: 1; }
+  100% {
+    transform: translateY(-20vh) translateX(40px);
+    opacity: 0;
+  }
+}
+
+/* ===============================
+   CINEMATIC INTRO
+================================ */
+
+.cinematic-intro {
+  position: fixed;
+  inset: 0;
+  background: #f5ede4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+  padding: 20px;
+}
+
+.intro-line {
+  font-family: 'Dancing Script', cursive;
+  font-size: 22px;
+  color: #7a5c50;
+  max-width: 650px;
+  margin: 10px 0;
+  animation: textFade 1.2s ease forwards;
+}
+
+@keyframes textFade {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Hide gallery during intro */
+.gallery-wrapper.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.gallery-wrapper.visible {
+  opacity: 1;
+  transition: opacity 1.5s ease;
+}
+
+/* ===============================
+   GALLERY
+================================ */
+
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 30px;
   max-width: 1000px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
-/* Square Images */
+/* Square images */
 .gallery-item {
   position: relative;
   width: 100%;
@@ -48,40 +120,52 @@
   transform: scale(1.05);
 }
 
-.gallery-item img {
+.gallery-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  animation: glowPulse 4s ease-in-out infinite;
 }
 
-/* Overlay */
-.overlay {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
-  color: white;
-  padding: 15px;
+/* Soft glow pulse */
+@keyframes glowPulse {
+  0% { box-shadow: 0 0 0px rgba(255, 223, 186, 0.3); }
+  50% { box-shadow: 0 0 25px rgba(255, 223, 186, 0.6); }
+  100% { box-shadow: 0 0 0px rgba(255, 223, 186, 0.3); }
+}
+
+.short-text {
+  margin-top: 8px;
   font-size: 1rem;
   font-family: 'Poppins', sans-serif;
+  color: #6e5b4b;
 }
 
 /* ===============================
-   MODAL (Adjusted Only Here)
+   EPIC MESSAGE
 ================================ */
 
-.modal {
+.epic-message {
+  margin-top: 40px;
+  font-family: 'Dancing Script', cursive;
+  font-size: 24px;
+  color: #5e4633;
+  animation: fadeIn 2s ease forwards;
+}
+
+/* ===============================
+   MODAL (MATCHES JSX)
+================================ */
+
+.modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   backdrop-filter: blur(12px);
   background: rgba(0, 0, 0, 0.25);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px; /* important for mobile */
+  padding: 20px;
   animation: fadeIn 0.4s ease forwards;
   z-index: 1000;
 }
@@ -91,16 +175,15 @@
   padding: 32px;
   border-radius: 25px;
   width: 100%;
-  max-width: 420px;   /* smaller than 500px */
+  max-width: 420px;
   text-align: center;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
   animation: zoomIn 0.4s ease forwards;
 }
 
-/* 👇 THIS controls image size */
-.modal-content img {
+.modal-image {
   width: 100%;
-  max-width: 300px;   /* smaller image */
+  max-width: 300px;
   margin: 0 auto 20px;
   display: block;
   aspect-ratio: 1 / 1;
@@ -108,34 +191,11 @@
   border-radius: 15px;
 }
 
-/* Text */
-.modal-content h2 {
-  font-family: 'Playfair Display', serif;
-  margin-bottom: 15px;
-  color: #5e4633;
-}
-
-.modal-content p {
+.long-text {
   font-family: 'Poppins', sans-serif;
   color: #6e5b4b;
   margin-bottom: 25px;
   line-height: 1.6;
-}
-
-/* Button */
-.modal-content button {
-  background: #e8cfc1;
-  border: none;
-  padding: 10px 25px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-family: 'Poppins', sans-serif;
-  transition: all 0.3s ease;
-}
-
-.modal-content button:hover {
-  background: #d9b9a9;
-  transform: scale(1.05);
 }
 
 /* Responsive tweak */
@@ -144,7 +204,7 @@
     max-width: 480px;
   }
 
-  .modal-content img {
+  .modal-image {
     max-width: 340px;
   }
 }
