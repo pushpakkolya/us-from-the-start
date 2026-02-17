@@ -43,13 +43,13 @@ useEffect(() => {
   const images = [
     {
       src: photo4,
-      short: "The first memory 🌸",
-      long: "This was the moment I realized something was changing inside me..."
+      short: "The endless laughters 🌸",
+      long: "Never stop laughing your heart out (Except when you are driving 🙈). I absolutely love it when explode in laughter over anything. No matter how bad my mood is or how drained I am, seeing your 28 🦷 (27+1🫣 ) makes me feel 100 times better"
     },
     {
       src: photo3,
-      short: "That smile 💕",
-      long: "Every time you smiled like this, my world softened."
+      short: "That Drama 💕",
+      long: "Your drama isn’t loud. It’s silent, no Chaos but Dangerous😌. Paapa Meeee 🥲. The way you just go quiet and suddenly I’m questioning every decision I’ve made since 1996 😭. No shouting. No chaos. Just that calm “I’m fine. And somehow that’s 10x more powerful. But honestly? Even your silent treatment is cute. Because behind that subtle queen energy is the softest heart… and I love every version of you 💞 "
     },
     {
       src: photo6,
