@@ -97,24 +97,31 @@
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 30px;
+  gap: 40px;              /* more breathing space */
   max-width: 1000px;
-  margin: 0 auto;
+  margin: 60px auto;      /* padding around gallery */
+  padding: 0 20px;        /* side spacing */
   position: relative;
   z-index: 1;
 }
+
 
 /* Square images */
 .gallery-item {
   position: relative;
   width: 100%;
   aspect-ratio: 1 / 1;
-  overflow: hidden;
-  border-radius: 20px;
+  border-radius: 24px;
   cursor: pointer;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
   transition: transform 0.3s ease;
+  
+  /* NEW */
+  padding: 14px;               /* space inside the card */
+  background: #f6efe8;         /* soft beige card */
 }
+
+
 
 .gallery-item:hover {
   transform: scale(1.05);
@@ -135,11 +142,13 @@
 }
 
 .short-text {
-  margin-top: 8px;
+  margin-top: 12px;        /* spacing from image */
   font-size: 1rem;
   font-family: 'Poppins', sans-serif;
   color: #6e5b4b;
+  text-align: center;
 }
+
 
 /* ===============================
    EPIC MESSAGE
@@ -225,3 +234,28 @@
     opacity: 1;
   }
 }
+
+.intro-continue-btn {
+  margin-top: 30px;
+  background: #e8cfc1;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 25px;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.intro-continue-btn:hover {
+  background: #d9b9a9;
+  transform: scale(1.05);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 18px;         /* slightly smaller than parent */
+  transition: transform 0.4s ease;
+}
+
