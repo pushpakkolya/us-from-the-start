@@ -25,11 +25,8 @@
 
 .memory-card img {
   width: 100%;
-  aspect-ratio: 1 / 1;   /* Forces perfect square */
-  object-fit: cover;     /* Crops nicely without stretching */
   border-radius: 14px;
 }
-
 
 .memory-card p {
   margin-top: 15px;
