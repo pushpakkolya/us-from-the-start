@@ -1,112 +1,78 @@
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./RoomTwo.css";
 
-import photo1 from "../assets/photo1.jpg";
-import photo2 from "../assets/photo2.jpg";
-import photo3 from "../assets/photo3.jpg";
-import photo4 from "../assets/photo4.jpg";
-import photo5 from "../assets/photo5.jpg";
-import photo6 from "../assets/photo6.jpg";
+const images = [
+  {
+    id: 1,
+    src: "/images/pic1.jpg",
+    short: "The Day I Realized.",
+    long: "This was the day I knew something felt different. The way you laughed, the way you looked at me... it stayed with me longer than I expected."
+  },
+  {
+    id: 2,
+    src: "/images/pic2.jpg",
+    short: "Your Soft Smile.",
+    long: "Your smile is unfair. It fixes my worst days. It makes everything around you feel warmer."
+  },
+  {
+    id: 3,
+    src: "/images/pic3.jpg",
+    short: "Our Chaos.",
+    long: "We are chaotic, dramatic, ridiculous… but somehow perfect in our own way."
+  },
+  {
+    id: 4,
+    src: "/images/pic4.jpg",
+    short: "That Moment.",
+    long: "Time slowed down here. I didn’t want the moment to end."
+  },
+  {
+    id: 5,
+    src: "/images/pic5.jpg",
+    short: "You Being You.",
+    long: "The softest heart. The cutest soul. The most precious human."
+  },
+  {
+    id: 6,
+    src: "/images/pic6.jpg",
+    short: "Still My Favorite.",
+    long: "No matter how many days pass, you are still my favorite notification."
+  }
+];
 
-export default function RoomTwo({ onComplete }) {
-  const lines = [
-    "Before today ends...",
-    "I need you to see something.",
-    "Not just pictures.",
-    "But moments that changed everything."
-  ];
-
-  const [visibleLines, setVisibleLines] = useState(0);
-  const [showMemories, setShowMemories] = useState(false);
-  const [showButton, setShowButton] = useState(false);
-  const [activeCard, setActiveCard] = useState(null);
-
-  useEffect(() => {
-    if (visibleLines < lines.length) {
-      const timer = setTimeout(() => {
-        setVisibleLines((prev) => prev + 1);
-      }, 1800);
-      return () => clearTimeout(timer);
-    } else {
-      setTimeout(() => setShowMemories(true), 1200);
-      setTimeout(() => setShowButton(true), 9000);
-    }
-  }, [visibleLines]);
-
-  const toggleCard = (index) => {
-    setActiveCard(activeCard === index ? null : index);
-  };
-
-  const memories = [
-    {
-      img: photo1,
-      short: "This is when I started noticing you differently.",
-      long: "I don't think you even realized how much you changed something in me that day. The way you looked, the way you laughed… it stayed with me longer than I expected. And somehow, everything after that felt different."
-    },
-    {
-      img: photo2,
-      short: "Your smile here? Yeah… it still wins.",
-      long: "That smile has this quiet power. It makes everything feel lighter. Even on days you don't feel your best, you still manage to light up every space you're in."
-    },
-    {
-      img: photo3,
-      short: "This day felt softer. Warmer. Safer.",
-      long: "There was something about this moment that just felt calm. Like the world slowed down a little. And I remember thinking… if life feels like this with you, I'm okay."
-    },
-    {
-      img: photo4,
-      short: "I replay this moment more than you think.",
-      long: "Not because it's perfect. But because it’s real. And I love the real moments with you more than anything polished or planned."
-    },
-    {
-      img: photo5,
-      short: "You make everything feel lighter.",
-      long: "Even when life gets overwhelming, being around you shifts something. You make ordinary days feel special without even trying."
-    },
-    {
-      img: photo6,
-      short: "And somehow… you just keep getting better.",
-      long: "I didn’t think it was possible to admire someone more over time. But here we are. Every year, every memory, every laugh… you just keep surprising me."
-    }
-  ];
+export default function RoomTwo() {
+  const [activeImage, setActiveImage] = useState(null);
 
   return (
-    <div className="cinema-container">
-      <div className="cinema-overlay"></div>
+    <div className={`room-two ${activeImage ? "blurred" : ""}`}>
+      
+      <h1 className="gallery-title">A Little Piece of Us 🤍</h1>
 
-      <div className="intro-text">
-        {lines.slice(0, visibleLines).map((line, index) => (
-          <p key={index} className="cinema-line">
-            {line}
-          </p>
+      <div className="gallery-grid">
+        {images.map((img) => (
+          <div
+            key={img.id}
+            className="gallery-item"
+            onClick={() => setActiveImage(img)}
+          >
+            <img src={img.src} alt="" />
+            <div className="overlay">
+              <p>{img.short}</p>
+            </div>
+          </div>
         ))}
       </div>
 
-      {showMemories && (
-        <div className="memory-sequence">
-          {memories.map((memory, index) => (
-            <div
-              key={index}
-              className={`memory-card ${activeCard === index ? "active" : ""}`}
-              onClick={() => toggleCard(index)}
-            >
-              <img src={memory.img} alt="" />
-              <p className="short-text">{memory.short}</p>
-
-              {activeCard === index && (
-                <div className="long-text">
-                  <p>{memory.long}</p>
-                </div>
-              )}
-            </div>
-          ))}
+      {/* Modal */}
+      {activeImage && (
+        <div className="modal">
+          <div className="modal-content">
+            <img src={activeImage.src} alt="" />
+            <h2>{activeImage.short}</h2>
+            <p>{activeImage.long}</p>
+            <button onClick={() => setActiveImage(null)}>Close 🤍</button>
+          </div>
         </div>
-      )}
-
-      {showButton && (
-        <button className="cinema-button" onClick={onComplete}>
-          Continue ❤️
-        </button>
       )}
     </div>
   );
