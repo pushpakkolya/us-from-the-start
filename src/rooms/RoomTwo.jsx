@@ -13,7 +13,7 @@ export default function RoomTwo({ onComplete }) {
     "Before today ends...",
     "I need you to see something.",
     "Not just pictures.",
-    "But moments that changed everything.",
+    "But moments that changed everything."
   ];
 
   const [visibleLines, setVisibleLines] = useState(0);
@@ -28,7 +28,7 @@ export default function RoomTwo({ onComplete }) {
       return () => clearTimeout(timer);
     } else {
       setTimeout(() => setShowMemories(true), 1200);
-      setTimeout(() => setShowButton(true), 8000);
+      setTimeout(() => setShowButton(true), 8500);
     }
   }, [visibleLines]);
 
@@ -90,4 +90,3 @@ export default function RoomTwo({ onComplete }) {
     </div>
   );
 }
- 
