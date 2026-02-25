@@ -91,28 +91,26 @@ useEffect(() => {
 {/* Dreamy floating particles */}
 <div className="dream-particles">
 
-  {/* particles */}
   {[...Array(15)].map((_, i) => (
     <span
       key={i}
       className="particle"
       style={{
-        left: `${Math.random() * 100}%`,
-        animationDelay: `${Math.random() * 15}s`,
-        animationDuration: `${12 + Math.random() * 10}s`
+        left: `${(i * 7) % 100}%`,
+        animationDelay: `${i * 0.8}s`,
+        animationDuration: `18s`
       }}
     />
   ))}
 
-  {/* floating hearts */}
   {[...Array(6)].map((_, i) => (
     <span
       key={"heart" + i}
       className="floating-heart"
       style={{
-        left: `${Math.random() * 100}%`,
-        animationDelay: `${Math.random() * 20}s`,
-        animationDuration: `${18 + Math.random() * 10}s`
+        left: `${(i * 15) % 100}%`,
+        animationDelay: `${i * 1.5}s`,
+        animationDuration: `22s`
       }}
     >
       ❤
