@@ -15,17 +15,35 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      # Checkout repo
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      # Setup Node with official npm registry
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 20
+          registry-url: https://registry.npmjs.org/
 
-      - run: npm install
-      - run: npm run build
+      # Clear any corrupted npm cache
+      - name: Clear npm cache
+        run: npm cache clean --force
 
-      - uses: actions/upload-pages-artifact@v3
+      # Install dependencies using official registry
+      - name: Install dependencies
+        run: npm install --registry=https://registry.npmjs.org/
+
+      # Build project
+      - name: Build
+        run: npm run build
+
+      # Upload build artifact
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
-      - uses: actions/deploy-pages@v4
+      # Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
