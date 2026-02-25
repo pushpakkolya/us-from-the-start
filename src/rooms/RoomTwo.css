@@ -1,242 +1,205 @@
-/* ===============================
-   MAIN CONTAINER
-================================ */
+import { useState, useEffect } from "react";
+import "./RoomTwo.css";
 
-.room-two-container {
-  min-height: 100vh;
-  background: linear-gradient(to bottom, #f5ede4, #f0dfcf);
-  padding: 60px 20px;
-  text-align: center;
-  position: relative;
-  overflow-x: hidden;
-}
+import photo1 from "../assets/photo1.jpg";
+import photo2 from "../assets/photo2.jpg";
+import photo3 from "../assets/photo3.jpg";
+import photo4 from "../assets/photo4.jpg";
+import photo5 from "../assets/photo5.jpg";
+import photo6 from "../assets/photo6.jpg";
 
-/* soft dreamy glow */
-.dream-glow {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 20% 30%, rgba(255,220,180,0.25), transparent 40%),
-    radial-gradient(circle at 80% 70%, rgba(255,200,220,0.2), transparent 40%);
-  z-index: 0;
-}
+export default function RoomTwo({ onComplete }) {
 
-/* ===============================
-   PARTICLES
-================================ */
+/* -------------------------
+   Cinematic Intro State
+------------------------- */
+const [showIntro, setShowIntro] = useState(true);
+const [lineIndex, setLineIndex] = useState(0);
 
-.dream-particles {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-}
+const introLines = [
+  "Hiiii Bubbachii 🥰.. There is something i have been cooking over the last few days for youu 🤪 ",
+  "I bareley held it together without telling you for this long",
+  "I just wanted to make something that feels even a tiny bit as special as you make me feel every single day.",
+  "But more than the surprise itself, I just want you to know how grateful I am for you.",
+  "ilaaaavuuuuuuu bubbaa 💞.. Sooo sooo Muchhh. Hope you enjoy this."
+];
 
-.particle {
-  position: absolute;
-  bottom: -20px;
-  width: 8px;
-  height: 8px;
-  background: rgba(255,240,220,0.5);
-  border-radius: 50%;
-  animation: floatUp linear infinite;
-}
-
-/* random positions */
-.particle:nth-child(1) { left: 10%; animation-duration: 14s; }
-.particle:nth-child(2) { left: 20%; animation-duration: 18s; }
-.particle:nth-child(3) { left: 30%; animation-duration: 16s; }
-.particle:nth-child(4) { left: 40%; animation-duration: 20s; }
-.particle:nth-child(5) { left: 50%; animation-duration: 15s; }
-.particle:nth-child(6) { left: 60%; animation-duration: 17s; }
-.particle:nth-child(7) { left: 70%; animation-duration: 19s; }
-.particle:nth-child(8) { left: 80%; animation-duration: 16s; }
-.particle:nth-child(9) { left: 90%; animation-duration: 18s; }
-
-@keyframes floatUp {
-  from {
-    transform: translateY(0);
-    opacity: 0;
+useEffect(() => {
+  if (lineIndex < introLines.length - 1) {
+    const timer = setTimeout(() => {
+      setLineIndex(prev => prev + 1);
+    }, 2200);
+    return () => clearTimeout(timer);
   }
-  20% {
-    opacity: 1;
-  }
-  to {
-    transform: translateY(-110vh);
-    opacity: 0;
-  }
+}, [lineIndex]);
+
+/* -------------------------
+   Gallery State
+------------------------- */
+
+const [selectedImage, setSelectedImage] = useState(null);
+const [openedImages, setOpenedImages] = useState([]);
+const [openedCount, setOpenedCount] = useState(0);
+
+const images = [
+{
+src: photo4, 
+short: "The endless laughters 🌸", 
+long: "Never stop laughing your heart out (Except when you are driving 🙈). I absolutely love it when explode in laughter over anything. No matter how bad my mood is or how drained I am, seeing your 28 🦷 (27+1🫣 ) makes me feel 100 times better"
+},
+{
+src: photo3, 
+   short: "That Drama 💕", 
+   long: "Your drama isn’t loud. It’s silent, no Chaos but Dangerous😌. Paapa Meeee 🥲. The way you just go quiet and suddenly I’m questioning every decision I’ve made since 1996 😭. No shouting. No chaos. Just that calm “I’m fine. And somehow that’s 10x more powerful. But honestly? Even your silent treatment is cute. Because behind that subtle queen energy is the softest heart… and I love every version of you 💞 "
+},
+{
+src: photo6, 
+short: "The chaos ✨", 
+   long: "The sudden energy bursts that you have; cutest and the most satisfying chaos ever. One minute you are a couch potato and the next second you are a monkey on a tree and honestly I cannot imagine my life without your mayhem now 💞. "
+},
+{
+src: photo5, 
+   short: "Yeah, She is that pretty 😌", 
+   long: "The prettiest. I love every inch of youu, inside out and I cant stop flexing youu. You are the prettiest when you smile. And you manage to be ridiculously cute at the same time 🥱. I dont want to admit it but I hope your genes wins and we get cute babies like youu 🫣"
+},
+{
+src: photo2, 
+   short: "Us being us 🥹", 
+   long: "No filters. No pretending. Just comfort. Just being ourselves, without trying to be anything more or less. Random plans that weren’t planned 🚗. Fun adventures that started with a simple “let’s go?” . Taking turns we didn’t expect, changing routes halfway, and still ending up exactly where we were meant to be 💞. Somehow, with you, even the simplest things feel exciting. I somehow have all the energy in the world to do anything with you 🫣"
+},
+{
+src: photo1,
+short: "Still my favorite 💖",
+long: "If I could relive one frame forever..."
+}
+];
+
+const handleImageClick = (index) => {
+
+if (!openedImages.includes(index)) {
+setOpenedImages(prev => [...prev, index]);
+setOpenedCount(prev => prev + 1);
 }
 
-/* ===============================
-   INTRO
-================================ */
+setSelectedImage(index);
 
-.cinematic-intro {
-  position: fixed;
-  inset: 0;
-  background: #f5ede4;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-  padding: 20px;
-}
+};
 
-.intro-line {
-  font-family: 'Dancing Script', cursive;
-  font-size: 22px;
-  color: #7a5c50;
-  margin: 10px 0;
-  animation: fadeUp 1s ease forwards;
-}
+const closeModal = () => {
+setSelectedImage(null);
+};
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+return (
 
-.intro-continue-btn {
-  margin-top: 30px;
-  background: #e8cfc1;
-  border: none;
-  padding: 12px 28px;
-  border-radius: 25px;
-  cursor: pointer;
-  font-family: 'Poppins', sans-serif;
-  transition: 0.3s;
-}
+<div className={`room-two-container ${selectedImage !== null ? "modal-open" : ""}`}>
 
-.intro-continue-btn:hover {
-  background: #d9b9a9;
-  transform: scale(1.05);
-}
+{/* Ambient Light */}
+<div className="vignette"></div>
 
-/* ===============================
-   GALLERY
-================================ */
+{/* Dream Particles */}
+<div className="dream-particles">
+{[...Array(18)].map((_, i) => (
+<span key={i} className="particle"></span>
+))}
+</div>
 
-.gallery-wrapper.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
+{/* Cinematic Intro */}
+{showIntro && (
+<div className="cinematic-intro">
 
-.gallery-wrapper.visible {
-  opacity: 1;
-  transition: opacity 1.5s ease;
-}
+{introLines.slice(0, lineIndex + 1).map((line, i) => (
+<p key={i} className="intro-line">{line}</p>
+))}
 
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 40px;
-  max-width: 1000px;
-  margin: 60px auto;
-  padding: 0 20px;
-  position: relative;
-  z-index: 2;
-}
+{lineIndex === introLines.length - 1 && (
+<button
+className="intro-continue-btn"
+onClick={() => setShowIntro(false)}
+>
+Continue 🤍
+</button>
+)}
 
-/* card */
-.gallery-item {
-  background: #f6efe8;
-  padding: 14px;
-  border-radius: 24px;
-  cursor: pointer;
-  transition: 0.3s;
-}
+</div>
+)}
 
-.gallery-item:hover {
-  transform: scale(1.05);
-}
+{/* Gallery */}
 
-/* opened memory glow */
-.gallery-item.opened {
-  box-shadow: 0 0 25px rgba(255,200,180,0.6);
-}
+<div className={`gallery-wrapper ${showIntro ? "hidden" : "visible"}`}>
 
-.gallery-image {
-  width: 100%;
-  aspect-ratio: 1/1;
-  object-fit: cover;
-  border-radius: 18px;
-}
+<div className="gallery-grid">
 
-.short-text {
-  margin-top: 12px;
-  font-family: 'Poppins', sans-serif;
-  color: #6e5b4b;
-}
+{images.map((img, index) => (
 
-/* ===============================
-   EPIC MESSAGE
-================================ */
+<div
+key={index}
+className="gallery-item"
+onClick={() => handleImageClick(index)}
+>
 
-.epic-message {
-  margin-top: 40px;
-  font-family: 'Dancing Script', cursive;
-  font-size: 26px;
-  animation: fadeIn 2s ease forwards;
-}
+<div className="image-wrapper">
 
-/* ===============================
-   MODAL
-================================ */
+<img
+src={img.src}
+alt=""
+className="gallery-image"
+/>
 
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  backdrop-filter: blur(12px);
-  background: rgba(0,0,0,0.25);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 20;
-}
+<div className="image-shimmer"></div>
 
-.modal-content {
-  background: #fffaf5;
-  padding: 32px;
-  border-radius: 25px;
-  max-width: 420px;
-  width: 90%;
-  animation: zoomIn 0.4s ease;
-}
+</div>
 
-.modal-image {
-  width: 100%;
-  border-radius: 15px;
-  margin-bottom: 20px;
-}
+<p className="short-text">
+{img.short}
+</p>
 
-.long-text {
-  font-family: 'Poppins', sans-serif;
-  color: #6e5b4b;
-  line-height: 1.6;
-}
+</div>
 
-/* ===============================
-   ANIMATIONS
-================================ */
+))}
 
-@keyframes zoomIn {
-  from {
-    transform: scale(.8);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
+</div>
 
-@keyframes fadeIn {
-  from { opacity:0 }
-  to { opacity:1 }
+{openedCount === 6 && (
+<div className="epic-message">
+✨ You unlocked every memory ✨
+</div>
+)}
+
+</div>
+
+{/* Modal */}
+
+{selectedImage !== null && (
+
+<div className="modal-overlay" onClick={closeModal}>
+
+<div
+className="modal-content"
+onClick={(e) => e.stopPropagation()}
+>
+
+<button
+className="close-btn"
+onClick={closeModal}
+>
+✕
+</button>
+
+<img
+src={images[selectedImage].src}
+alt=""
+className="modal-image"
+/>
+
+<p className="long-text">
+{images[selectedImage].long}
+</p>
+
+</div>
+
+</div>
+)}
+
+</div>
+);
 }
