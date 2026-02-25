@@ -21,14 +21,20 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          registry-url: https://registry.npmjs.org/
+          node-version: 18   # ✅ USE NODE 18 (NOT 20)
+          
+      - name: Fix npm registry
+        run: |
+          npm config set registry https://registry.npmjs.org/
+          npm config set strict-ssl false
+          npm config set fund false
+          npm config set audit false
 
-      - name: Clear npm cache
+      - name: Clear cache
         run: npm cache clean --force
 
       - name: Install dependencies
-        run: npm install --no-audit --no-fund
+        run: npm install --legacy-peer-deps
 
       - name: Build
         run: npm run build
