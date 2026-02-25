@@ -1,485 +1,240 @@
-/* ===============================
-   MAIN CONTAINER (MATCHES JSX)
-================================ */
 
-.room-two-container {
-  min-height: 100vh;
-  background: linear-gradient(to bottom, #f5ede4, #f0dfcf);
-  padding: 60px 20px;
-  text-align: center;
-  position: relative;
-  overflow-x: hidden;
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* ===============================
-   DREAMY FLOATING PARTICLES
-================================ */
-
-.dream-particles {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+    height: 100vh;
+    overflow-x: hidden;
+    color: #333;
 }
 
-.particle {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  background: rgba(255, 240, 220, 0.4);
-  border-radius: 50%;
-  animation: floatUp 12s infinite linear;
+/* MAIN CONTAINER */
+.container {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 }
 
-.particle:nth-child(odd) {
-  width: 6px;
-  height: 6px;
-  animation-duration: 16s;
+/* QUESTION CARD */
+.question-box {
+    position: relative;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 40px 30px;
+    text-align: center;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+
+    /* IMPORTANT FIXES */
+    z-index: 10;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* QUESTION TITLE */
+.question-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 32px;
+    color: white;
+    margin-bottom: 10px;
+
+    /* FIX visibility */
+    opacity: 1;
+    visibility: visible;
+    z-index: 11;
+    position: relative;
+}
+
+/* SHORT DESCRIPTION */
+.question-description {
+    font-size: 16px;
+    color: white;
+    margin-bottom: 25px;
+
+    /* FIX visibility */
+    opacity: 1;
+    visibility: visible;
+    z-index: 11;
+    position: relative;
+}
+
+/* BUTTON CONTAINER */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+
+    position: relative;
+    z-index: 12;
+}
+
+/* BUTTONS */
+button {
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* YES BUTTON */
+.yes-btn {
+    background: #ff4d6d;
+    color: white;
+}
+
+.yes-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(255,77,109,0.7);
+}
+
+/* NO BUTTON */
+.no-btn {
+    background: #aaa;
+    color: white;
+    position: relative;
+}
+
+.no-btn:hover {
+    transform: scale(1.1);
+}
+
+/* HIDDEN QUESTIONS */
+.hidden {
+    display: none;
+}
+
+/* ACTIVE QUESTION */
+.active {
+    display: block;
+    animation: fadeIn 0.8s ease forwards;
+}
+
+/* FADE IN ANIMATION */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* HEART ANIMATION */
+.heart {
+    position: absolute;
+    color: red;
+    font-size: 24px;
+    animation: floatUp 4s linear infinite;
+    opacity: 0.8;
 }
 
 @keyframes floatUp {
-  0% {
-    transform: translateY(100vh) translateX(0);
-    opacity: 0;
-  }
-  20% { opacity: 1; }
-  100% {
-    transform: translateY(-20vh) translateX(40px);
-    opacity: 0;
-  }
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-600px);
+        opacity: 0;
+    }
 }
 
-/* ===============================
-   CINEMATIC INTRO
-================================ */
+/* BACKGROUND HEARTS CONTAINER */
+.hearts-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
 
-.cinematic-intro {
-  position: fixed;
-  inset: 0;
-  background: #f5ede4;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 5;
-  padding: 20px;
+    /* IMPORTANT FIX */
+    z-index: 1;
 }
 
-.intro-line {
-  font-family: 'Dancing Script', cursive;
-  font-size: 22px;
-  color: #7a5c50;
-  max-width: 650px;
-  margin: 10px 0;
-  animation: textFade 1.2s ease forwards;
+/* FINAL MESSAGE */
+.final-message {
+    font-size: 34px;
+    font-family: 'Dancing Script', cursive;
+    color: white;
+    animation: fadeIn 2s ease forwards;
+
+    position: relative;
+    z-index: 20;
 }
 
-@keyframes textFade {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
+/* SPARKLE EFFECT */
+.sparkle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+    animation: sparkleAnim 1s ease-out forwards;
 }
 
-/* Hide gallery during intro */
-.gallery-wrapper.hidden {
-  opacity: 0;
-  pointer-events: none;
+@keyframes sparkleAnim {
+    from {
+        transform: scale(0);
+        opacity: 1;
+    }
+    to {
+        transform: scale(2);
+        opacity: 0;
+    }
 }
 
-.gallery-wrapper.visible {
-  opacity: 1;
-  transition: opacity 1.5s ease;
+/* PREVENT ANY OVERLAY BLOCKING TEXT */
+.overlay,
+.background-overlay,
+.effect-layer {
+    pointer-events: none;
+    z-index: 0;
 }
 
-/* ===============================
-   GALLERY
-================================ */
-
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 40px;              /* more breathing space */
-  max-width: 1000px;
-  margin: 60px auto;      /* padding around gallery */
-  padding: 0 20px;        /* side spacing */
-  position: relative;
-  z-index: 1;
+/* ENSURE ALL QUESTIONS STACK PROPERLY */
+#question1,
+#question2,
+#question3,
+#question4,
+#question5,
+#finalQuestion {
+    position: relative;
+    z-index: 10;
 }
 
-
-/* Square images */
-.gallery-item {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  border-radius: 24px;
-  cursor: pointer;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-  transition: transform 0.3s ease;
-  
-  /* NEW */
-  padding: 14px;               /* space inside the card */
-  background: #f6efe8;         /* soft beige card */
-}
-
-
-
-.gallery-item:hover {
-  transform: scale(1.05);
-}
-
-.gallery-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  animation: glowPulse 4s ease-in-out infinite;
-}
-
-/* Soft glow pulse */
-@keyframes glowPulse {
-  0% { box-shadow: 0 0 0px rgba(255, 223, 186, 0.3); }
-  50% { box-shadow: 0 0 25px rgba(255, 223, 186, 0.6); }
-  100% { box-shadow: 0 0 0px rgba(255, 223, 186, 0.3); }
-}
-
-.short-text {
-  margin-top: 12px;        /* spacing from image */
-  font-size: 1rem;
-  font-family: 'Poppins', sans-serif;
-  color: #6e5b4b;
-  text-align: center;
-}
-
-
-/* ===============================
-   EPIC MESSAGE
-================================ */
-
-.epic-message {
-  margin-top: 40px;
-  font-family: 'Dancing Script', cursive;
-  font-size: 24px;
-  color: #5e4633;
-  animation: fadeIn 2s ease forwards;
-}
-
-/* ===============================
-   MODAL (MATCHES JSX)
-================================ */
-
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  backdrop-filter: blur(12px);
-  background: rgba(0, 0, 0, 0.25);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  animation: fadeIn 0.4s ease forwards;
-  z-index: 1000;
-}
-
-.modal-content {
-  background: #fffaf5;
-  padding: 32px;
-  border-radius: 25px;
-  width: 100%;
-  max-width: 420px;
-  text-align: center;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-  animation: zoomIn 0.4s ease forwards;
-}
-
-.modal-image {
-  width: 100%;
-  max-width: 300px;
-  margin: 0 auto 20px;
-  display: block;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: 15px;
-}
-
-.long-text {
-  font-family: 'Poppins', sans-serif;
-  color: #6e5b4b;
-  margin-bottom: 25px;
-  line-height: 1.6;
-}
-
-/* Responsive tweak */
-@media (min-width: 768px) {
-  .modal-content {
-    max-width: 480px;
-  }
-
-  .modal-image {
-    max-width: 340px;
-  }
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes zoomIn {
-  from {
-    transform: scale(0.85);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-.intro-continue-btn {
-  margin-top: 30px;
-  background: #e8cfc1;
-  border: none;
-  padding: 12px 28px;
-  border-radius: 25px;
-  font-family: 'Poppins', sans-serif;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.intro-continue-btn:hover {
-  background: #d9b9a9;
-  transform: scale(1.05);
-}
-
-.gallery-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 18px;         /* slightly smaller than parent */
-  transition: transform 0.4s ease;
-}
-
-
-/* ===============================
-   PAGE FADE IN (soft entrance)
-================================ */
-
-.room-two-container {
-  animation: pageFadeIn 1.5s ease;
-}
-
-@keyframes pageFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-
-/* ===============================
-   FLOATING PARTICLES — softer + magical
-================================ */
-
-.particle {
-  animation: floatUpCute 18s infinite linear;
-  opacity: 0;
-}
-
-.particle:nth-child(1) { left: 5%; animation-delay: 0s; }
-.particle:nth-child(2) { left: 12%; animation-delay: 2s; }
-.particle:nth-child(3) { left: 20%; animation-delay: 4s; }
-.particle:nth-child(4) { left: 28%; animation-delay: 1s; }
-.particle:nth-child(5) { left: 36%; animation-delay: 6s; }
-.particle:nth-child(6) { left: 44%; animation-delay: 3s; }
-.particle:nth-child(7) { left: 52%; animation-delay: 7s; }
-.particle:nth-child(8) { left: 60%; animation-delay: 2s; }
-.particle:nth-child(9) { left: 68%; animation-delay: 5s; }
-.particle:nth-child(10){ left: 76%; animation-delay: 8s; }
-.particle:nth-child(11){ left: 84%; animation-delay: 4s; }
-.particle:nth-child(12){ left: 92%; animation-delay: 9s; }
-.particle:nth-child(13){ left: 18%; animation-delay: 11s; }
-.particle:nth-child(14){ left: 48%; animation-delay: 13s; }
-.particle:nth-child(15){ left: 78%; animation-delay: 15s; }
-
-@keyframes floatUpCute {
-
-  0% {
-    transform: translateY(100vh) translateX(0) scale(0.8);
-    opacity: 0;
-  }
-
-  15% {
-    opacity: 1;
-  }
-
-  50% {
-    transform: translateY(40vh) translateX(20px) scale(1);
-  }
-
-  100% {
-    transform: translateY(-20vh) translateX(-20px) scale(0.9);
-    opacity: 0;
-  }
-
-}
-
-
-/* ===============================
-   GALLERY CARDS — cute float effect
-================================ */
-
-.gallery-item {
-  animation: cardFloat 6s ease-in-out infinite;
-}
-
-.gallery-item:nth-child(1) { animation-delay: 0s; }
-.gallery-item:nth-child(2) { animation-delay: 0.5s; }
-.gallery-item:nth-child(3) { animation-delay: 1s; }
-.gallery-item:nth-child(4) { animation-delay: 1.5s; }
-.gallery-item:nth-child(5) { animation-delay: 2s; }
-.gallery-item:nth-child(6) { animation-delay: 2.5s; }
-
-@keyframes cardFloat {
-
-  0% {
-    transform: translateY(0px);
-  }
-
-  50% {
-    transform: translateY(-8px);
-  }
-
-  100% {
-    transform: translateY(0px);
-  }
-
-}
-
-
-/* ===============================
-   IMAGE HOVER — soft zoom + glow
-================================ */
-
-.gallery-item:hover img {
-
-  transform: scale(1.07);
-
-  box-shadow:
-    0 15px 40px rgba(255, 200, 180, 0.5),
-    0 0 30px rgba(255, 210, 210, 0.4);
-
-}
-
-
-/* ===============================
-   SHORT TEXT — gentle fade in
-================================ */
-
-.short-text {
-  animation: textAppear 1.5s ease forwards;
-  opacity: 0;
-}
-
-@keyframes textAppear {
-
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-}
-
-
-/* ===============================
-   MODAL — romantic entrance
-================================ */
-
-.modal-content {
-  animation: modalCuteEnter 0.5s ease forwards;
-}
-
-@keyframes modalCuteEnter {
-
-  0% {
-    transform: scale(0.8) translateY(20px);
-    opacity: 0;
-  }
-
-  60% {
-    transform: scale(1.05);
-  }
-
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-
-}
-
-
-/* ===============================
-   EPIC MESSAGE — magical glow
-================================ */
-
-.epic-message {
-
-  animation:
-    fadeIn 2s ease forwards,
-    glowCute 3s ease-in-out infinite;
-
-}
-
-@keyframes glowCute {
-
-  0% {
-    text-shadow: 0 0 0px rgba(255,200,200,0.4);
-  }
-
-  50% {
-    text-shadow:
-      0 0 20px rgba(255,200,200,0.9),
-      0 0 40px rgba(255,220,220,0.6);
-  }
-
-  100% {
-    text-shadow: 0 0 0px rgba(255,200,200,0.4);
-  }
-
-}
-
-
-/* ===============================
-   BUTTON — cute heartbeat
-================================ */
-
-.intro-continue-btn {
-
-  animation: heartbeat 2s infinite;
-
-}
-
-@keyframes heartbeat {
-
-  0% { transform: scale(1); }
-  25% { transform: scale(1.05); }
-  40% { transform: scale(1); }
-  60% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-
-}
-
-.intro-continue-btn:hover {
-
-  animation: none;
-  transform: scale(1.1);
-
+/* FIX FOR MOBILE */
+@media (max-width: 600px) {
+    .question-box {
+        padding: 25px 20px;
+    }
+
+    .question-title {
+        font-size: 26px;
+    }
+
+    .question-description {
+        font-size: 14px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 10px 20px;
+    }
 }
