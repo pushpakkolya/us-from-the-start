@@ -9,6 +9,11 @@
   text-align: center;
   position: relative;
   overflow-x: hidden;
+
+  /* FIX: important for particles layering */
+  overflow: hidden;
+  isolation: isolate;
+
   animation: pageFadeIn 1.5s ease;
 }
 
@@ -32,29 +37,48 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
+
+  /* FIX: must be above background but below gallery */
   z-index: 1;
 }
 
 /* glowing particles */
 .particle {
   position: absolute;
-  bottom: -30px;
+  bottom: -40px;
+
   width: 8px;
   height: 8px;
+
   background: rgba(255, 200, 160, 0.95);
   border-radius: 50%;
-  box-shadow: 0 0 12px rgba(255, 180, 140, 0.9);
+
+  box-shadow:
+    0 0 12px rgba(255, 180, 140, 0.9),
+    0 0 20px rgba(255, 200, 160, 0.6);
+
   animation: floatUp linear infinite;
+
+  /* FIX: ensure visible */
+  opacity: 0;
 }
 
 /* floating hearts */
 .floating-heart {
   position: absolute;
-  bottom: -30px;
-  font-size: 16px;
-  color: rgba(255, 140, 170, 0.85);
-  text-shadow: 0 0 10px rgba(255, 120, 160, 0.9);
+  bottom: -40px;
+
+  font-size: 18px;
+  color: rgba(255, 140, 170, 0.9);
+
+  text-shadow:
+    0 0 10px rgba(255, 120, 160, 0.9),
+    0 0 18px rgba(255, 140, 170, 0.6);
+
   animation: floatUp linear infinite;
+
+  /* FIX */
+  opacity: 0;
 }
 
 /* single float animation */
@@ -74,7 +98,7 @@
   }
 
   100% {
-    transform: translateY(-110vh) translateX(-20px);
+    transform: translateY(-120vh) translateX(-20px);
     opacity: 0;
   }
 
@@ -149,6 +173,8 @@
 
 .gallery-wrapper {
   position: relative;
+
+  /* FIX: above particles */
   z-index: 2;
 }
 
