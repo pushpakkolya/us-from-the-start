@@ -238,3 +238,60 @@ button {
         padding: 10px 20px;
     }
 }
+
+/* ===== VISIBILITY FIX (DO NOT REMOVE EXISTING CSS) ===== */
+
+/* Ensure question containers are visible */
+.question-container,
+.question-box,
+.question {
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 5 !important;
+}
+
+/* Ensure titles are visible */
+.question h1,
+.question h2,
+.question-title {
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: relative !important;
+    z-index: 6 !important;
+}
+
+/* Ensure descriptions are visible */
+.question p,
+.question-description,
+.description {
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: relative !important;
+    z-index: 6 !important;
+}
+
+/* Ensure active questions display */
+.question.active,
+.active {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Ensure hidden only hides inactive ones */
+.question.hidden {
+    display: none !important;
+}
+
+/* Prevent background effects from covering text */
+.hearts,
+.hearts-container,
+.background,
+.bg-animation {
+    z-index: 0 !important;
+}
+
+.container {
+    z-index: 2 !important;
+    position: relative !important;
+}
