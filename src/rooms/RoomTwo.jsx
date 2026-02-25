@@ -63,17 +63,81 @@ export default function RoomTwo({
         setSelectedImage(null);
     };
 return (
-  <div className={`room-two-container ${selectedImage !== null ? "modal-open" : ""}`}>
-        }
-    } > {
-        /* Ambient Light */ } < div className = "vignette" > < /div> {/ * Dream Particles * /} <div className="dream-particles"> {[...Array(18)].map((_, i) => ( <span key={i} className="particle"></span > ))
-} < /div> {/ * Cinematic Intro * /} {showIntro && ( <div className="cinematic-intro"> {introLines.slice(0, lineIndex + 1).map((line, i) => ( <p key={i} className="intro-line">{line}</p > ))
-} {
-    lineIndex === introLines.length - 1 && ( < button className = "intro-continue-btn"
-        onClick = {
-            () => setShowIntro(false)
-        } > Continue🤍 < /button> )} </div > )
-} {
+
+<div className={`room-two-container ${selectedImage !== null ? "modal-open" : ""}`}>
+
+{/* Ambient Light */}
+<div className="vignette"></div>
+
+{/* Dream Particles */}
+<div className="dream-particles">
+  {[...Array(18)].map((_, i) => (
+    <span key={i} className="particle"></span>
+  ))}
+</div>
+
+{/* Cinematic Intro */}
+{showIntro && (
+  <div className="cinematic-intro">
+
+    {introLines.slice(0, lineIndex + 1).map((line, i) => (
+      <p key={i} className="intro-line">{line}</p>
+    ))}
+
+    {lineIndex === introLines.length - 1 && (
+      <button
+        className="intro-continue-btn"
+        onClick={() => setShowIntro(false)}
+      >
+        Continue 🤍
+      </button>
+    )}
+
+  </div>
+)}
+
+{/* Gallery */}
+<div className={`gallery-wrapper ${showIntro ? "hidden" : "visible"}`}>
+
+  <div className="gallery-grid">
+
+    {images.map((img, index) => (
+
+      <div
+        key={index}
+        className="gallery-item"
+        onClick={() => handleImageClick(index)}
+      >
+
+        <div className="image-wrapper">
+
+          <img
+            src={img.src}
+            alt=""
+            className="gallery-image"
+          />
+
+          <div className="image-shimmer"></div>
+
+        </div>
+
+        <p className="short-text">
+          {img.short}
+        </p>
+
+      </div>
+
+    ))}
+
+  </div>
+
+  {openedCount === 6 && (
+    <div className="epic-message">
+      ✨ You unlocked every memory ✨
+    </div>
+  )}
+
+</div> {
     /* Gallery */ } < div className = {
 gallery - wrapper $ {
     showIntro ? "hidden" : "visible"
