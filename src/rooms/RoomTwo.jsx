@@ -11,7 +11,7 @@ import photo6 from "../assets/photo6.jpg";
 export default function RoomTwo({ onComplete }) {
 
 /* -------------------------
-   Cinematic Intro State
+   Cinematic Intro State 
 ------------------------- */
 const [showIntro, setShowIntro] = useState(true);
 const [lineIndex, setLineIndex] = useState(0);
