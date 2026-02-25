@@ -137,11 +137,8 @@ return (
     </div>
   )}
 
-</div> {
-    /* Gallery */ } < div className = {
-gallery - wrapper $ {
-    showIntro ? "hidden" : "visible"
-}
+</div>{/* Gallery */}
+<div className={`gallery-wrapper ${showIntro ? "hidden" : "visible"}`}>
 } > < div className = "gallery-grid" > {
 images.map((img, index) => ( < div key = {
         index
