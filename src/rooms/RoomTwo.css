@@ -8,12 +8,7 @@
   padding: 60px 20px;
   text-align: center;
   position: relative;
-  overflow-x: hidden;
-
-  /* FIX: important for particles layering */
-  overflow: hidden;
-  isolation: isolate;
-
+  overflow: hidden; /* FIX: required for particles */
   animation: pageFadeIn 1.5s ease;
 }
 
@@ -30,16 +25,15 @@
 
 
 /* ===============================
-   DREAMY FLOATING PARTICLES
+   DREAMY FLOATING PARTICLES (FIXED)
 ================================ */
 
 .dream-particles {
   position: absolute;
   inset: 0;
   pointer-events: none;
-
-  /* FIX: must be above background but below gallery */
-  z-index: 1;
+  z-index: 0;
+  overflow: hidden;
 }
 
 /* glowing particles */
@@ -47,20 +41,26 @@
   position: absolute;
   bottom: -40px;
 
+  display: block;
+
   width: 8px;
   height: 8px;
 
-  background: rgba(255, 200, 160, 0.95);
   border-radius: 50%;
+  background: rgba(255, 200, 160, 1);
 
   box-shadow:
-    0 0 12px rgba(255, 180, 140, 0.9),
-    0 0 20px rgba(255, 200, 160, 0.6);
+    0 0 10px rgba(255,180,140,1),
+    0 0 20px rgba(255,180,140,0.8),
+    0 0 35px rgba(255,180,140,0.6);
 
-  animation: floatUp linear infinite;
-
-  /* FIX: ensure visible */
   opacity: 0;
+
+  animation-name: floatUp;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+
+  will-change: transform, opacity;
 }
 
 /* floating hearts */
@@ -68,24 +68,30 @@
   position: absolute;
   bottom: -40px;
 
+  display: block;
+
   font-size: 18px;
-  color: rgba(255, 140, 170, 0.9);
+  color: rgba(255, 140, 170, 1);
 
   text-shadow:
-    0 0 10px rgba(255, 120, 160, 0.9),
-    0 0 18px rgba(255, 140, 170, 0.6);
+    0 0 10px rgba(255,120,160,1),
+    0 0 20px rgba(255,120,160,0.8),
+    0 0 35px rgba(255,120,160,0.6);
 
-  animation: floatUp linear infinite;
-
-  /* FIX */
   opacity: 0;
+
+  animation-name: floatUp;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+
+  will-change: transform, opacity;
 }
 
-/* single float animation */
+/* animation */
 @keyframes floatUp {
 
   0% {
-    transform: translateY(0) translateX(0);
+    transform: translateY(0);
     opacity: 0;
   }
 
@@ -93,12 +99,8 @@
     opacity: 1;
   }
 
-  50% {
-    transform: translateY(-50vh) translateX(20px);
-  }
-
   100% {
-    transform: translateY(-120vh) translateX(-20px);
+    transform: translateY(-120vh);
     opacity: 0;
   }
 
@@ -155,9 +157,11 @@
   font-family: 'Poppins', sans-serif;
   cursor: pointer;
   background: linear-gradient(135deg, #f0d5c8, #e8cfc1);
+
   box-shadow:
     0 5px 15px rgba(0,0,0,0.15),
     0 0 15px rgba(255,210,210,0.4);
+
   transition: all 0.3s ease;
 }
 
@@ -173,8 +177,6 @@
 
 .gallery-wrapper {
   position: relative;
-
-  /* FIX: above particles */
   z-index: 2;
 }
 
@@ -250,6 +252,7 @@
 
 .gallery-item:hover {
   transform: scale(1.07) translateY(-6px);
+
   box-shadow:
     0 15px 40px rgba(0,0,0,0.18),
     0 0 25px rgba(255,210,210,0.4);
@@ -304,8 +307,9 @@
   font-size: 24px;
   color: #5e4633;
 
-  animation: epicFade 2s ease forwards,
-             epicGlow 3s ease-in-out infinite;
+  animation:
+    epicFade 2s ease forwards,
+    epicGlow 3s ease-in-out infinite;
 }
 
 @keyframes epicFade {
