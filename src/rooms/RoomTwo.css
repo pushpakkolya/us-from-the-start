@@ -258,3 +258,228 @@
   border-radius: 18px;         /* slightly smaller than parent */
   transition: transform 0.4s ease;
 }
+
+
+/* ===============================
+   PAGE FADE IN (soft entrance)
+================================ */
+
+.room-two-container {
+  animation: pageFadeIn 1.5s ease;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ===============================
+   FLOATING PARTICLES — softer + magical
+================================ */
+
+.particle {
+  animation: floatUpCute 18s infinite linear;
+  opacity: 0;
+}
+
+.particle:nth-child(1) { left: 5%; animation-delay: 0s; }
+.particle:nth-child(2) { left: 12%; animation-delay: 2s; }
+.particle:nth-child(3) { left: 20%; animation-delay: 4s; }
+.particle:nth-child(4) { left: 28%; animation-delay: 1s; }
+.particle:nth-child(5) { left: 36%; animation-delay: 6s; }
+.particle:nth-child(6) { left: 44%; animation-delay: 3s; }
+.particle:nth-child(7) { left: 52%; animation-delay: 7s; }
+.particle:nth-child(8) { left: 60%; animation-delay: 2s; }
+.particle:nth-child(9) { left: 68%; animation-delay: 5s; }
+.particle:nth-child(10){ left: 76%; animation-delay: 8s; }
+.particle:nth-child(11){ left: 84%; animation-delay: 4s; }
+.particle:nth-child(12){ left: 92%; animation-delay: 9s; }
+.particle:nth-child(13){ left: 18%; animation-delay: 11s; }
+.particle:nth-child(14){ left: 48%; animation-delay: 13s; }
+.particle:nth-child(15){ left: 78%; animation-delay: 15s; }
+
+@keyframes floatUpCute {
+
+  0% {
+    transform: translateY(100vh) translateX(0) scale(0.8);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  50% {
+    transform: translateY(40vh) translateX(20px) scale(1);
+  }
+
+  100% {
+    transform: translateY(-20vh) translateX(-20px) scale(0.9);
+    opacity: 0;
+  }
+
+}
+
+
+/* ===============================
+   GALLERY CARDS — cute float effect
+================================ */
+
+.gallery-item {
+  animation: cardFloat 6s ease-in-out infinite;
+}
+
+.gallery-item:nth-child(1) { animation-delay: 0s; }
+.gallery-item:nth-child(2) { animation-delay: 0.5s; }
+.gallery-item:nth-child(3) { animation-delay: 1s; }
+.gallery-item:nth-child(4) { animation-delay: 1.5s; }
+.gallery-item:nth-child(5) { animation-delay: 2s; }
+.gallery-item:nth-child(6) { animation-delay: 2.5s; }
+
+@keyframes cardFloat {
+
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+
+}
+
+
+/* ===============================
+   IMAGE HOVER — soft zoom + glow
+================================ */
+
+.gallery-item:hover img {
+
+  transform: scale(1.07);
+
+  box-shadow:
+    0 15px 40px rgba(255, 200, 180, 0.5),
+    0 0 30px rgba(255, 210, 210, 0.4);
+
+}
+
+
+/* ===============================
+   SHORT TEXT — gentle fade in
+================================ */
+
+.short-text {
+  animation: textAppear 1.5s ease forwards;
+  opacity: 0;
+}
+
+@keyframes textAppear {
+
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+
+/* ===============================
+   MODAL — romantic entrance
+================================ */
+
+.modal-content {
+  animation: modalCuteEnter 0.5s ease forwards;
+}
+
+@keyframes modalCuteEnter {
+
+  0% {
+    transform: scale(0.8) translateY(20px);
+    opacity: 0;
+  }
+
+  60% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+}
+
+
+/* ===============================
+   EPIC MESSAGE — magical glow
+================================ */
+
+.epic-message {
+
+  animation:
+    fadeIn 2s ease forwards,
+    glowCute 3s ease-in-out infinite;
+
+}
+
+@keyframes glowCute {
+
+  0% {
+    text-shadow: 0 0 0px rgba(255,200,200,0.4);
+  }
+
+  50% {
+    text-shadow:
+      0 0 20px rgba(255,200,200,0.9),
+      0 0 40px rgba(255,220,220,0.6);
+  }
+
+  100% {
+    text-shadow: 0 0 0px rgba(255,200,200,0.4);
+  }
+
+}
+
+
+/* ===============================
+   BUTTON — cute heartbeat
+================================ */
+
+.intro-continue-btn {
+
+  animation: heartbeat 2s infinite;
+
+}
+
+@keyframes heartbeat {
+
+  0% { transform: scale(1); }
+  25% { transform: scale(1.05); }
+  40% { transform: scale(1); }
+  60% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+
+}
+
+.intro-continue-btn:hover {
+
+  animation: none;
+  transform: scale(1.1);
+
+}
