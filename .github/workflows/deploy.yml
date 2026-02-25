@@ -15,35 +15,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout repo
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Setup Node with official npm registry
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org/
+          cache: 'npm'
 
-      # Clear any corrupted npm cache
       - name: Clear npm cache
         run: npm cache clean --force
 
-      # Install dependencies using official registry
-      - name: Install dependencies
-        run: npm install --registry=https://registry.npmjs.org/
+      - name: Remove lock file and node_modules
+        run: |
+          rm -rf node_modules
+          rm -f package-lock.json
 
-      # Build project
-      - name: Build
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Build project
         run: npm run build
 
-      # Upload build artifact
-      - name: Upload Pages artifact
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
-      # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
