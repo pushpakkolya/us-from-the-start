@@ -1,5 +1,5 @@
 /* ===============================
-   MAIN CONTAINER
+   MAIN CONTAINER (MATCHES JSX)
 ================================ */
 
 .room-two-container {
@@ -8,24 +8,11 @@
   padding: 60px 20px;
   text-align: center;
   position: relative;
-  overflow: hidden; /* FIX: required for particles */
-  animation: pageFadeIn 1.5s ease;
+  overflow-x: hidden;
 }
-
-@keyframes pageFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 
 /* ===============================
-   DREAMY FLOATING PARTICLES (FIXED)
+   DREAMY FLOATING PARTICLES
 ================================ */
 
 .dream-particles {
@@ -33,79 +20,34 @@
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  overflow: hidden;
 }
 
-/* glowing particles */
 .particle {
   position: absolute;
-  bottom: -40px;
-
-  display: block;
-
-  width: 8px;
-  height: 8px;
-
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 240, 220, 0.4);
   border-radius: 50%;
-  background: rgba(255, 200, 160, 1);
-
-  box-shadow:
-    0 0 10px rgba(255,180,140,1),
-    0 0 20px rgba(255,180,140,0.8),
-    0 0 35px rgba(255,180,140,0.6);
-
-  opacity: 0.9;
-
-  animation-name: floatUp;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-
-  will-change: transform, opacity;
+  animation: floatUp 12s infinite linear;
 }
 
-/* floating hearts */
-.floating-heart {
-  position: absolute;
-  bottom: -40px;
-
-  display: block;
-
-  font-size: 18px;
-  color: rgba(255, 140, 170, 1);
-
-  text-shadow:
-    0 0 10px rgba(255,120,160,1),
-    0 0 20px rgba(255,120,160,0.8),
-    0 0 35px rgba(255,120,160,0.6);
-
-  opacity: 0.9;
-
-  animation-name: floatUp;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-
-  will-change: transform, opacity;
+.particle:nth-child(odd) {
+  width: 6px;
+  height: 6px;
+  animation-duration: 16s;
 }
 
-/* animation */
 @keyframes floatUp {
-
   0% {
-    transform: translateY(0);
+    transform: translateY(100vh) translateX(0);
     opacity: 0;
   }
-
-  10% {
-    opacity: 1;
-  }
-
+  20% { opacity: 1; }
   100% {
-    transform: translateY(-120vh);
+    transform: translateY(-20vh) translateX(40px);
     opacity: 0;
   }
-
 }
-
 
 /* ===============================
    CINEMATIC INTRO
@@ -114,7 +56,7 @@
 .cinematic-intro {
   position: fixed;
   inset: 0;
-  background: linear-gradient(to bottom, #f5ede4, #f2e3d5);
+  background: #f5ede4;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -130,56 +72,14 @@
   max-width: 650px;
   margin: 10px 0;
   animation: textFade 1.2s ease forwards;
-  text-shadow: 0 0 8px rgba(255, 210, 210, 0.3);
 }
 
 @keyframes textFade {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-
-/* ===============================
-   CONTINUE BUTTON
-================================ */
-
-.intro-continue-btn {
-  margin-top: 30px;
-  border: none;
-  padding: 12px 28px;
-  border-radius: 25px;
-  font-family: 'Poppins', sans-serif;
-  cursor: pointer;
-  background: linear-gradient(135deg, #f0d5c8, #e8cfc1);
-
-  box-shadow:
-    0 5px 15px rgba(0,0,0,0.15),
-    0 0 15px rgba(255,210,210,0.4);
-
-  transition: all 0.3s ease;
-}
-
-.intro-continue-btn:hover {
-  background: linear-gradient(135deg, #e5c0b0, #d9b9a9);
-  transform: scale(1.05);
-}
-
-
-/* ===============================
-   GALLERY WRAPPER
-================================ */
-
-.gallery-wrapper {
-  position: relative;
-  z-index: 2;
-}
-
+/* Hide gallery during intro */
 .gallery-wrapper.hidden {
   opacity: 0;
   pointer-events: none;
@@ -190,110 +90,63 @@
   transition: opacity 1.5s ease;
 }
 
-
 /* ===============================
-   GALLERY GRID
+   GALLERY
 ================================ */
 
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 40px;
+  gap: 40px;              /* more breathing space */
   max-width: 1000px;
-  margin: 60px auto;
-  padding: 0 20px;
+  margin: 60px auto;      /* padding around gallery */
+  padding: 0 20px;        /* side spacing */
   position: relative;
-  z-index: 2;
+  z-index: 1;
 }
 
 
-/* ===============================
-   GALLERY ITEM CARD
-================================ */
-
+/* Square images */
 .gallery-item {
   position: relative;
-  z-index: 2;
   width: 100%;
   aspect-ratio: 1 / 1;
   border-radius: 24px;
   cursor: pointer;
-  padding: 14px;
-  background: #f6efe8;
-  backdrop-filter: blur(8px);
-
-  border: 1px solid rgba(255,255,255,0.35);
-
-  box-shadow:
-    0 10px 30px rgba(0,0,0,0.12);
-
-  transition: all 0.35s ease;
-  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  transition: transform 0.3s ease;
+  
+  /* NEW */
+  padding: 14px;               /* space inside the card */
+  background: #f6efe8;         /* soft beige card */
 }
 
-.gallery-item::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 24px;
-  background: linear-gradient(
-    120deg,
-    rgba(255,210,210,0.2),
-    rgba(255,240,220,0.15),
-    rgba(255,210,230,0.2)
-  );
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
 
-.gallery-item:hover::before {
-  opacity: 1;
-}
 
 .gallery-item:hover {
-  transform: scale(1.07) translateY(-6px);
-
-  box-shadow:
-    0 15px 40px rgba(0,0,0,0.18),
-    0 0 25px rgba(255,210,210,0.4);
+  transform: scale(1.05);
 }
-
-
-/* ===============================
-   IMAGE
-================================ */
 
 .gallery-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 18px;
-  transition: transform 0.4s ease;
+  animation: glowPulse 4s ease-in-out infinite;
 }
 
-.gallery-item:hover img {
-  transform: scale(1.08);
+/* Soft glow pulse */
+@keyframes glowPulse {
+  0% { box-shadow: 0 0 0px rgba(255, 223, 186, 0.3); }
+  50% { box-shadow: 0 0 25px rgba(255, 223, 186, 0.6); }
+  100% { box-shadow: 0 0 0px rgba(255, 223, 186, 0.3); }
 }
-
-
-/* ===============================
-   SHORT TEXT
-================================ */
 
 .short-text {
-  margin-top: 12px;
+  margin-top: 12px;        /* spacing from image */
   font-size: 1rem;
   font-family: 'Poppins', sans-serif;
   color: #6e5b4b;
   text-align: center;
-  opacity: 0.9;
-  transition: all 0.3s ease;
-}
-
-.gallery-item:hover .short-text {
-  opacity: 1;
-  transform: translateY(-2px);
-  color: #5a4636;
 }
 
 
@@ -306,45 +159,18 @@
   font-family: 'Dancing Script', cursive;
   font-size: 24px;
   color: #5e4633;
-
-  animation:
-    epicFade 2s ease forwards,
-    epicGlow 3s ease-in-out infinite;
+  animation: fadeIn 2s ease forwards;
 }
-
-@keyframes epicFade {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes epicGlow {
-  0% {
-    text-shadow: 0 0 0px rgba(255,200,200,0.4);
-  }
-  50% {
-    text-shadow: 0 0 20px rgba(255,200,200,0.9);
-  }
-  100% {
-    text-shadow: 0 0 0px rgba(255,200,200,0.4);
-  }
-}
-
 
 /* ===============================
-   MODAL
+   MODAL (MATCHES JSX)
 ================================ */
 
 .modal-overlay {
   position: fixed;
   inset: 0;
   backdrop-filter: blur(12px);
-  background: rgba(0,0,0,0.25);
+  background: rgba(0, 0, 0, 0.25);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -354,19 +180,13 @@
 }
 
 .modal-content {
-  background: linear-gradient(145deg, #fffaf5, #fff4ec);
+  background: #fffaf5;
   padding: 32px;
   border-radius: 25px;
   width: 100%;
   max-width: 420px;
   text-align: center;
-
-  border: 1px solid rgba(255,220,200,0.4);
-
-  box-shadow:
-    0 25px 60px rgba(0,0,0,0.25),
-    0 0 30px rgba(255,210,210,0.2);
-
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
   animation: zoomIn 0.4s ease forwards;
 }
 
@@ -378,10 +198,6 @@
   aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 15px;
-
-  box-shadow:
-    0 10px 30px rgba(0,0,0,0.15),
-    0 0 25px rgba(255,210,210,0.4);
 }
 
 .long-text {
@@ -391,9 +207,21 @@
   line-height: 1.6;
 }
 
+/* Responsive tweak */
+@media (min-width: 768px) {
+  .modal-content {
+    max-width: 480px;
+  }
+
+  .modal-image {
+    max-width: 340px;
+  }
+}
+
+/* Animations */
 @keyframes fadeIn {
-  from { opacity: 0 }
-  to { opacity: 1 }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes zoomIn {
@@ -405,4 +233,28 @@
     transform: scale(1);
     opacity: 1;
   }
+}
+
+.intro-continue-btn {
+  margin-top: 30px;
+  background: #e8cfc1;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 25px;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.intro-continue-btn:hover {
+  background: #d9b9a9;
+  transform: scale(1.05);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 18px;         /* slightly smaller than parent */
+  transition: transform 0.4s ease;
 }
