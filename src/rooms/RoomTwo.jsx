@@ -62,9 +62,8 @@ export default function RoomTwo({
     const closeModal = () => {
         setSelectedImage(null);
     };
-    return ( < div className = {
-        room - two - container $ {
-            selectedImage !== null ? "modal-open" : ""
+return (
+  <div className={`room-two-container ${selectedImage !== null ? "modal-open" : ""}`}>
         }
     } > {
         /* Ambient Light */ } < div className = "vignette" > < /div> {/ * Dream Particles * /} <div className="dream-particles"> {[...Array(18)].map((_, i) => ( <span key={i} className="particle"></span > ))
