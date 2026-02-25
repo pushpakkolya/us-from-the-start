@@ -88,12 +88,20 @@ useEffect(() => {
   return (
     <div className="room-two-container">
 
-      {/* Dreamy floating particles */}
-      <div className="dream-particles">
-        {[...Array(15)].map((_, i) => (
-          <span key={i} className="particle"></span>
-        ))}
-      </div>
+{/* Dreamy floating particles */}
+<div className="dream-particles">
+
+  {/* existing particles */}
+  {[...Array(15)].map((_, i) => (
+    <span key={i} className="particle"></span>
+  ))}
+
+  {/* ADD THIS — floating hearts */}
+  {[...Array(6)].map((_, i) => (
+    <span key={"heart"+i} className="floating-heart">❤</span>
+  ))}
+
+</div>
 
       {/* Cinematic Intro */}
 {showIntro && (
