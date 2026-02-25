@@ -64,7 +64,7 @@ useEffect(() => {
     {
       src: photo2,
       short: "Us being us 🥹",
-      long: "No filters. No pretending. Just comfort."
+      long: "No filters. No pretending. Just comfort. Just being ourselves, without trying to be anything more or less. Random plans that weren’t planned 🚗. Fun adventures that started with a simple “let’s go?” . Taking turns we didn’t expect, changing routes halfway, and still ending up exactly where we were meant to be 💞. Somehow, with you, even the simplest things feel exciting. I somehow have all the energy in the world to do anything with you 🫣"
     },
     {
       src: photo1,
