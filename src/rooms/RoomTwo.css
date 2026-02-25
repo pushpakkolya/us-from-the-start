@@ -1,261 +1,331 @@
-/* ===============================
-   MAIN CONTAINER (MATCHES JSX)
-================================ */
-
 .room-two-container {
-  min-height: 100vh;
-  background: linear-gradient(to bottom, #f5ede4, #f0dfcf);
-  padding: 60px 20px;
-  text-align: center;
-  position: relative;
-  overflow-x: hidden;
+
+min-height: 100vh;
+background: linear-gradient(to bottom, #f5ede4, #f0dfcf);
+padding: 60px 20px;
+position: relative;
+overflow-x: hidden;
+
+transition: transform .6s ease;
+
 }
 
-/* ===============================
-   DREAMY FLOATING PARTICLES
-================================ */
+.room-two-container.modal-open {
+
+transform: scale(.96);
+
+}
+
+/* vignette */
+
+.vignette {
+
+position: fixed;
+inset:0;
+pointer-events:none;
+
+background:
+radial-gradient(circle at center,
+rgba(0,0,0,0) 60%,
+rgba(0,0,0,.15) 100%);
+
+z-index:1;
+
+}
+
+/* particles */
 
 .dream-particles {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
+
+position:absolute;
+inset:0;
+
 }
 
 .particle {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  background: rgba(255, 240, 220, 0.4);
-  border-radius: 50%;
-  animation: floatUp 12s infinite linear;
-}
 
-.particle:nth-child(odd) {
-  width: 6px;
-  height: 6px;
-  animation-duration: 16s;
+position:absolute;
+
+width:8px;
+height:8px;
+
+background:rgba(255,255,255,.4);
+
+border-radius:50%;
+
+animation:floatUp linear infinite;
+
 }
 
 @keyframes floatUp {
-  0% {
-    transform: translateY(100vh) translateX(0);
-    opacity: 0;
-  }
-  20% { opacity: 1; }
-  100% {
-    transform: translateY(-20vh) translateX(40px);
-    opacity: 0;
-  }
+
+0%{
+transform:translateY(100vh);
+opacity:0;
 }
 
-/* ===============================
-   CINEMATIC INTRO
-================================ */
+20%{opacity:1;}
 
-.cinematic-intro {
-  position: fixed;
-  inset: 0;
-  background: #f5ede4;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 5;
-  padding: 20px;
+100%{
+transform:translateY(-20vh);
+opacity:0;
 }
 
-.intro-line {
-  font-family: 'Dancing Script', cursive;
-  font-size: 22px;
-  color: #7a5c50;
-  max-width: 650px;
-  margin: 10px 0;
-  animation: textFade 1.2s ease forwards;
 }
 
-@keyframes textFade {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
+/* intro */
+
+.cinematic-intro{
+
+position:fixed;
+inset:0;
+
+background:#f5ede4;
+
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+
+z-index:10;
+
 }
 
-/* Hide gallery during intro */
-.gallery-wrapper.hidden {
-  opacity: 0;
-  pointer-events: none;
+.intro-line{
+
+font-family:'Dancing Script';
+font-size:24px;
+
+animation:fadeUp 1s ease;
+
 }
 
-.gallery-wrapper.visible {
-  opacity: 1;
-  transition: opacity 1.5s ease;
+@keyframes fadeUp{
+
+from{
+opacity:0;
+transform:translateY(20px);
 }
 
-/* ===============================
-   GALLERY
-================================ */
-
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 40px;              /* more breathing space */
-  max-width: 1000px;
-  margin: 60px auto;      /* padding around gallery */
-  padding: 0 20px;        /* side spacing */
-  position: relative;
-  z-index: 1;
 }
 
+/* button */
 
-/* Square images */
-.gallery-item {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  border-radius: 24px;
-  cursor: pointer;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-  transition: transform 0.3s ease;
-  
-  /* NEW */
-  padding: 14px;               /* space inside the card */
-  background: #f6efe8;         /* soft beige card */
+.intro-continue-btn{
+
+margin-top:30px;
+
+padding:12px 26px;
+
+border-radius:30px;
+
+border:none;
+
+background:#e6cfc2;
+
+cursor:pointer;
+
 }
 
+/* gallery */
 
+.gallery-grid{
 
-.gallery-item:hover {
-  transform: scale(1.05);
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+gap:40px;
+
+max-width:1000px;
+
+margin:auto;
+
 }
 
-.gallery-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  animation: glowPulse 4s ease-in-out infinite;
+.gallery-item{
+
+padding:14px;
+
+background:#f6efe8;
+
+border-radius:24px;
+
+cursor:pointer;
+
+transition:.4s;
+
 }
 
-/* Soft glow pulse */
-@keyframes glowPulse {
-  0% { box-shadow: 0 0 0px rgba(255, 223, 186, 0.3); }
-  50% { box-shadow: 0 0 25px rgba(255, 223, 186, 0.6); }
-  100% { box-shadow: 0 0 0px rgba(255, 223, 186, 0.3); }
+.gallery-item:hover{
+
+transform:translateY(-6px) scale(1.03);
+
 }
 
-.short-text {
-  margin-top: 12px;        /* spacing from image */
-  font-size: 1rem;
-  font-family: 'Poppins', sans-serif;
-  color: #6e5b4b;
-  text-align: center;
+/* image wrapper */
+
+.image-wrapper{
+
+position:relative;
+
+overflow:hidden;
+
+border-radius:18px;
+
 }
 
+/* shimmer */
 
-/* ===============================
-   EPIC MESSAGE
-================================ */
+.image-shimmer{
 
-.epic-message {
-  margin-top: 40px;
-  font-family: 'Dancing Script', cursive;
-  font-size: 24px;
-  color: #5e4633;
-  animation: fadeIn 2s ease forwards;
+position:absolute;
+
+inset:0;
+
+background:linear-gradient(
+120deg,
+transparent 30%,
+rgba(255,255,255,.35),
+transparent 70%
+);
+
+transform:translateX(-100%);
+
+animation:shimmer 5s infinite;
+
 }
 
-/* ===============================
-   MODAL (MATCHES JSX)
-================================ */
+@keyframes shimmer{
 
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  backdrop-filter: blur(12px);
-  background: rgba(0, 0, 0, 0.25);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  animation: fadeIn 0.4s ease forwards;
-  z-index: 1000;
+100%{
+transform:translateX(100%);
 }
 
-.modal-content {
-  background: #fffaf5;
-  padding: 32px;
-  border-radius: 25px;
-  width: 100%;
-  max-width: 420px;
-  text-align: center;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-  animation: zoomIn 0.4s ease forwards;
 }
 
-.modal-image {
-  width: 100%;
-  max-width: 300px;
-  margin: 0 auto 20px;
-  display: block;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: 15px;
+.gallery-image{
+
+width:100%;
+aspect-ratio:1/1;
+
+object-fit:cover;
+
+border-radius:18px;
+
 }
 
-.long-text {
-  font-family: 'Poppins', sans-serif;
-  color: #6e5b4b;
-  margin-bottom: 25px;
-  line-height: 1.6;
+/* text */
+
+.short-text{
+
+margin-top:10px;
+
+font-family:Poppins;
+
 }
 
-/* Responsive tweak */
-@media (min-width: 768px) {
-  .modal-content {
-    max-width: 480px;
-  }
+/* modal */
 
-  .modal-image {
-    max-width: 340px;
-  }
+.modal-overlay{
+
+position:fixed;
+inset:0;
+
+backdrop-filter:blur(14px);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+z-index:100;
+
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+/* modal box */
+
+.modal-content{
+
+background:#fffaf5;
+
+padding:26px;
+
+border-radius:24px;
+
+max-width:400px;
+
+animation:zoom .5s ease;
+
+position:relative;
+
 }
 
-@keyframes zoomIn {
-  from {
-    transform: scale(0.85);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
+@keyframes zoom{
+
+from{
+opacity:0;
+transform:scale(.7);
 }
 
-.intro-continue-btn {
-  margin-top: 30px;
-  background: #e8cfc1;
-  border: none;
-  padding: 12px 28px;
-  border-radius: 25px;
-  font-family: 'Poppins', sans-serif;
-  cursor: pointer;
-  transition: all 0.3s ease;
 }
 
-.intro-continue-btn:hover {
-  background: #d9b9a9;
-  transform: scale(1.05);
+/* modal image */
+
+.modal-image{
+
+width:100%;
+
+max-width:280px;
+
+margin:auto;
+
+display:block;
+
+border-radius:16px;
+
+animation:breathe 4s infinite;
+
 }
 
-.gallery-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 18px;         /* slightly smaller than parent */
-  transition: transform 0.4s ease;
+@keyframes breathe{
+
+0%,100%{
+transform:scale(1);
 }
 
+50%{
+transform:scale(1.04);
+}
+
+}
+
+/* close btn */
+
+.close-btn{
+
+position:absolute;
+top:12px;
+right:16px;
+
+border:none;
+background:none;
+
+font-size:20px;
+
+cursor:pointer;
+
+}
+
+/* epic text */
+
+.epic-message{
+
+margin-top:40px;
+
+font-family:'Dancing Script';
+
+font-size:26px;
+
+animation:fadeUp 2s ease;
+
+}
