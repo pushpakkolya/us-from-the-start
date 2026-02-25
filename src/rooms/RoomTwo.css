@@ -1,34 +1,22 @@
 /* ===============================
-   Main Container
+   MAIN CONTAINER (MATCHES JSX)
 ================================ */
+
 .room-two-container {
-  position: relative;
   min-height: 100vh;
-  padding: 40px 20px;
-  background: radial-gradient(circle at center, #0f0f14, #050508 70%);
+  background: linear-gradient(to bottom, #f5ede4, #f0dfcf);
+  padding: 60px 20px;
+  text-align: center;
+  position: relative;
   overflow-x: hidden;
-  color: white;
-  font-family: "Inter", sans-serif;
 }
 
 /* ===============================
-   Ambient vignette glow
+   DREAMY FLOATING PARTICLES
 ================================ */
-.vignette {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.06), transparent 40%),
-    radial-gradient(circle at 80% 70%, rgba(255,255,255,0.04), transparent 40%);
-  z-index: 0;
-}
 
-/* ===============================
-   Floating particles
-================================ */
 .dream-particles {
-  position: fixed;
+  position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 0;
@@ -36,93 +24,62 @@
 
 .particle {
   position: absolute;
-  width: 4px;
-  height: 4px;
-  background: white;
-  opacity: 0.2;
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 240, 220, 0.4);
   border-radius: 50%;
-  animation: floatParticle 10s infinite linear;
+  animation: floatUp 12s infinite linear;
 }
 
 .particle:nth-child(odd) {
-  animation-duration: 14s;
+  width: 6px;
+  height: 6px;
+  animation-duration: 16s;
 }
 
-.particle:nth-child(even) {
-  animation-duration: 18s;
-}
-
-@keyframes floatParticle {
-  from {
-    transform: translateY(100vh);
+@keyframes floatUp {
+  0% {
+    transform: translateY(100vh) translateX(0);
     opacity: 0;
   }
-  20% {
-    opacity: 0.4;
-  }
-  to {
-    transform: translateY(-10vh);
+  20% { opacity: 1; }
+  100% {
+    transform: translateY(-20vh) translateX(40px);
     opacity: 0;
   }
 }
 
 /* ===============================
-   Cinematic Intro
+   CINEMATIC INTRO
 ================================ */
+
 .cinematic-intro {
-  position: relative;
-  z-index: 2;
-  max-width: 700px;
-  margin: auto;
-  text-align: center;
-  margin-top: 100px;
+  position: fixed;
+  inset: 0;
+  background: #f5ede4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+  padding: 20px;
 }
 
 .intro-line {
-  font-size: 1.4rem;
-  margin-bottom: 18px;
-  opacity: 0;
-  animation: fadeIn 1s forwards;
+  font-family: 'Dancing Script', cursive;
+  font-size: 22px;
+  color: #7a5c50;
+  max-width: 650px;
+  margin: 10px 0;
+  animation: textFade 1.2s ease forwards;
 }
 
-.intro-line:nth-child(1) { animation-delay: 0.3s; }
-.intro-line:nth-child(2) { animation-delay: 0.6s; }
-.intro-line:nth-child(3) { animation-delay: 0.9s; }
-.intro-line:nth-child(4) { animation-delay: 1.2s; }
-.intro-line:nth-child(5) { animation-delay: 1.5s; }
-
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-  }
+@keyframes textFade {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.intro-continue-btn {
-  margin-top: 30px;
-  padding: 12px 28px;
-  border-radius: 30px;
-  border: none;
-  background: white;
-  color: black;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.intro-continue-btn:hover {
-  transform: scale(1.05);
-}
-
-/* ===============================
-   Gallery Wrapper
-================================ */
-.gallery-wrapper {
-  position: relative;
-  z-index: 2;
-  margin-top: 40px;
-  transition: opacity 1s ease;
-}
-
+/* Hide gallery during intro */
 .gallery-wrapper.hidden {
   opacity: 0;
   pointer-events: none;
@@ -130,152 +87,174 @@
 
 .gallery-wrapper.visible {
   opacity: 1;
+  transition: opacity 1.5s ease;
 }
 
 /* ===============================
-   Gallery Grid
+   GALLERY
 ================================ */
+
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 180px));
-  justify-content: center;
-  gap: 22px;
-  padding: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 40px;              /* more breathing space */
+  max-width: 1000px;
+  margin: 60px auto;      /* padding around gallery */
+  padding: 0 20px;        /* side spacing */
+  position: relative;
+  z-index: 1;
 }
 
-/* ===============================
-   Gallery Item
-================================ */
+
+/* Square images */
 .gallery-item {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 24px;
   cursor: pointer;
-  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
   transition: transform 0.3s ease;
+  
+  /* NEW */
+  padding: 14px;               /* space inside the card */
+  background: #f6efe8;         /* soft beige card */
 }
+
+
 
 .gallery-item:hover {
   transform: scale(1.05);
 }
 
-/* ===============================
-   Image Wrapper (FOR PERFECT SQUARE)
-================================ */
-.image-wrapper {
-  width: 180px;
-  height: 180px;
-  position: relative;
-  overflow: hidden;
-  border-radius: 14px;
-}
-
-/* ===============================
-   Gallery Image (FIXED PROPORTIONS)
-================================ */
 .gallery-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 14px;
-  display: block;
+  animation: glowPulse 4s ease-in-out infinite;
 }
 
-/* ===============================
-   Shimmer effect
-================================ */
-.image-shimmer {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    120deg,
-    transparent 40%,
-    rgba(255,255,255,0.15),
-    transparent 60%
-  );
-  transform: translateX(-100%);
-  animation: shimmer 3s infinite;
+/* Soft glow pulse */
+@keyframes glowPulse {
+  0% { box-shadow: 0 0 0px rgba(255, 223, 186, 0.3); }
+  50% { box-shadow: 0 0 25px rgba(255, 223, 186, 0.6); }
+  100% { box-shadow: 0 0 0px rgba(255, 223, 186, 0.3); }
 }
 
-@keyframes shimmer {
-  to {
-    transform: translateX(100%);
-  }
-}
-
-/* ===============================
-   Short Text
-================================ */
 .short-text {
-  margin-top: 10px;
-  font-size: 0.95rem;
-  opacity: 0.85;
+  margin-top: 12px;        /* spacing from image */
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  color: #6e5b4b;
+  text-align: center;
 }
 
+
 /* ===============================
-   Epic Message
+   EPIC MESSAGE
 ================================ */
+
 .epic-message {
   margin-top: 40px;
-  text-align: center;
-  font-size: 1.3rem;
-  opacity: 0.9;
-  animation: fadeIn 1.5s ease forwards;
+  font-family: 'Dancing Script', cursive;
+  font-size: 24px;
+  color: #5e4633;
+  animation: fadeIn 2s ease forwards;
 }
 
 /* ===============================
-   Modal
+   MODAL (MATCHES JSX)
 ================================ */
+
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.25);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10;
+  padding: 20px;
+  animation: fadeIn 0.4s ease forwards;
+  z-index: 1000;
 }
 
 .modal-content {
-  max-width: 600px;
-  width: 90%;
-  background: #111;
-  padding: 20px;
-  border-radius: 16px;
-  position: relative;
-  animation: modalFade 0.4s ease;
-}
-
-@keyframes modalFade {
-  from {
-    opacity: 0;
-    transform: scale(0.92);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  background: #fffaf5;
+  padding: 32px;
+  border-radius: 25px;
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  animation: zoomIn 0.4s ease forwards;
 }
 
 .modal-image {
   width: 100%;
-  border-radius: 12px;
-  margin-bottom: 16px;
+  max-width: 300px;
+  margin: 0 auto 20px;
+  display: block;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 15px;
 }
 
 .long-text {
-  font-size: 1.05rem;
+  font-family: 'Poppins', sans-serif;
+  color: #6e5b4b;
+  margin-bottom: 25px;
   line-height: 1.6;
-  opacity: 0.95;
 }
 
-/* ===============================
-   Close Button
-================================ */
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 14px;
-  background: transparent;
+/* Responsive tweak */
+@media (min-width: 768px) {
+  .modal-content {
+    max-width: 480px;
+  }
+
+  .modal-image {
+    max-width: 340px;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.intro-continue-btn {
+  margin-top: 30px;
+  background: #e8cfc1;
   border: none;
-  color: white;
-  font-size: 1.4rem;
+  padding: 12px 28px;
+  border-radius: 25px;
+  font-family: 'Poppins', sans-serif;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.intro-continue-btn:hover {
+  background: #d9b9a9;
+  transform: scale(1.05);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 18px;         /* slightly smaller than parent */
+  transition: transform 0.4s ease;
 }
