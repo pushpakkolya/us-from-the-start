@@ -98,6 +98,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 40px;              /* more breathing space */
+     position: relative;
+  z-index: 2;
   max-width: 1000px;
   margin: 60px auto;      /* padding around gallery */
   padding: 0 20px;        /* side spacing */
@@ -110,6 +112,7 @@
 .gallery-item {
   position: relative;
   width: 100%;
+   z-index: 2;
   aspect-ratio: 1 / 1;
   border-radius: 24px;
   cursor: pointer;
@@ -493,7 +496,12 @@
 
 .floating-heart {
   position: absolute;
+  bottom: -20px;
   color: rgba(255, 170, 190, 0.35);
   font-size: 14px;
-  animation: floatHeart 20s linear infinite;
+  animation-name: floatHeart;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  pointer-events: none;
+  z-index: 0;
 }
