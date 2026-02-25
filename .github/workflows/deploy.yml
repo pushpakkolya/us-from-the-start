@@ -23,20 +23,14 @@ jobs:
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org/
-          cache: 'npm'
 
       - name: Clear npm cache
         run: npm cache clean --force
 
-      - name: Remove lock file and node_modules
-        run: |
-          rm -rf node_modules
-          rm -f package-lock.json
-
       - name: Install dependencies
         run: npm install --no-audit --no-fund
 
-      - name: Build project
+      - name: Build
         run: npm run build
 
       - name: Upload artifact
@@ -44,5 +38,5 @@ jobs:
         with:
           path: ./dist
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         uses: actions/deploy-pages@v4
