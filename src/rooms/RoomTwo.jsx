@@ -135,11 +135,22 @@ useEffect(() => {
         </div>
 
         {/* Epic unlock message */}
-        {openedCount === 6 && (
-          <div className="epic-message">
-            ✨ You just unlocked something special…
-          </div>
-        )}
+{openedCount === 6 && (
+  <div className="epic-message-container">
+    
+    <div className="epic-message">
+      ✨ You just unlocked something special…
+    </div>
+
+    <button
+      className="next-room-btn"
+      onClick={onComplete}
+    >
+      Continue to the next room 🤍 →
+    </button>
+
+  </div>
+)}
 
       </div>
 
