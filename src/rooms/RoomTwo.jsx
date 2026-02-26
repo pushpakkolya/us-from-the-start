@@ -134,25 +134,23 @@ useEffect(() => {
           ))}
         </div>
 
-        {/* Epic unlock message */}
-{openedCount === 2 && (
+{/* Epic unlock message - show only after ALL images opened */}
+{openedCount === images.length && (
   <div className="epic-message-container">
     
     <div className="epic-message">
-      ✨ You just unlocked something special…
+      ✨ You unlocked the final memory…
     </div>
 
     <button
       className="next-room-btn"
       onClick={onComplete}
     >
-      Continue to the next room 🤍 →
+      Enter the next room 🤍 →
     </button>
 
   </div>
 )}
-
-      </div>
 
       {/* Modal */}
       {selectedImage !== null && (
