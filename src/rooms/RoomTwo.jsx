@@ -99,7 +99,7 @@ useEffect(() => {
 {showIntro && (
   <div className="cinematic-intro">
     {introLines.slice(0, lineIndex + 1).map((line, i) => (
-      <p key={i} className="intro-line">{line}</p>
+      <p key={i + "-" + lineIndex} className="intro-line">{line}</p>
     ))}
 
     {lineIndex === introLines.length - 1 && (
