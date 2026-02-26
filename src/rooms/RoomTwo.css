@@ -23,40 +23,63 @@
   z-index: 0;
 }
 
+/* ===============================
+   FLOATING HEART PARTICLES
+================================ */
+
 .particle {
   position: absolute;
   bottom: -20px;
-  width: 8px;
-  height: 8px;
-  background: rgba(255, 240, 220, 0.5);
-  border-radius: 50%;
-  animation: floatUp linear infinite;
+
+  font-size: 18px;
+  animation: floatHeart linear infinite;
+  opacity: 0.7;
 }
 
-/* Random positions */
+/* Use heart emoji */
+.particle::before {
+  content: "❤️";
+}
+
+/* Random horizontal positions + timing */
 .particle:nth-child(1) { left: 5%; animation-duration: 12s; }
-.particle:nth-child(2) { left: 15%; animation-duration: 14s; }
+.particle:nth-child(2) { left: 15%; animation-duration: 15s; }
 .particle:nth-child(3) { left: 25%; animation-duration: 10s; }
-.particle:nth-child(4) { left: 35%; animation-duration: 16s; }
-.particle:nth-child(5) { left: 45%; animation-duration: 13s; }
-.particle:nth-child(6) { left: 55%; animation-duration: 11s; }
-.particle:nth-child(7) { left: 65%; animation-duration: 15s; }
+.particle:nth-child(4) { left: 35%; animation-duration: 14s; }
+.particle:nth-child(5) { left: 45%; animation-duration: 11s; }
+.particle:nth-child(6) { left: 55%; animation-duration: 16s; }
+.particle:nth-child(7) { left: 65%; animation-duration: 13s; }
 .particle:nth-child(8) { left: 75%; animation-duration: 12s; }
-.particle:nth-child(9) { left: 85%; animation-duration: 14s; }
+.particle:nth-child(9) { left: 85%; animation-duration: 15s; }
 .particle:nth-child(10){ left: 95%; animation-duration: 10s; }
+.particle:nth-child(11){ left: 20%; animation-duration: 17s; }
+.particle:nth-child(12){ left: 40%; animation-duration: 14s; }
+.particle:nth-child(13){ left: 60%; animation-duration: 16s; }
+.particle:nth-child(14){ left: 80%; animation-duration: 13s; }
+.particle:nth-child(15){ left: 50%; animation-duration: 18s; }
 
-@keyframes floatUp {
-  from {
-    transform: translateY(0);
+
+@keyframes floatHeart {
+
+  0% {
+    transform: translateY(0) scale(0.8);
     opacity: 0;
   }
-  20% { opacity: 1; }
-  to {
-    transform: translateY(-110vh);
+
+  10% {
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: translateY(-50vh) translateX(20px) scale(1);
+  }
+
+  100% {
+    transform: translateY(-110vh) translateX(-20px) scale(1.2);
     opacity: 0;
   }
+
 }
-
 
 /* ===============================
    CINEMATIC INTRO
