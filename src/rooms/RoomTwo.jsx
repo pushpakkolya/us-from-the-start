@@ -112,7 +112,7 @@ useEffect(() => {
     )}
   </div>
 )}
-  </div>
+
 
       {/* Gallery */}
       <div className={`gallery-wrapper ${showIntro ? "hidden" : "visible"}`}>
@@ -151,7 +151,7 @@ useEffect(() => {
 
   </div>
 )}
-
+  </div>
       {/* Modal */}
       {selectedImage !== null && (
         <div className="modal-overlay" onClick={closeModal}>
