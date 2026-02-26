@@ -135,7 +135,7 @@ useEffect(() => {
         </div>
 
         {/* Epic unlock message */}
-{openedCount === 6 && (
+{openedCount === 2 && (
   <div className="epic-message-container">
     
     <div className="epic-message">
