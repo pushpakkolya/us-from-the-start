@@ -1,5 +1,5 @@
 /* ===============================
-   MAIN CONTAINER
+   MAIN CONTAINER (MATCHES JSX)
 ================================ */
 
 .room-two-container {
@@ -11,9 +11,8 @@
   overflow-x: hidden;
 }
 
-
 /* ===============================
-   FLOATING PARTICLES
+   DREAMY FLOATING PARTICLES
 ================================ */
 
 .dream-particles {
@@ -22,10 +21,6 @@
   pointer-events: none;
   z-index: 0;
 }
-
-/* ===============================
-   FLOATING HEART PARTICLES
-================================ */
 
 .particle {
   position: absolute;
@@ -94,47 +89,24 @@
   justify-content: center;
   align-items: center;
   z-index: 5;
+  padding: 20px;
 }
 
 .intro-line {
   font-family: 'Dancing Script', cursive;
   font-size: 22px;
   color: #7a5c50;
-  margin: 10px;
-  opacity: 0;
-  animation: fadeUp 1s ease forwards;
+  max-width: 650px;
+  margin: 10px 0;
+  animation: textFade 1.2s ease forwards;
 }
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@keyframes textFade {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.intro-continue-btn {
-  margin-top: 30px;
-  background: #e8cfc1;
-  border: none;
-  padding: 12px 28px;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.intro-continue-btn:hover {
-  transform: scale(1.05);
-}
-
-
-/* ===============================
-   GALLERY VISIBILITY
-================================ */
-
+/* Hide gallery during intro */
 .gallery-wrapper.hidden {
   opacity: 0;
   pointer-events: none;
@@ -145,70 +117,63 @@
   transition: opacity 1.5s ease;
 }
 
-
 /* ===============================
-   GALLERY GRID
+   GALLERY
 ================================ */
 
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 40px;
+  gap: 40px;              /* more breathing space */
   max-width: 1000px;
-  margin: 60px auto;
-  z-index: 1;
+  margin: 60px auto;      /* padding around gallery */
+  padding: 0 20px;        /* side spacing */
   position: relative;
+  z-index: 1;
 }
 
 
-/* ===============================
-   GALLERY ITEM
-================================ */
-
+/* Square images */
 .gallery-item {
-  background: #f6efe8;
-  padding: 14px;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   border-radius: 24px;
   cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
   transition: transform 0.3s ease;
+  
+  /* NEW */
+  padding: 14px;               /* space inside the card */
+  background: #f6efe8;         /* soft beige card */
 }
+
+
 
 .gallery-item:hover {
   transform: scale(1.05);
 }
 
-
-/* IMAGE — PERFECT SQUARE */
 .gallery-image {
   width: 100%;
-  aspect-ratio: 1 / 1;
+  height: 100%;
   object-fit: cover;
-  border-radius: 18px;
-
   animation: glowPulse 4s ease-in-out infinite;
 }
 
+/* Soft glow pulse */
 @keyframes glowPulse {
-
-  0% {
-    box-shadow: 0 0 0px rgba(255,223,186,0.2);
-  }
-
-  50% {
-    box-shadow: 0 0 25px rgba(255,223,186,0.6);
-  }
-
-  100% {
-    box-shadow: 0 0 0px rgba(255,223,186,0.2);
-  }
+  0% { box-shadow: 0 0 0px rgba(255, 223, 186, 0.3); }
+  50% { box-shadow: 0 0 25px rgba(255, 223, 186, 0.6); }
+  100% { box-shadow: 0 0 0px rgba(255, 223, 186, 0.3); }
 }
 
-
-/* TEXT BELOW IMAGE */
 .short-text {
-  margin-top: 10px;
+  margin-top: 12px;        /* spacing from image */
+  font-size: 1rem;
   font-family: 'Poppins', sans-serif;
   color: #6e5b4b;
+  text-align: center;
 }
 
 
@@ -216,120 +181,71 @@
    EPIC MESSAGE
 ================================ */
 
-.epic-message-container {
-  margin-top: 30px;
-  opacity: 0;
-  animation: fadeIn 2s forwards;
-}
-
 .epic-message {
+  margin-top: 40px;
   font-family: 'Dancing Script', cursive;
   font-size: 24px;
   color: #5e4633;
+  animation: fadeIn 2s ease forwards;
 }
-
 
 /* ===============================
-   NEXT ROOM BUTTON
-================================ */
-
-.next-room-btn {
-
-  margin-top: 20px;
-
-  background: linear-gradient(135deg,#f8e1d4,#efd0bc);
-
-  border: none;
-  padding: 14px 34px;
-  border-radius: 40px;
-
-  cursor: pointer;
-
-  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-
-  transition: 0.3s;
-
-  position: relative;
-  overflow: hidden;
-}
-
-.next-room-btn:hover {
-  transform: translateY(-3px);
-}
-
-.next-room-btn::after {
-
-  content: "";
-  position: absolute;
-  left: -100%;
-  top: 0;
-
-  width: 100%;
-  height: 100%;
-
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(255,255,255,0.6),
-    transparent
-  );
-
-  transition: 0.6s;
-}
-
-.next-room-btn:hover::after {
-  left: 100%;
-}
-
-
-/* ===============================
-   MODAL
+   MODAL (MATCHES JSX)
 ================================ */
 
 .modal-overlay {
-
   position: fixed;
   inset: 0;
-
-  background: rgba(0,0,0,0.25);
-  backdrop-filter: blur(10px);
-
+  backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.25);
   display: flex;
   justify-content: center;
   align-items: center;
-
-  animation: fadeIn 0.3s;
+  padding: 20px;
+  animation: fadeIn 0.4s ease forwards;
+  z-index: 1000;
 }
 
 .modal-content {
-
   background: #fffaf5;
-
-  padding: 25px;
-  border-radius: 20px;
-
-  animation: zoomIn 0.3s;
+  padding: 32px;
+  border-radius: 25px;
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  animation: zoomIn 0.4s ease forwards;
 }
 
 .modal-image {
-
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto 20px;
+  display: block;
   aspect-ratio: 1 / 1;
-
   object-fit: cover;
   border-radius: 15px;
 }
 
 .long-text {
-  margin-top: 15px;
+  font-family: 'Poppins', sans-serif;
   color: #6e5b4b;
+  margin-bottom: 25px;
+  line-height: 1.6;
 }
 
+/* Responsive tweak */
+@media (min-width: 768px) {
+  .modal-content {
+    max-width: 480px;
+  }
 
-/* ===============================
-   ANIMATIONS
-================================ */
+  .modal-image {
+    max-width: 340px;
+  }
+}
 
+/* Animations */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -344,4 +260,127 @@
     transform: scale(1);
     opacity: 1;
   }
+}
+
+.intro-continue-btn {
+  margin-top: 30px;
+  background: #e8cfc1;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 25px;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.intro-continue-btn:hover {
+  background: #d9b9a9;
+  transform: scale(1.05);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 18px;
+  transition: transform 0.4s ease;
+
+  animation: glowPulse 4s ease-in-out infinite;
+}
+
+/* ===============================
+   NEXT ROOM BUTTON
+================================ */
+
+.epic-message-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+     opacity: 0;
+  animation: fadeIn 2s ease forwards;
+  gap: 22px;
+  margin-top: 30px;
+  animation: fadeIn 2s ease forwards;
+}
+
+.next-room-btn {
+
+  background: linear-gradient(
+    135deg,
+    #f8e1d4,
+    #f3d5c0,
+    #efd0bc
+  );
+
+  border: none;
+  padding: 14px 34px;
+
+  border-radius: 40px;
+
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+
+  color: #6e5b4b;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 6px 18px rgba(0,0,0,0.12),
+    inset 0 0 10px rgba(255,255,255,0.4);
+
+  transition: all 0.35s ease;
+
+  position: relative;
+  overflow: hidden;
+}
+
+
+/* Hover glow */
+.next-room-btn:hover {
+
+  transform: translateY(-3px) scale(1.04);
+
+  box-shadow:
+    0 10px 28px rgba(0,0,0,0.18),
+    0 0 18px rgba(255, 220, 200, 0.6);
+
+}
+
+
+/* Click press */
+.next-room-btn:active {
+
+  transform: scale(0.97);
+
+}
+
+
+/* subtle shine animation */
+.next-room-btn::after {
+
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: -100%;
+
+  width: 100%;
+  height: 100%;
+
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.6),
+    transparent
+  );
+
+  transition: all 0.6s ease;
+
+}
+
+.next-room-btn:hover::after {
+
+  left: 100%;
+
 }
