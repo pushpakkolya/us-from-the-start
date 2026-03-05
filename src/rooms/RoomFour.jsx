@@ -112,12 +112,12 @@ const handleAnswer = () => {
   if (showBirthday) {
     return (
       <div className="birthday-screen">
-        <h1>🎉 Happy Birthday Bubbachiiiii 🎉</h1>
-        <p>We solved soo many riddles on our own over the years and reached here now </p>
-        <p>Time to start solving things together…</p>
-        <p>Like how Mario found his princess, i found mine ❤️</p>
+        <h1>🎉 Happy Birthday Bubbachiiiii😘 🎉</h1>
+        <p>We solved soo many riddles on our own over the years and reached here </p>
+        <p>Time to start solving things together now…</p>
+        <p>Like how Mario found his princess, I found mine ❤️</p>
 <div className="subtext">
-  Thank you for being my forever Player 1 🎮💖
+  Thank you for being my forever Player 1 🎮💖 Mika Mikaa 🙈
 </div>
       </div>
     );
