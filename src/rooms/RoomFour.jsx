@@ -8,11 +8,26 @@ import castle from "../assets/mario/castle.png";
 import cloud from "../assets/mario/cloud.png";
 
 const riddles = [
-  { q: "What has to be broken before you can use it?", a: "egg" },
-  { q: "I’m tall when I’m young, short when I’m old.", a: "candle" },
-  { q: "What has hands but can’t clap?", a: "clock" },
-  { q: "What gets wetter the more it dries?", a: "towel" },
-  { q: "What has keys but can’t open locks?", a: "piano" }
+  {
+    q: "What feature of yours do I compliment the most? 💖",
+    a: ["eyes", "smile", "dimples"]
+  },
+  {
+    q: "What is something you do that I always find ridiculously cute?",
+    a: ["laugh", "giggle", "excited", "happy dance"]
+  },
+  {
+    q: "What is the one thing that instantly makes me feel at home when I'm with you?",
+    a: ["hug", "cuddle", "being with you", "your arms"]
+  },
+  {
+    q: "What is something we both love doing that always turns into a fun adventure?",
+    a: ["travel", "explore", "random plans", "trips"]
+  },
+  {
+    q: "What is the one thing about you that made me realize you were my princess? 👑",
+    a: ["heart", "kindness", "love", "care"]
+  }
 ];
 
 export default function RoomFour() {
@@ -76,17 +91,23 @@ export default function RoomFour() {
     requestAnimationFrame(animate);
   };
 
-  const handleAnswer = () => {
-    if (input.toLowerCase().trim() === riddles[index].a) {
-      if (index < riddles.length - 1) {
-        performJump();
-        setIndex(i => i + 1);
-        setInput("");
-      } else {
-        performJump(140, true);
-      }
+const handleAnswer = () => {
+  const answer = input.toLowerCase().trim();
+
+  const correct = riddles[index].a.some(keyword =>
+    answer.includes(keyword)
+  );
+
+  if (correct) {
+    if (index < riddles.length - 1) {
+      performJump();
+      setIndex(i => i + 1);
+      setInput("");
+    } else {
+      performJump(140, true);
     }
-  };
+  }
+};
 
   if (showBirthday) {
     return (
