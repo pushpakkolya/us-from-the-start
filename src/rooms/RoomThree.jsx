@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import puzzleImage from "../assets/puzzle.jpg";
+import "./RoomThree.css";
 
 export default function RoomThree({ onComplete }) {
   const size = 3;
@@ -86,14 +87,15 @@ export default function RoomThree({ onComplete }) {
     tile === solved[index];
 
   return (
-    <div style={styles.container}>
-      <h2>🧩 Complete the Picture</h2>
-      <p>Moves: {moves}</p>
+    <div style={styles.container} className="room3-container">
+<h2 className="room-title">🧩 Complete the Picture</h2>
+<p className="moves">Moves: {moves}</p>
 
       {magicAvailable && !magicMode && !completed && (
         <button
           onClick={() => setMagicMode(true)}
           style={styles.magicButton}
+          className="magic-btn"
         >
           ✨ Magic Swap Available
         </button>
@@ -101,11 +103,12 @@ export default function RoomThree({ onComplete }) {
 
       {!completed && (
         <div
-          style={{
-            ...styles.grid,
-            width: size * tileSize,
-            height: size * tileSize,
-          }}
+className="puzzle-grid"
+style={{
+  ...styles.grid,
+  width: size * tileSize,
+  height: size * tileSize,
+}}
         >
           {tiles.map((tile, index) => {
             if (tile === null) {
@@ -129,6 +132,7 @@ export default function RoomThree({ onComplete }) {
             return (
               <div
                 key={index}
+                className="puzzle-tile"
                 draggable={magicMode}
                 onDragStart={() =>
                   magicMode && setDragIndex(index)
@@ -174,7 +178,7 @@ export default function RoomThree({ onComplete }) {
       )}
 
       {completed && (
-        <div style={styles.revealWrapper}>
+        <div style={styles.revealWrapper} className="final-wrapper">
           <GlowAura />
           <img
             src={puzzleImage}
