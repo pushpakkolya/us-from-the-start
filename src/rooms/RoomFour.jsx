@@ -26,7 +26,7 @@ const riddles = [
   },
   {
     q: "In this little Mario story, he keeps jumping levels just to reach one person. Who is she ❤️? 👑",
-    a: ["dubba", "bubbachi", "drishya", "me"]
+    a: ["bubba", "bubbachi", "drishya", "me"]
   }
 ];
 
@@ -112,7 +112,7 @@ const handleAnswer = () => {
   if (showBirthday) {
     return (
       <div className="birthday-screen">
-        <h1>🎉 Happy Birthday My Love 🎉</h1>
+        <h1>🎉 Happy Birthday Love 🎉</h1>
         <p>You solved every riddle…</p>
         <p>You reached the princess…</p>
         <p>And you reached my heart too ❤️</p>
