@@ -69,7 +69,7 @@ useEffect(() => {
     {
       src: photo1,
       short: "Still my favorite 💖",
-      long: "If I could relive one frame forever, it might be this one."
+      long: "I used to think home was a place you go back to. But somewhere along the way, I realized it’s actually a person you feel safe with. No matter where life takes me, or how far I wander, somehow it always feels like I’m home when I’m with you 💞and I’m exactly where I belong."
     }
   ];
 
