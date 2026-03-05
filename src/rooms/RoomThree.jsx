@@ -15,7 +15,7 @@ export default function RoomThree({ onComplete }) {
   const shuffleSolvable = () => {
     let arr = [...solved];
     let emptyIndex = arr.indexOf(null);
-
+ 
     for (let i = 0; i < 15; i++) {
       const possibleMoves = [];
       const row = Math.floor(emptyIndex / size);
