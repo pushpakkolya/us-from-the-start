@@ -185,16 +185,23 @@ style={{
             alt="Completed"
             style={styles.finalImage}
           />
-          <h1 style={styles.overlayText}>You Did It 💖</h1>
-          <SparkleBurst />
-          <Confetti />
+<h1 style={styles.overlayText}>You Did It 💖</h1>
 
-          <button
-            onClick={onComplete}
-            style={styles.continueButton}
-          >
-            Continue ➜
-          </button>
+<div className="love-message">
+  <p>You solved every puzzle…</p>
+  <p>But the real puzzle is how I got this lucky ❤️</p>
+  <p className="love-question">Will you keep solving life with me?</p>
+</div>
+
+<SparkleBurst />
+<Confetti />
+
+<button
+  onClick={onComplete}
+  style={styles.continueButton}
+>
+  Continue ➜
+</button>
         </div>
       )}
     </div>
