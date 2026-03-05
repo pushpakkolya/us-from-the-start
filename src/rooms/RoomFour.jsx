@@ -9,24 +9,24 @@ import cloud from "../assets/mario/cloud.png";
 
 const riddles = [
   {
-    q: "What feature of yours do I compliment the most? 💖",
-    a: ["eyes", "smile", "dimples"]
+    q: "When was our first date? 💖",
+    a: ["june 8", "8 june", "june 8 2025", "8 june 2025", "8/6/2025", "08/06/2025"]
   },
   {
-    q: "What is something you do that I always find ridiculously cute?",
-    a: ["laugh", "giggle", "excited", "happy dance"]
+    q: "You’re not a building, yet I say I feel like I belong here whenever You’re around. What am I? 🏡",
+    a: ["home"]
   },
   {
-    q: "What is the one thing that instantly makes me feel at home when I'm with you?",
-    a: ["hug", "cuddle", "being with you", "your arms"]
+    q: "I’m something you give me without wrapping it. Every time you do, the world suddenly feels calmer, warmer and lighter. What am I? 🤗",
+    a: ["hug", "cuddle"]
   },
   {
-    q: "What is something we both love doing that always turns into a fun adventure?",
-    a: ["travel", "explore", "random plans", "trips"]
+    q: "What do you do that instantly melts my heart every single time? 🫣",
+    a: ["laugh", "giggle", "smile", "excited"]
   },
   {
-    q: "What is the one thing about you that made me realize you were my princess? 👑",
-    a: ["heart", "kindness", "love", "care"]
+    q: "In this little Mario story, he keeps jumping levels just to reach one person. Who is she ❤️? 👑",
+    a: ["dubba", "bubbachi", "drishya", "me"]
   }
 ];
 
